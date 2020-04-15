@@ -1,0 +1,473 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		04E716FD2446C255006D54BB /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E716FC2446C255006D54BB /* AppDelegate.m */; };
+		04E717002446C255006D54BB /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E716FF2446C255006D54BB /* SceneDelegate.m */; };
+		04E717032446C255006D54BB /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E717022446C255006D54BB /* ViewController.m */; };
+		04E717062446C255006D54BB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 04E717042446C255006D54BB /* Main.storyboard */; };
+		04E717082446C256006D54BB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 04E717072446C256006D54BB /* Assets.xcassets */; };
+		04E7170B2446C256006D54BB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 04E717092446C256006D54BB /* LaunchScreen.storyboard */; };
+		04E7170E2446C256006D54BB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E7170D2446C256006D54BB /* main.m */; };
+		04E717182446C256006D54BB /* AsyncKit_ContactPickerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E717172446C256006D54BB /* AsyncKit_ContactPickerTests.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		04E717142446C256006D54BB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 04E716F02446C255006D54BB /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 04E716F72446C255006D54BB;
+			remoteInfo = "AsyncKit ContactPicker";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		04E716F82446C255006D54BB /* AsyncKit ContactPicker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "AsyncKit ContactPicker.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		04E716FB2446C255006D54BB /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		04E716FC2446C255006D54BB /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		04E716FE2446C255006D54BB /* SceneDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SceneDelegate.h; sourceTree = "<group>"; };
+		04E716FF2446C255006D54BB /* SceneDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SceneDelegate.m; sourceTree = "<group>"; };
+		04E717012446C255006D54BB /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		04E717022446C255006D54BB /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		04E717052446C255006D54BB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		04E717072446C256006D54BB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		04E7170A2446C256006D54BB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		04E7170C2446C256006D54BB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		04E7170D2446C256006D54BB /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		04E717132446C256006D54BB /* AsyncKit ContactPickerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "AsyncKit ContactPickerTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		04E717172446C256006D54BB /* AsyncKit_ContactPickerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AsyncKit_ContactPickerTests.m; sourceTree = "<group>"; };
+		04E717192446C256006D54BB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		04E716F52446C255006D54BB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		04E717102446C256006D54BB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		04E716EF2446C255006D54BB = {
+			isa = PBXGroup;
+			children = (
+				04E716FA2446C255006D54BB /* AsyncKit ContactPicker */,
+				04E717162446C256006D54BB /* AsyncKit ContactPickerTests */,
+				04E716F92446C255006D54BB /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		04E716F92446C255006D54BB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				04E716F82446C255006D54BB /* AsyncKit ContactPicker.app */,
+				04E717132446C256006D54BB /* AsyncKit ContactPickerTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		04E716FA2446C255006D54BB /* AsyncKit ContactPicker */ = {
+			isa = PBXGroup;
+			children = (
+				04E716FB2446C255006D54BB /* AppDelegate.h */,
+				04E716FC2446C255006D54BB /* AppDelegate.m */,
+				04E716FE2446C255006D54BB /* SceneDelegate.h */,
+				04E716FF2446C255006D54BB /* SceneDelegate.m */,
+				04E717012446C255006D54BB /* ViewController.h */,
+				04E717022446C255006D54BB /* ViewController.m */,
+				04E717042446C255006D54BB /* Main.storyboard */,
+				04E717072446C256006D54BB /* Assets.xcassets */,
+				04E717092446C256006D54BB /* LaunchScreen.storyboard */,
+				04E7170C2446C256006D54BB /* Info.plist */,
+				04E7170D2446C256006D54BB /* main.m */,
+			);
+			path = "AsyncKit ContactPicker";
+			sourceTree = "<group>";
+		};
+		04E717162446C256006D54BB /* AsyncKit ContactPickerTests */ = {
+			isa = PBXGroup;
+			children = (
+				04E717172446C256006D54BB /* AsyncKit_ContactPickerTests.m */,
+				04E717192446C256006D54BB /* Info.plist */,
+			);
+			path = "AsyncKit ContactPickerTests";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		04E716F72446C255006D54BB /* AsyncKit ContactPicker */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 04E7171C2446C256006D54BB /* Build configuration list for PBXNativeTarget "AsyncKit ContactPicker" */;
+			buildPhases = (
+				04E716F42446C255006D54BB /* Sources */,
+				04E716F52446C255006D54BB /* Frameworks */,
+				04E716F62446C255006D54BB /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "AsyncKit ContactPicker";
+			productName = "AsyncKit ContactPicker";
+			productReference = 04E716F82446C255006D54BB /* AsyncKit ContactPicker.app */;
+			productType = "com.apple.product-type.application";
+		};
+		04E717122446C256006D54BB /* AsyncKit ContactPickerTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 04E7171F2446C256006D54BB /* Build configuration list for PBXNativeTarget "AsyncKit ContactPickerTests" */;
+			buildPhases = (
+				04E7170F2446C256006D54BB /* Sources */,
+				04E717102446C256006D54BB /* Frameworks */,
+				04E717112446C256006D54BB /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				04E717152446C256006D54BB /* PBXTargetDependency */,
+			);
+			name = "AsyncKit ContactPickerTests";
+			productName = "AsyncKit ContactPickerTests";
+			productReference = 04E717132446C256006D54BB /* AsyncKit ContactPickerTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		04E716F02446C255006D54BB /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 1130;
+				ORGANIZATIONNAME = "Trần Đình Tôn Hiếu";
+				TargetAttributes = {
+					04E716F72446C255006D54BB = {
+						CreatedOnToolsVersion = 11.3.1;
+					};
+					04E717122446C256006D54BB = {
+						CreatedOnToolsVersion = 11.3.1;
+						TestTargetID = 04E716F72446C255006D54BB;
+					};
+				};
+			};
+			buildConfigurationList = 04E716F32446C255006D54BB /* Build configuration list for PBXProject "AsyncKit ContactPicker" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 04E716EF2446C255006D54BB;
+			productRefGroup = 04E716F92446C255006D54BB /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				04E716F72446C255006D54BB /* AsyncKit ContactPicker */,
+				04E717122446C256006D54BB /* AsyncKit ContactPickerTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		04E716F62446C255006D54BB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				04E7170B2446C256006D54BB /* LaunchScreen.storyboard in Resources */,
+				04E717082446C256006D54BB /* Assets.xcassets in Resources */,
+				04E717062446C255006D54BB /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		04E717112446C256006D54BB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		04E716F42446C255006D54BB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				04E717032446C255006D54BB /* ViewController.m in Sources */,
+				04E716FD2446C255006D54BB /* AppDelegate.m in Sources */,
+				04E7170E2446C256006D54BB /* main.m in Sources */,
+				04E717002446C255006D54BB /* SceneDelegate.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		04E7170F2446C256006D54BB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				04E717182446C256006D54BB /* AsyncKit_ContactPickerTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		04E717152446C256006D54BB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 04E716F72446C255006D54BB /* AsyncKit ContactPicker */;
+			targetProxy = 04E717142446C256006D54BB /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		04E717042446C255006D54BB /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				04E717052446C255006D54BB /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		04E717092446C256006D54BB /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				04E7170A2446C256006D54BB /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		04E7171A2446C256006D54BB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		04E7171B2446C256006D54BB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		04E7171D2446C256006D54BB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = VC54UPHUD4;
+				INFOPLIST_FILE = "AsyncKit ContactPicker/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "zalo.hieutdt.AsyncKit-ContactPicker";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		04E7171E2446C256006D54BB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = VC54UPHUD4;
+				INFOPLIST_FILE = "AsyncKit ContactPicker/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "zalo.hieutdt.AsyncKit-ContactPicker";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		04E717202446C256006D54BB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = VC54UPHUD4;
+				INFOPLIST_FILE = "AsyncKit ContactPickerTests/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "zalo.hieutdt.AsyncKit-ContactPickerTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AsyncKit ContactPicker.app/AsyncKit ContactPicker";
+			};
+			name = Debug;
+		};
+		04E717212446C256006D54BB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = VC54UPHUD4;
+				INFOPLIST_FILE = "AsyncKit ContactPickerTests/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "zalo.hieutdt.AsyncKit-ContactPickerTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AsyncKit ContactPicker.app/AsyncKit ContactPicker";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		04E716F32446C255006D54BB /* Build configuration list for PBXProject "AsyncKit ContactPicker" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				04E7171A2446C256006D54BB /* Debug */,
+				04E7171B2446C256006D54BB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		04E7171C2446C256006D54BB /* Build configuration list for PBXNativeTarget "AsyncKit ContactPicker" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				04E7171D2446C256006D54BB /* Debug */,
+				04E7171E2446C256006D54BB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		04E7171F2446C256006D54BB /* Build configuration list for PBXNativeTarget "AsyncKit ContactPickerTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				04E717202446C256006D54BB /* Debug */,
+				04E717212446C256006D54BB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 04E716F02446C255006D54BB /* Project object */;
+}
