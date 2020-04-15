@@ -33,8 +33,7 @@
         _concurrentQueue = dispatch_queue_create("contactAdapterConcurrentQueue", DISPATCH_QUEUE_CONCURRENT);
         _contactDidChangedDelegates = [[NSMutableArray alloc] init];
         
-        auto *fullNameKey = [CNContactFormatter descriptorForRequiredKeysForStyle:CNContactFormatterStyleFullName];
-        _keysToFetch = [NSMutableArray arrayWithArray: @[fullNameKey, CNContactPhoneNumbersKey, CNContactThumbnailImageDataKey]];
+        _keysToFetch = [NSMutableArray arrayWithArray: @[[CNContactFormatter descriptorForRequiredKeysForStyle:CNContactFormatterStyleFullName], CNContactPhoneNumbersKey, CNContactThumbnailImageDataKey]];
         
         // Add Contact changes Observer
         [[NSNotificationCenter defaultCenter] addObserver:self
@@ -79,7 +78,7 @@
         CNContactStore *contactStore = [[CNContactStore alloc] init];
         CNContactFetchRequest *request = [[CNContactFetchRequest alloc] initWithKeysToFetch:self.keysToFetch];
         
-        try {
+        @try {
             [contactStore enumerateContactsWithFetchRequest:request
                                                       error:nil
                                                  usingBlock:^(CNContact *contact, BOOL *stop) {
@@ -89,7 +88,7 @@
             NSArray<Contact *> *contacts = [self getContactModelsFromCNContacts:CNContacts];
             [self forwardAllCompletionHandlers:contacts error:nil];
             
-        } catch (NSException *e) {
+        } @catch (NSException *e) {
             NSLog(@"ContactAdapter: Unable to fetch contacts: %@", e);
             
             NSError *error = [[NSError alloc] initWithDomain:@"ContactAdapter"
@@ -110,7 +109,7 @@
         
         CNContactFetchRequest *request = [[CNContactFetchRequest alloc] initWithKeysToFetch:self.keysToFetch];
         
-        try {
+        @try {
             [contactStore enumerateContactsWithFetchRequest:request
                                                       error:nil
                                                  usingBlock:^(CNContact *contact, BOOL *stop) {
@@ -120,7 +119,7 @@
             NSArray<Contact *> *contacts = [self getContactModelsFromCNContacts:CNContacts];
             [self forwardAllCompletionHandlers:contacts error:nil];
             
-        } catch (NSException *e) {
+        } @catch (NSException *e) {
             NSLog(@"ContactAdapter: Unable to fetch contacts: %@", e);
             
             NSError *error = [[NSError alloc] initWithDomain:@"ContactAdapter"
@@ -139,11 +138,13 @@
     
     NSPredicate *predicate = [CNContact predicateForContactsWithIdentifiers:@[contactID]];
     CNContactStore *contactStore = [[CNContactStore alloc] init];
-    NSError *error = [[NSError alloc] initWithDomain:@"ContactAdapter" code:200 userInfo:@{@"Tải hình ảnh thất bại.": NSLocalizedDescriptionKey}];
+    NSError *error = [[NSError alloc] initWithDomain:@"ContactAdapter"
+                                                code:200
+                                            userInfo:@{@"Tải hình ảnh thất bại.": NSLocalizedDescriptionKey}];
     
     // Fetch multiple images concurrently
     dispatch_async(self.concurrentQueue, ^{
-        try {
+        @try {
             NSArray<CNContact *> *contacts = [contactStore unifiedContactsMatchingPredicate:predicate keysToFetch:@[CNContactThumbnailImageDataKey] error:nil];
             
             if (contacts.count == 0) {
@@ -154,7 +155,7 @@
             UIImage *image = [UIImage imageWithData:contacts[0].thumbnailImageData];
             completionHandle(image, nil);
             
-        } catch (NSException *e) {
+        } @catch (NSException *e) {
             NSLog(@"ContactAdapter: Load image failed: %@", e);
             completionHandle(nil, error);
         }
@@ -172,7 +173,7 @@
                                             userInfo:@{@"Tải danh bạ thất bại": NSLocalizedDescriptionKey}];
     
     dispatch_async(self.serialQueue, ^{
-        try {
+        @try {
             NSArray<CNContact *> *contacts = [contactStore unifiedContactsMatchingPredicate:predicate keysToFetch:self.keysToFetch error:nil];
             
             if (contacts.count == 0) {
@@ -183,7 +184,7 @@
             NSMutableArray<Contact *> *contactModels = [self getContactModelsFromCNContacts:contacts];
             completionHandle(contactModels, nil);
             
-        } catch (NSException *e) {
+        } @catch (NSException *e) {
             NSLog(@"Load contact with predicate failed: %@", e);
             completionHandle(nil, error);
         }
@@ -226,7 +227,7 @@
     
     [[[CNContactStore alloc] init] requestAccessForEntityType:CNEntityTypeContacts
                                             completionHandler:^(BOOL granted, NSError *error) {
-        if (error or !granted) {
+        if (error || !granted) {
             completionHandle(false);
         } else {
             completionHandle(true);
@@ -245,7 +246,7 @@
         
         for (int i = 0; i < self.contactDidChangedDelegates.count; i++) {
             id<ContactDidChangedDelegate> delegate = [self.contactDidChangedDelegates objectAtIndex:i];
-            if (delegate and [delegate respondsToSelector:@selector(contactsDidChanged)]) {
+            if (delegate && [delegate respondsToSelector:@selector(contactsDidChanged)]) {
                 [delegate contactsDidChanged];
             }
         }

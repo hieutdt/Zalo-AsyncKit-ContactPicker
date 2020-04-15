@@ -22,7 +22,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)requestAccessWithCompletionHandle:(void (^)(BOOL granted))completionHandle;
 
-- (void)loadContactsWithCompletion:(void (^)(NSMutableArray<Contact *> *contacts, NSError *error))completionHandle;
+- (void)loadContactsWithCompletion:(void (^)(NSArray<Contact *> *contacts, NSError *error))completionHandle;
 
 - (void)loadContactImageByID:(NSString*)contactID
                   completion:(void (^)(UIImage *image, NSError *error))completionHandle;

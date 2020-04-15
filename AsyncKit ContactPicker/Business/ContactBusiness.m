@@ -30,11 +30,11 @@
     return self;
 }
 
-- (void)loadContactsWithCompletion:(void (^)(NSMutableArray<Contact *> * contacts, NSError * error))completionHandle {
+- (void)loadContactsWithCompletion:(void (^)(NSArray<Contact *> * contacts, NSError * error))completionHandle {
     if (!completionHandle)
         return;
     
-    [[ContactAdaper instance] fetchContactsWithCompletion:^(NSMutableArray<Contact *> *contacts, NSError *error) {
+    [[ContactAdaper instance] fetchContactsWithCompletion:^(NSArray<Contact *> *contacts, NSError *error) {
         if (!completionHandle)
             return;
         
@@ -46,11 +46,13 @@
     }];
 }
 
-- (void)loadContactImageByID:(NSString *)contactID completion:(void (^)(UIImage *image, NSError * error))completionHandle {
+- (void)loadContactImageByID:(NSString *)contactID
+                  completion:(void (^)(UIImage *image, NSError * error))completionHandle {
     if (!completionHandle)
         return;
     
-    [[ContactAdaper instance] fetchContactImageDataByID:contactID completion:^(UIImage *image, NSError *error) {
+    [[ContactAdaper instance] fetchContactImageDataByID:contactID
+                                             completion:^(UIImage *image, NSError *error) {
         if (!completionHandle)
             return;
         
@@ -106,11 +108,11 @@
         assert(sections.count == ALPHABET_SECTIONS_NUMBER);
     #endif
     
-    if (!contacts or !sections)
+    if (!contacts || !sections)
         return;
-    if (contacts and contacts.count == 0)
+    if (contacts && contacts.count == 0)
         return;
-    if (sections and sections.count == 0)
+    if (sections && sections.count == 0)
         return;
     
     for (int i = 0; i < sections.count; i++) {
@@ -120,7 +122,7 @@
     for (int i = 0; i < contacts.count; i++) {
         int index = [contacts[i] getSectionIndex];
     
-        if (index >= 0 and index < ALPHABET_SECTIONS_NUMBER - 1) {
+        if (index >= 0 && index < ALPHABET_SECTIONS_NUMBER - 1) {
             [sections[index] addObject:contacts[i]];
         } else {
             [sections[ALPHABET_SECTIONS_NUMBER - 1] addObject:contacts[i]];

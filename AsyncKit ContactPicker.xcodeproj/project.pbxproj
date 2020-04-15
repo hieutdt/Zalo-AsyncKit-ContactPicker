@@ -7,11 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0454CD302446F8B700D34849 /* ContactBusiness.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0454CD2E2446F8B700D34849 /* ContactBusiness.mm */; };
-		0454CD352446F8C000D34849 /* ContactAdaper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0454CD312446F8C000D34849 /* ContactAdaper.mm */; };
+		0454CD302446F8B700D34849 /* ContactBusiness.m in Sources */ = {isa = PBXBuildFile; fileRef = 0454CD2E2446F8B700D34849 /* ContactBusiness.m */; };
+		0454CD352446F8C000D34849 /* ContactAdaper.m in Sources */ = {isa = PBXBuildFile; fileRef = 0454CD312446F8C000D34849 /* ContactAdaper.m */; };
 		0454CD382446F8DF00D34849 /* Contact.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0454CD362446F8DF00D34849 /* Contact.mm */; };
 		0454CD462446F94400D34849 /* ColorHelper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0454CD3B2446F94400D34849 /* ColorHelper.mm */; };
-		0454CD472446F94400D34849 /* LoadingHelper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0454CD3C2446F94400D34849 /* LoadingHelper.mm */; };
 		0454CD482446F94400D34849 /* StringHelper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0454CD3E2446F94400D34849 /* StringHelper.mm */; };
 		0454CD492446F94400D34849 /* ImageCache.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0454CD412446F94400D34849 /* ImageCache.mm */; };
 		0454CD4A2446F94400D34849 /* LayoutHelper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0454CD432446F94400D34849 /* LayoutHelper.mm */; };
@@ -38,17 +37,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		0454CD2E2446F8B700D34849 /* ContactBusiness.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ContactBusiness.mm; sourceTree = "<group>"; };
+		0454CD2E2446F8B700D34849 /* ContactBusiness.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactBusiness.m; sourceTree = "<group>"; };
 		0454CD2F2446F8B700D34849 /* ContactBusiness.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactBusiness.h; sourceTree = "<group>"; };
-		0454CD312446F8C000D34849 /* ContactAdaper.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ContactAdaper.mm; sourceTree = "<group>"; };
+		0454CD312446F8C000D34849 /* ContactAdaper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactAdaper.m; sourceTree = "<group>"; };
 		0454CD332446F8C000D34849 /* ContactDidChangedDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactDidChangedDelegate.h; sourceTree = "<group>"; };
 		0454CD342446F8C000D34849 /* ContactAdaper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactAdaper.h; sourceTree = "<group>"; };
 		0454CD362446F8DF00D34849 /* Contact.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = Contact.mm; sourceTree = "<group>"; };
 		0454CD372446F8DF00D34849 /* Contact.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Contact.h; sourceTree = "<group>"; };
 		0454CD3A2446F94400D34849 /* LayoutHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LayoutHelper.h; sourceTree = "<group>"; };
 		0454CD3B2446F94400D34849 /* ColorHelper.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ColorHelper.mm; sourceTree = "<group>"; };
-		0454CD3C2446F94400D34849 /* LoadingHelper.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = LoadingHelper.mm; sourceTree = "<group>"; };
-		0454CD3D2446F94400D34849 /* LoadingHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoadingHelper.h; sourceTree = "<group>"; };
 		0454CD3E2446F94400D34849 /* StringHelper.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = StringHelper.mm; sourceTree = "<group>"; };
 		0454CD3F2446F94400D34849 /* StringHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StringHelper.h; sourceTree = "<group>"; };
 		0454CD412446F94400D34849 /* ImageCache.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ImageCache.mm; sourceTree = "<group>"; };
@@ -144,8 +141,6 @@
 				0454CD432446F94400D34849 /* LayoutHelper.mm */,
 				0454CD442446F94400D34849 /* ColorHelper.h */,
 				0454CD3B2446F94400D34849 /* ColorHelper.mm */,
-				0454CD3D2446F94400D34849 /* LoadingHelper.h */,
-				0454CD3C2446F94400D34849 /* LoadingHelper.mm */,
 				0454CD3F2446F94400D34849 /* StringHelper.h */,
 				0454CD3E2446F94400D34849 /* StringHelper.mm */,
 			);
@@ -176,7 +171,7 @@
 			isa = PBXGroup;
 			children = (
 				0454CD2F2446F8B700D34849 /* ContactBusiness.h */,
-				0454CD2E2446F8B700D34849 /* ContactBusiness.mm */,
+				0454CD2E2446F8B700D34849 /* ContactBusiness.m */,
 			);
 			path = Business;
 			sourceTree = "<group>";
@@ -186,7 +181,7 @@
 			children = (
 				0454CD322446F8C000D34849 /* Protocol */,
 				0454CD342446F8C000D34849 /* ContactAdaper.h */,
-				0454CD312446F8C000D34849 /* ContactAdaper.mm */,
+				0454CD312446F8C000D34849 /* ContactAdaper.m */,
 			);
 			path = DataAccess;
 			sourceTree = "<group>";
@@ -438,13 +433,12 @@
 			files = (
 				04E716FD2446C255006D54BB /* AppDelegate.m in Sources */,
 				04E7170E2446C256006D54BB /* main.m in Sources */,
-				0454CD302446F8B700D34849 /* ContactBusiness.mm in Sources */,
-				0454CD352446F8C000D34849 /* ContactAdaper.mm in Sources */,
+				0454CD302446F8B700D34849 /* ContactBusiness.m in Sources */,
+				0454CD352446F8C000D34849 /* ContactAdaper.m in Sources */,
 				0454CD382446F8DF00D34849 /* Contact.mm in Sources */,
 				0454CD4A2446F94400D34849 /* LayoutHelper.mm in Sources */,
 				0454CD462446F94400D34849 /* ColorHelper.mm in Sources */,
 				0454CD482446F94400D34849 /* StringHelper.mm in Sources */,
-				0454CD472446F94400D34849 /* LoadingHelper.mm in Sources */,
 				04E717002446C255006D54BB /* SceneDelegate.m in Sources */,
 				0490DEE02446C58800ABB676 /* MainViewController.m in Sources */,
 				0454CD492446F94400D34849 /* ImageCache.mm in Sources */,
