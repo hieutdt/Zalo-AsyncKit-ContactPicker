@@ -23,7 +23,12 @@ typedef NS_ENUM(NSInteger, ContactAuthorState) {
 };
 
 #define AVATAR_IMAGE_HEIHGT     50
-#define CHECKER_IMAGE_HEIGHT    20
+#define CHECKER_IMAGE_HEIGHT    30
+
+#define GRADIENT_COLOR_BLUE     0
+#define GRADIENT_COLOR_RED      1
+#define GRADIENT_COLOR_ORANGE   2
+#define GRADIENT_COLOR_GREEN    3
 
 static const int FIRST_ALPHABET_ASCII_CODE = 97;
 static const int ALPHABET_SECTIONS_NUMBER = 27;
@@ -36,10 +41,5 @@ static const int MAX_PICK = 5;
 static const int SECTION_HEADER_HEIGHT = 40;
 
 static const int MAX_IMAGES_CACHE_SIZE = 10;
-
-static const int GRADIENT_COLOR_BLUE = 0;
-static const int GRADIENT_COLOR_RED = 1;
-static const int GRADIENT_COLOR_ORANGE = 2;
-static const int GRADIENT_COLOR_GREEN = 3;
 
 #endif /* AppConsts_h */

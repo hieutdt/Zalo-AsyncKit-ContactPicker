@@ -8,6 +8,7 @@
 
 #import "MainViewController.h"
 #import "PickerTableNode.h"
+#import "PickerCollectionNode.h"
 
 #import "Contact.h"
 #import "ContactBusiness.h"
@@ -16,6 +17,7 @@
 
 @property (nonatomic, strong) ASDisplayNode *contentNode;
 @property (nonatomic, strong) PickerTableNode *tableNode;
+@property (nonatomic, strong) PickerCollectionNode *collectionNode;
 
 @property (nonatomic, strong) NSMutableArray<Contact *> *contacts;
 @property (nonatomic, strong) NSMutableArray<NSMutableArray *> *sectionData;
