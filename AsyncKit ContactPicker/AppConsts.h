@@ -22,6 +22,9 @@ typedef NS_ENUM(NSInteger, ContactAuthorState) {
     ContactAuthorStateNotDetermined
 };
 
+#define AVATAR_IMAGE_HEIHGT     50
+#define CHECKER_IMAGE_HEIGHT    20
+
 static const int FIRST_ALPHABET_ASCII_CODE = 97;
 static const int ALPHABET_SECTIONS_NUMBER = 27;
 

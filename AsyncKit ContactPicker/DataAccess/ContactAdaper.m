@@ -35,6 +35,8 @@
         
         _keysToFetch = [NSMutableArray arrayWithArray: @[[CNContactFormatter descriptorForRequiredKeysForStyle:CNContactFormatterStyleFullName], CNContactPhoneNumbersKey, CNContactThumbnailImageDataKey]];
         
+        _completionHandlers = [[NSMutableArray alloc] init];
+        
         // Add Contact changes Observer
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(contactsDidChange) name:CNContactStoreDidChangeNotification object:nil];

@@ -16,6 +16,13 @@
 		0454CD4A2446F94400D34849 /* LayoutHelper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0454CD432446F94400D34849 /* LayoutHelper.mm */; };
 		0490DEE02446C58800ABB676 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0490DEDF2446C58800ABB676 /* MainViewController.m */; };
 		0490DEE12446C58800ABB676 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0490DEDF2446C58800ABB676 /* MainViewController.m */; };
+		049FCE1B24474FBE00F285C4 /* PickerTableCellNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 049FCE1A24474FBE00F285C4 /* PickerTableCellNode.m */; };
+		049FCE1C24474FBE00F285C4 /* PickerTableCellNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 049FCE1A24474FBE00F285C4 /* PickerTableCellNode.m */; };
+		049FCE1E24475BDA00F285C4 /* Contacts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 049FCE1D24475BDA00F285C4 /* Contacts.framework */; };
+		049FCE2124475D9D00F285C4 /* PickerTableNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 049FCE2024475D9D00F285C4 /* PickerTableNode.m */; };
+		049FCE2224475D9D00F285C4 /* PickerTableNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 049FCE2024475D9D00F285C4 /* PickerTableNode.m */; };
+		049FCE2524475F7A00F285C4 /* PickerViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 049FCE2424475F7A00F285C4 /* PickerViewModel.m */; };
+		049FCE2624475F7A00F285C4 /* PickerViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 049FCE2424475F7A00F285C4 /* PickerViewModel.m */; };
 		04E716FD2446C255006D54BB /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E716FC2446C255006D54BB /* AppDelegate.m */; };
 		04E717002446C255006D54BB /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E716FF2446C255006D54BB /* SceneDelegate.m */; };
 		04E717082446C256006D54BB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 04E717072446C256006D54BB /* Assets.xcassets */; };
@@ -55,6 +62,13 @@
 		0454CD452446F94400D34849 /* AppConsts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppConsts.h; sourceTree = "<group>"; };
 		0490DEDE2446C58800ABB676 /* MainViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
 		0490DEDF2446C58800ABB676 /* MainViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
+		049FCE1924474FBE00F285C4 /* PickerTableCellNode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PickerTableCellNode.h; sourceTree = "<group>"; };
+		049FCE1A24474FBE00F285C4 /* PickerTableCellNode.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PickerTableCellNode.m; sourceTree = "<group>"; };
+		049FCE1D24475BDA00F285C4 /* Contacts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Contacts.framework; path = System/Library/Frameworks/Contacts.framework; sourceTree = SDKROOT; };
+		049FCE1F24475D9D00F285C4 /* PickerTableNode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PickerTableNode.h; sourceTree = "<group>"; };
+		049FCE2024475D9D00F285C4 /* PickerTableNode.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PickerTableNode.m; sourceTree = "<group>"; };
+		049FCE2324475F7A00F285C4 /* PickerViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PickerViewModel.h; sourceTree = "<group>"; };
+		049FCE2424475F7A00F285C4 /* PickerViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PickerViewModel.m; sourceTree = "<group>"; };
 		04E716F82446C255006D54BB /* AsyncKit ContactPicker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "AsyncKit ContactPicker.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		04E716FB2446C255006D54BB /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		04E716FC2446C255006D54BB /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -81,6 +95,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C3F577B689B80DE3A894931E /* Pods_AsyncKit_ContactPicker.framework in Frameworks */,
+				049FCE1E24475BDA00F285C4 /* Contacts.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -105,6 +120,10 @@
 		0454CD2B2446F87000D34849 /* Fragments */ = {
 			isa = PBXGroup;
 			children = (
+				049FCE1924474FBE00F285C4 /* PickerTableCellNode.h */,
+				049FCE1A24474FBE00F285C4 /* PickerTableCellNode.m */,
+				049FCE1F24475D9D00F285C4 /* PickerTableNode.h */,
+				049FCE2024475D9D00F285C4 /* PickerTableNode.m */,
 			);
 			path = Fragments;
 			sourceTree = "<group>";
@@ -121,6 +140,8 @@
 		0454CD2D2446F87D00D34849 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				049FCE2324475F7A00F285C4 /* PickerViewModel.h */,
+				049FCE2424475F7A00F285C4 /* PickerViewModel.m */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -248,6 +269,7 @@
 		3CC9E107C958142E7FACBFAA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				049FCE1D24475BDA00F285C4 /* Contacts.framework */,
 				D3263D69205A5588855E6CC7 /* Pods_AsyncKit_ContactPicker.framework */,
 				F87144D5B7D21DA18792319F /* Pods_AsyncKit_ContactPickerTests.framework */,
 			);
@@ -433,6 +455,7 @@
 			files = (
 				04E716FD2446C255006D54BB /* AppDelegate.m in Sources */,
 				04E7170E2446C256006D54BB /* main.m in Sources */,
+				049FCE2124475D9D00F285C4 /* PickerTableNode.m in Sources */,
 				0454CD302446F8B700D34849 /* ContactBusiness.m in Sources */,
 				0454CD352446F8C000D34849 /* ContactAdaper.m in Sources */,
 				0454CD382446F8DF00D34849 /* Contact.mm in Sources */,
@@ -442,6 +465,8 @@
 				04E717002446C255006D54BB /* SceneDelegate.m in Sources */,
 				0490DEE02446C58800ABB676 /* MainViewController.m in Sources */,
 				0454CD492446F94400D34849 /* ImageCache.mm in Sources */,
+				049FCE2524475F7A00F285C4 /* PickerViewModel.m in Sources */,
+				049FCE1B24474FBE00F285C4 /* PickerTableCellNode.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -449,8 +474,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				049FCE2224475D9D00F285C4 /* PickerTableNode.m in Sources */,
+				049FCE2624475F7A00F285C4 /* PickerViewModel.m in Sources */,
 				04E717182446C256006D54BB /* AsyncKit_ContactPickerTests.m in Sources */,
 				0490DEE12446C58800ABB676 /* MainViewController.m in Sources */,
+				049FCE1C24474FBE00F285C4 /* PickerTableCellNode.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
