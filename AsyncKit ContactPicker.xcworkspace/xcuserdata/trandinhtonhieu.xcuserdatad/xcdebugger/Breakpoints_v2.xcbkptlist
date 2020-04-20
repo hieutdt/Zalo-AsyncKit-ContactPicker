@@ -23,16 +23,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "0B551D80-FB77-4FB0-BBC6-15A8CC8B8885"
+            uuid = "5FCAA8B4-3B0F-4F9D-A6A1-F08501B4EB73"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "AsyncKit ContactPicker/Presentation/Fragments/PickerCollection/PickerCollectionNode.m"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "58"
-            endingLineNumber = "58"
-            landmarkName = "-layoutSpecThatFits:"
+            startingLineNumber = "177"
+            endingLineNumber = "177"
+            landmarkName = "-collectionNode:constrainedSizeForItemAtIndexPath:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

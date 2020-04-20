@@ -10,9 +10,11 @@
 #import "PickerCollectionCellNode.h"
 #import "AppConsts.h"
 
-#define NEXT_BUTTON_HEIGHT 40
+#define NEXT_BUTTON_HEIGHT 60
 
-@interface PickerCollectionNode () <ASCollectionDelegate, ASCollectionDataSource, PickerCollectionCellNodeDelegate>
+static NSString *kReuseIdentifier = @"PickerCollectionViewCell";
+
+@interface PickerCollectionNode () <ASCollectionDelegate, ASCollectionDataSource, ASCollectionViewLayoutInspecting, PickerCollectionCellNodeDelegate>
 
 @property (nonatomic, strong) ASCollectionNode *collectionNode;
 @property (nonatomic, strong) UICollectionViewFlowLayout *flowLayout;
@@ -28,7 +30,7 @@
 - (instancetype)init {
     self = [super init];
     if (self) {
-        self.backgroundColor = [UIColor whiteColor];
+        self.backgroundColor = [UIColor redColor];
         
         self.automaticallyManagesSubnodes = YES;
         
@@ -36,17 +38,24 @@
         _imageCache = [[NSCache alloc] init];
         
         _flowLayout = [[UICollectionViewFlowLayout alloc] init];
-        _flowLayout.minimumLineSpacing = 1;
-        _flowLayout.itemSize = CGSizeMake(70, 100);
+        _flowLayout.itemSize = CGSizeMake(80, 100);
+        _flowLayout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
         
         _collectionNode = [[ASCollectionNode alloc] initWithCollectionViewLayout:_flowLayout];
         _collectionNode.delegate = self;
         _collectionNode.dataSource = self;
+        _collectionNode.layoutInspector = self;
         _collectionNode.backgroundColor = [UIColor redColor];
         
         _nextButton = [[ASButtonNode alloc] init];
-        _nextButton.backgroundColor = [UIColor blueColor];
-        [_nextButton setImage:[UIImage imageNamed:@""] forState:UIControlStateNormal];
+        [_nextButton setTitle:@">"
+                     withFont:[UIFont systemFontOfSize:30]
+                    withColor:[UIColor whiteColor]
+                     forState:UIControlStateNormal];
+        _nextButton.contentVerticalAlignment = ASVerticalAlignmentCenter;
+        _nextButton.contentHorizontalAlignment = ASHorizontalAlignmentMiddle;
+        [_nextButton setBackgroundColor:[UIColor blueColor]];
+        _nextButton.cornerRadius = NEXT_BUTTON_HEIGHT / 2.f;
         [_nextButton addTarget:self
                         action:@selector(nextButtonTapped)
               forControlEvents:ASControlNodeEventTouchUpInside];
@@ -55,16 +64,19 @@
 }
 
 - (ASLayoutSpec *)layoutSpecThatFits:(ASSizeRange)constrainedSize {
+    _nextButton.style.preferredSize = CGSizeMake(NEXT_BUTTON_HEIGHT, NEXT_BUTTON_HEIGHT);
+    
     CGSize maxConstrainedSize = constrainedSize.max;
     
-    ASCenterLayoutSpec *centerNextButtonSpec = [ASCenterLayoutSpec centerLayoutSpecWithCenteringOptions:ASCenterLayoutSpecCenteringY
-                                                                                          sizingOptions:ASCenterLayoutSpecSizingOptionDefault
-                                                                                                  child:_nextButton];
+    ASCenterLayoutSpec *centerNextButtonSpec = [ASCenterLayoutSpec
+                                                centerLayoutSpecWithCenteringOptions:ASCenterLayoutSpecCenteringY
+                                                sizingOptions:ASCenterLayoutSpecSizingOptionDefault
+                                                child:_nextButton];
     centerNextButtonSpec.style.layoutPosition = CGPointMake(maxConstrainedSize.width - 10 - NEXT_BUTTON_HEIGHT, 10);
     centerNextButtonSpec.style.preferredSize = CGSizeMake(NEXT_BUTTON_HEIGHT, AVATAR_IMAGE_HEIHGT + 20);
     
     _collectionNode.style.layoutPosition = CGPointMake(10, 10);
-    _collectionNode.style.preferredSize = CGSizeMake(maxConstrainedSize.width - 10 - NEXT_BUTTON_HEIGHT - 10, AVATAR_IMAGE_HEIHGT + 20);
+    _collectionNode.style.preferredSize = CGSizeMake(maxConstrainedSize.width - 10 - NEXT_BUTTON_HEIGHT - 15, AVATAR_IMAGE_HEIHGT + 30);
     
     return [ASAbsoluteLayoutSpec absoluteLayoutSpecWithChildren:@[_collectionNode, centerNextButtonSpec]];
 }
@@ -75,7 +87,7 @@
 
 #pragma mark - SetData
 
-- (void)addElement:(PickerViewModel *)pickerModel withImage:(UIImage *)image {
+- (void)addElement:(PickerViewModel *)pickerModel withImage:( UIImage * _Nullable)image {
     if (self.models.count == MAX_PICK)
         return;
     
@@ -134,11 +146,13 @@
     return 1;
 }
 
-- (NSInteger)collectionNode:(ASCollectionNode *)collectionNode numberOfItemsInSection:(NSInteger)section {
+- (NSInteger)collectionNode:(ASCollectionNode *)collectionNode
+     numberOfItemsInSection:(NSInteger)section {
     return self.models.count;
 }
 
-- (ASCellNodeBlock)collectionNode:(ASCollectionNode *)collectionNode nodeBlockForItemAtIndexPath:(NSIndexPath *)indexPath {
+- (ASCellNodeBlock)collectionNode:(ASCollectionNode *)collectionNode
+      nodeBlockForItemAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.row >= self.models.count)
         return nil;
     
@@ -155,10 +169,23 @@
     return cellNodeBlock;
 }
 
+
 #pragma mark - ASCollectionDelegate
 
-- (ASSizeRange)collectionNode:(ASCollectionNode *)collectionNode constrainedSizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    return ASSizeRangeMake(CGSizeMake(AVATAR_IMAGE_HEIHGT, AVATAR_IMAGE_HEIHGT + 20));
+- (ASSizeRange)collectionNode:(ASCollectionNode *)collectionNode
+constrainedSizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+    return ASSizeRangeMake(CGSizeMake(AVATAR_IMAGE_HEIHGT + 20, AVATAR_IMAGE_HEIHGT + 20));
+}
+
+#pragma mark - ASCollectionViewLayoutInspecting
+
+- (ASSizeRange)collectionView:(ASCollectionView *)collectionView
+constrainedSizeForNodeAtIndexPath:(NSIndexPath *)indexPath {
+    return ASSizeRangeMake(CGSizeMake(AVATAR_IMAGE_HEIHGT + 20, AVATAR_IMAGE_HEIHGT + 20));
+}
+
+- (ASScrollDirection)scrollableDirections {
+    return ASScrollDirectionHorizontalDirections;
 }
 
 

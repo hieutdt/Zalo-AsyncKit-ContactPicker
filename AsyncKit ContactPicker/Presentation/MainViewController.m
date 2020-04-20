@@ -13,7 +13,7 @@
 #import "Contact.h"
 #import "ContactBusiness.h"
 
-@interface MainViewController () <ContactDidChangedDelegate>
+@interface MainViewController () <ContactDidChangedDelegate, PickerTableNodeDelegate>
 
 @property (nonatomic, strong) ASDisplayNode *contentNode;
 @property (nonatomic, strong) PickerTableNode *tableNode;
@@ -39,6 +39,8 @@
         __weak MainViewController *weakSelf = self;
         
         _tableNode = [[PickerTableNode alloc] init];
+        _tableNode.delegate = self;
+        _collectionNode = [[PickerCollectionNode alloc] init];
         
         _pickerModels = [[NSMutableArray alloc] init];
         _contacts = [[NSMutableArray alloc] init];
@@ -52,10 +54,18 @@
         
         self.contentNode.backgroundColor = [UIColor whiteColor];
         [self.contentNode addSubnode:self.tableNode];
+        [self.contentNode addSubnode:self.collectionNode];
+        self.contentNode.automaticallyManagesSubnodes = YES;
         self.contentNode.layoutSpecBlock = ^ASLayoutSpec *(__kindof ASDisplayNode * _Nonnull node, ASSizeRange constrainedSize) {
-            ASInsetLayoutSpec *insetTable = [ASInsetLayoutSpec insetLayoutSpecWithInsets:UIEdgeInsetsZero
-                                                                                   child:weakSelf.tableNode];
-            return insetTable;
+            weakSelf.tableNode.style.preferredSize = CGSizeMake(weakSelf.view.bounds.size.width, weakSelf.view.bounds.size.height - 100);
+            weakSelf.collectionNode.style.preferredSize = CGSizeMake(weakSelf.view.bounds.size.width, 100);
+            
+            ASStackLayoutSpec *stackSpec = [ASStackLayoutSpec stackLayoutSpecWithDirection:ASStackLayoutDirectionVertical
+                                                                                   spacing:0
+                                                                            justifyContent:ASStackLayoutJustifyContentStart
+                                                                                alignItems:ASStackLayoutAlignItemsCenter
+                                                                                  children:@[weakSelf.tableNode, weakSelf.collectionNode]];
+            return stackSpec;
         };
     }
     return self;
@@ -138,6 +148,20 @@
     }
     
     return pickerModels;
+}
+
+#pragma mark - PickerTableNodeDelegate
+
+- (void)pickerTableNode:(PickerTableNode *)tableNode checkedCellOfElement:(PickerViewModel *)element {
+    if (element) {
+        [self.collectionNode addElement:element withImage:nil];
+    }
+}
+
+- (void)pickerTableNode:(PickerTableNode *)tableNode uncheckedCellOfElement:(PickerViewModel *)element {
+    if (element) {
+        [self.collectionNode removeElement:element];
+    }
 }
 
 @end

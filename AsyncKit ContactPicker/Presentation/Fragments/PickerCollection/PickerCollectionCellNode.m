@@ -33,14 +33,11 @@
         
         _imageNode = [[ASImageNode alloc] init];
         _imageNode.contentMode = UIViewContentModeScaleToFill;
-        _imageNode.style.height = ASDimensionMake(AVATAR_IMAGE_HEIHGT);
-        _imageNode.style.width = ASDimensionMake(AVATAR_IMAGE_HEIHGT);
         
         _shortNameLabel = [[ASTextNode alloc] init];
         _shortNameLabel.maximumNumberOfLines = 1;
         
         _removeButton = [[ASButtonNode alloc] init];
-        _removeButton.style.preferredSize = CGSizeMake(20, 20);
         [_removeButton setTitle:@"X"
                        withFont:[UIFont boldSystemFontOfSize:15]
                       withColor:[UIColor blackColor]
@@ -54,9 +51,18 @@
 }
 
 - (ASLayoutSpec *)layoutSpecThatFits:(ASSizeRange)constrainedSize {
-    ASCenterLayoutSpec *centerNameSpec = [ASCenterLayoutSpec centerLayoutSpecWithCenteringOptions:ASCenterLayoutSpecCenteringXY
-                                                                                    sizingOptions:ASCenterLayoutSpecSizingOptionDefault
-                                                                                            child:_shortNameLabel];
+    _imageNode.style.preferredSize = CGSizeMake(AVATAR_IMAGE_HEIHGT, AVATAR_IMAGE_HEIHGT);
+    _imageNode.cornerRadius = AVATAR_IMAGE_HEIHGT / 2.f;
+    
+    _removeButton.style.preferredSize = CGSizeMake(20, 20);
+    _removeButton.cornerRadius = 10;
+    _removeButton.borderWidth = 2;
+    _removeButton.borderColor = [UIColor whiteColor].CGColor;
+    
+    ASCenterLayoutSpec *centerNameSpec = [ASCenterLayoutSpec
+                                          centerLayoutSpecWithCenteringOptions:ASCenterLayoutSpecCenteringXY
+                                          sizingOptions:ASCenterLayoutSpecSizingOptionDefault
+                                          child:_shortNameLabel];
     
     ASInsetLayoutSpec *insetNameSpec = [ASInsetLayoutSpec insetLayoutSpecWithInsets:UIEdgeInsetsZero
                                                                               child:centerNameSpec];
