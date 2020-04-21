@@ -34,6 +34,11 @@ static NSString *kReuseIdentifier = @"PickerCollectionViewCell";
         
         self.automaticallyManagesSubnodes = YES;
         
+        self.shadowRadius = 3;
+        self.shadowOffset = CGSizeZero;
+        self.shadowColor = [UIColor blackColor].CGColor;
+        self.shadowOpacity = 0.3;
+        
         _models = [[NSMutableArray alloc] init];
         _imageCache = [[NSCache alloc] init];
         
@@ -186,6 +191,23 @@ constrainedSizeForNodeAtIndexPath:(NSIndexPath *)indexPath {
 
 - (ASScrollDirection)scrollableDirections {
     return ASScrollDirectionHorizontalDirections;
+}
+
+#pragma mark - PickerCollectionCellNodeDelegateProtocol
+
+- (void)collectionCellNode:(PickerCollectionCellNode *)node removeButtonTappedAtElement:(PickerViewModel *)element {
+#if DEBUG
+    assert(element);
+#endif
+    
+    if (!element)
+        return;
+    
+    [self removeElement:element];
+    
+    if (self.delegate && [self.delegate respondsToSelector:@selector(collectionNode:removeElement:)]) {
+        [self.delegate collectionNode:self removeElement:element];
+    }
 }
 
 

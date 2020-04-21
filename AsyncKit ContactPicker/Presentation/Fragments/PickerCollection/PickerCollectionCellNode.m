@@ -44,7 +44,7 @@
                        withFont:[UIFont boldSystemFontOfSize:15]
                       withColor:[UIColor blackColor]
                        forState:UIControlStateNormal];
-        [_removeButton setBackgroundColor:[UIColor lightGrayColor]];
+        [_removeButton setBackgroundColor:[UIColor colorWithRed:240/255.f green:241/255.f blue:242/255.f alpha:1]];
         [_removeButton addTarget:self
                           action:@selector(removeButtonTapped)
                 forControlEvents:ASControlNodeEventTouchUpInside];

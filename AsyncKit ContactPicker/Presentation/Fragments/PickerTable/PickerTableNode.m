@@ -54,14 +54,38 @@
     _tableNode.view.separatorStyle = UITableViewCellSeparatorStyleNone;
 }
 
-#pragma mark - SetData
+#pragma mark - PublicMethods
 
 - (void)setViewModels:(NSArray<PickerViewModel *> *)pickerModel {
     self.pickerModels = [NSMutableArray arrayWithArray:pickerModel];
     [self fitPickerModelsData:self.pickerModels
                    toSections:self.sectionsArray];
-    
 }
+
+- (void)removeElement:(PickerViewModel *)element {
+    if (self.selectedCount > 0) {
+        self.selectedCount--;
+        element.isChosen = NO;
+        
+        int section = [element getSectionIndex];
+        if (section >= self.sectionsArray.count) {
+            [self reloadData];
+            return;
+        }
+        
+        unsigned long row = [self.sectionsArray[section] indexOfObject:element];
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:row inSection:section];
+        
+        // Only reload a row of that element
+        [self.tableNode reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+    }
+}
+
+- (int)selectedCount {
+    return _selectedCount;
+}
+
+#pragma mark - SetData
 
 - (void)fitPickerModelsData:(NSMutableArray<PickerViewModel*> *)models
                  toSections:(NSMutableArray<NSMutableArray*> *)sectionsArray {
