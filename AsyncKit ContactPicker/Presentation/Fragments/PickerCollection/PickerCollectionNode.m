@@ -30,7 +30,7 @@ static NSString *kReuseIdentifier = @"PickerCollectionViewCell";
 - (instancetype)init {
     self = [super init];
     if (self) {
-        self.backgroundColor = [UIColor redColor];
+        self.backgroundColor = [UIColor whiteColor];
         
         self.automaticallyManagesSubnodes = YES;
         
@@ -38,14 +38,14 @@ static NSString *kReuseIdentifier = @"PickerCollectionViewCell";
         _imageCache = [[NSCache alloc] init];
         
         _flowLayout = [[UICollectionViewFlowLayout alloc] init];
-        _flowLayout.itemSize = CGSizeMake(80, 100);
+        _flowLayout.itemSize = CGSizeMake(AVATAR_COLLECTION_IMAGE_HEIGHT, AVATAR_COLLECTION_IMAGE_HEIGHT);
         _flowLayout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
         
         _collectionNode = [[ASCollectionNode alloc] initWithCollectionViewLayout:_flowLayout];
         _collectionNode.delegate = self;
         _collectionNode.dataSource = self;
         _collectionNode.layoutInspector = self;
-        _collectionNode.backgroundColor = [UIColor redColor];
+        _collectionNode.backgroundColor = [UIColor whiteColor];
         
         _nextButton = [[ASButtonNode alloc] init];
         [_nextButton setTitle:@">"
@@ -76,7 +76,7 @@ static NSString *kReuseIdentifier = @"PickerCollectionViewCell";
     centerNextButtonSpec.style.preferredSize = CGSizeMake(NEXT_BUTTON_HEIGHT, AVATAR_IMAGE_HEIHGT + 20);
     
     _collectionNode.style.layoutPosition = CGPointMake(10, 10);
-    _collectionNode.style.preferredSize = CGSizeMake(maxConstrainedSize.width - 10 - NEXT_BUTTON_HEIGHT - 15, AVATAR_IMAGE_HEIHGT + 30);
+    _collectionNode.style.preferredSize = CGSizeMake(maxConstrainedSize.width - 10 - NEXT_BUTTON_HEIGHT - 15, AVATAR_COLLECTION_IMAGE_HEIGHT + 30);
     
     return [ASAbsoluteLayoutSpec absoluteLayoutSpecWithChildren:@[_collectionNode, centerNextButtonSpec]];
 }
@@ -174,14 +174,14 @@ static NSString *kReuseIdentifier = @"PickerCollectionViewCell";
 
 - (ASSizeRange)collectionNode:(ASCollectionNode *)collectionNode
 constrainedSizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    return ASSizeRangeMake(CGSizeMake(AVATAR_IMAGE_HEIHGT + 20, AVATAR_IMAGE_HEIHGT + 20));
+    return ASSizeRangeMake(CGSizeMake(AVATAR_COLLECTION_IMAGE_HEIGHT, AVATAR_COLLECTION_IMAGE_HEIGHT));
 }
 
 #pragma mark - ASCollectionViewLayoutInspecting
 
 - (ASSizeRange)collectionView:(ASCollectionView *)collectionView
 constrainedSizeForNodeAtIndexPath:(NSIndexPath *)indexPath {
-    return ASSizeRangeMake(CGSizeMake(AVATAR_IMAGE_HEIHGT + 20, AVATAR_IMAGE_HEIHGT + 20));
+    return ASSizeRangeMake(CGSizeMake(AVATAR_COLLECTION_IMAGE_HEIGHT, AVATAR_COLLECTION_IMAGE_HEIGHT));
 }
 
 - (ASScrollDirection)scrollableDirections {

@@ -56,31 +56,34 @@
 - (ASLayoutSpec *)layoutSpecThatFits:(ASSizeRange)constrainedSize {
     CGSize maxConstrainedSize = constrainedSize.max;
     
-    ASCenterLayoutSpec *centerNameSpec = [ASCenterLayoutSpec centerLayoutSpecWithCenteringOptions:ASCenterLayoutSpecCenteringY
-                                                                            sizingOptions:ASCenterLayoutSpecSizingOptionDefault
-                                                                                            child:_nameLabel];
-    
-    centerNameSpec.style.layoutPosition = CGPointMake(15 + AVATAR_IMAGE_HEIHGT + 20, 15);
+    ASCenterLayoutSpec *centerNameSpec = [ASCenterLayoutSpec
+                                          centerLayoutSpecWithCenteringOptions:ASCenterLayoutSpecCenteringY
+                                          sizingOptions:ASCenterLayoutSpecSizingOptionDefault
+                                          child:_nameLabel];
     centerNameSpec.style.preferredSize = CGSizeMake(maxConstrainedSize.width, AVATAR_IMAGE_HEIHGT);
     
-    ASCenterLayoutSpec *centerShortNameSpec = [ASCenterLayoutSpec centerLayoutSpecWithCenteringOptions:ASCenterLayoutSpecCenteringXY
-                                                                                         sizingOptions:ASCenterLayoutSpecSizingOptionDefault
-                                                                                                 child:_shortNameLabel];
-    
-    centerShortNameSpec.style.layoutPosition = CGPointMake(15, 15);
+    _avatarImageNode.style.preferredSize = CGSizeMake(AVATAR_IMAGE_HEIHGT, AVATAR_IMAGE_HEIHGT);
+    ASCenterLayoutSpec *centerShortNameSpec = [ASCenterLayoutSpec
+                                               centerLayoutSpecWithCenteringOptions:ASCenterLayoutSpecCenteringXY
+                                               sizingOptions:ASCenterLayoutSpecSizingOptionDefault
+                                               child:_shortNameLabel];
     centerShortNameSpec.style.preferredSize = CGSizeMake(AVATAR_IMAGE_HEIHGT, AVATAR_IMAGE_HEIHGT);
     
-    ASCenterLayoutSpec *checkIconSpec = [ASCenterLayoutSpec centerLayoutSpecWithCenteringOptions:ASCenterLayoutSpecCenteringXY
-                                                                                   sizingOptions:ASCenterLayoutSpecSizingOptionDefault
-                                                                                           child:_checkerImageNode];
+    ASOverlayLayoutSpec *overlayShortNameSpec = [ASOverlayLayoutSpec overlayLayoutSpecWithChild:_avatarImageNode
+                                                                                        overlay:centerShortNameSpec];
+
     
-    checkIconSpec.style.layoutPosition = CGPointMake(maxConstrainedSize.width - CHECKER_IMAGE_HEIGHT - 10, 15);
-    checkIconSpec.style.preferredSize = CGSizeMake(CHECKER_IMAGE_HEIGHT, AVATAR_IMAGE_HEIHGT);
+    ASStackLayoutSpec *stackSpec = [ASStackLayoutSpec stackLayoutSpecWithDirection:ASStackLayoutDirectionHorizontal
+                                                                           spacing:10
+                                                                    justifyContent:ASStackLayoutJustifyContentStart
+                                                                        alignItems:ASStackLayoutAlignItemsCenter
+                                                                          children:@[_checkerImageNode, overlayShortNameSpec, centerNameSpec]];
     
-    _avatarImageNode.style.layoutPosition = CGPointMake(15, 15);
-    _avatarImageNode.style.preferredSize = CGSizeMake(AVATAR_IMAGE_HEIHGT, AVATAR_IMAGE_HEIHGT);
+    ASCenterLayoutSpec *centerSpec = [ASCenterLayoutSpec centerLayoutSpecWithCenteringOptions:ASCenterLayoutSpecCenteringY
+                                                      sizingOptions:ASCenterLayoutSpecSizingOptionDefault
+                                                              child:stackSpec];
     
-    return [ASAbsoluteLayoutSpec absoluteLayoutSpecWithChildren:@[centerNameSpec, checkIconSpec,_avatarImageNode, centerShortNameSpec]];
+    return [ASInsetLayoutSpec insetLayoutSpecWithInsets:UIEdgeInsetsMake(0, 15, 0, 0) child:centerSpec];
 }
 
 

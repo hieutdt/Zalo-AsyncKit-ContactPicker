@@ -22,8 +22,10 @@ typedef NS_ENUM(NSInteger, ContactAuthorState) {
     ContactAuthorStateNotDetermined
 };
 
-#define AVATAR_IMAGE_HEIHGT     50
+#define AVATAR_IMAGE_HEIHGT     60
 #define CHECKER_IMAGE_HEIGHT    30
+
+#define AVATAR_COLLECTION_IMAGE_HEIGHT 70
 
 #define GRADIENT_COLOR_BLUE     0
 #define GRADIENT_COLOR_RED      1

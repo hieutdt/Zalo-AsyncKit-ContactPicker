@@ -33,6 +33,8 @@
         
         _imageNode = [[ASImageNode alloc] init];
         _imageNode.contentMode = UIViewContentModeScaleToFill;
+        _imageNode.style.preferredSize = CGSizeMake(AVATAR_COLLECTION_IMAGE_HEIGHT, AVATAR_COLLECTION_IMAGE_HEIGHT);
+        _imageNode.cornerRadius = AVATAR_COLLECTION_IMAGE_HEIGHT / 2.f;
         
         _shortNameLabel = [[ASTextNode alloc] init];
         _shortNameLabel.maximumNumberOfLines = 1;
@@ -51,11 +53,8 @@
 }
 
 - (ASLayoutSpec *)layoutSpecThatFits:(ASSizeRange)constrainedSize {
-    _imageNode.style.preferredSize = CGSizeMake(AVATAR_IMAGE_HEIHGT, AVATAR_IMAGE_HEIHGT);
-    _imageNode.cornerRadius = AVATAR_IMAGE_HEIHGT / 2.f;
-    
-    _removeButton.style.preferredSize = CGSizeMake(20, 20);
-    _removeButton.cornerRadius = 10;
+    _removeButton.style.preferredSize = CGSizeMake(25, 25);
+    _removeButton.cornerRadius = 25/2.f;
     _removeButton.borderWidth = 2;
     _removeButton.borderColor = [UIColor whiteColor].CGColor;
     
@@ -64,15 +63,22 @@
                                           sizingOptions:ASCenterLayoutSpecSizingOptionDefault
                                           child:_shortNameLabel];
     
+    
     ASInsetLayoutSpec *insetNameSpec = [ASInsetLayoutSpec insetLayoutSpecWithInsets:UIEdgeInsetsZero
                                                                               child:centerNameSpec];
-    
     ASOverlayLayoutSpec *overlaySpec = [ASOverlayLayoutSpec overlayLayoutSpecWithChild:_imageNode
                                                                                overlay:insetNameSpec];
     
-    return [ASCornerLayoutSpec cornerLayoutSpecWithChild:overlaySpec
-                                                  corner:_removeButton
-                                                location:ASCornerLayoutLocationTopRight];
+    ASInsetLayoutSpec *insetRemoveButtonSpec = [ASInsetLayoutSpec
+                                                insetLayoutSpecWithInsets:UIEdgeInsetsMake(0, INFINITY, INFINITY, 0)
+                                                child:_removeButton];
+    ASOverlayLayoutSpec *removeButtonOverlaySpec = [ASOverlayLayoutSpec
+                                                    overlayLayoutSpecWithChild:overlaySpec
+                                                    overlay:insetRemoveButtonSpec];
+    
+    return [ASCenterLayoutSpec centerLayoutSpecWithCenteringOptions:ASCenterLayoutSpecCenteringXY
+                                                      sizingOptions:ASCenterLayoutSpecSizingOptionDefault
+                                                              child:removeButtonOverlaySpec];
 }
 
 - (void)didLoad {
@@ -127,7 +133,9 @@
 #pragma mark - Action
 
 - (void)removeButtonTapped {
-    
+    if (self.delegate && [self.delegate respondsToSelector:@selector(collectionCellNode:removeButtonTappedAtElement:)]) {
+        [self.delegate collectionCellNode:self removeButtonTappedAtElement:self.model];
+    }
 }
 
 @end
