@@ -11,6 +11,8 @@
 #import "AppConsts.h"
 
 #define NEXT_BUTTON_HEIGHT 60
+#define PADDING_LEFT 15
+#define PADDING_RIGHT 15
 
 static NSString *kReuseIdentifier = @"PickerCollectionViewCell";
 
@@ -53,13 +55,13 @@ static NSString *kReuseIdentifier = @"PickerCollectionViewCell";
         _collectionNode.backgroundColor = [UIColor whiteColor];
         
         _nextButton = [[ASButtonNode alloc] init];
-        [_nextButton setTitle:@">"
-                     withFont:[UIFont systemFontOfSize:30]
+        [_nextButton setTitle:@"→"
+                     withFont:[UIFont boldSystemFontOfSize:30]
                     withColor:[UIColor whiteColor]
                      forState:UIControlStateNormal];
         _nextButton.contentVerticalAlignment = ASVerticalAlignmentCenter;
         _nextButton.contentHorizontalAlignment = ASHorizontalAlignmentMiddle;
-        [_nextButton setBackgroundColor:[UIColor blueColor]];
+        [_nextButton setBackgroundColor:[UIColor colorWithRed:52/255.f green:152/255.f blue:219/255.f alpha:1]];
         _nextButton.cornerRadius = NEXT_BUTTON_HEIGHT / 2.f;
         [_nextButton addTarget:self
                         action:@selector(nextButtonTapped)
@@ -69,21 +71,23 @@ static NSString *kReuseIdentifier = @"PickerCollectionViewCell";
 }
 
 - (ASLayoutSpec *)layoutSpecThatFits:(ASSizeRange)constrainedSize {
-    _nextButton.style.preferredSize = CGSizeMake(NEXT_BUTTON_HEIGHT, NEXT_BUTTON_HEIGHT);
-    
     CGSize maxConstrainedSize = constrainedSize.max;
     
-    ASCenterLayoutSpec *centerNextButtonSpec = [ASCenterLayoutSpec
-                                                centerLayoutSpecWithCenteringOptions:ASCenterLayoutSpecCenteringY
-                                                sizingOptions:ASCenterLayoutSpecSizingOptionDefault
-                                                child:_nextButton];
-    centerNextButtonSpec.style.layoutPosition = CGPointMake(maxConstrainedSize.width - 10 - NEXT_BUTTON_HEIGHT, 10);
-    centerNextButtonSpec.style.preferredSize = CGSizeMake(NEXT_BUTTON_HEIGHT, AVATAR_IMAGE_HEIHGT + 20);
+    _nextButton.style.preferredSize = CGSizeMake(NEXT_BUTTON_HEIGHT, NEXT_BUTTON_HEIGHT);
+    _collectionNode.style.preferredSize = CGSizeMake(maxConstrainedSize.width - NEXT_BUTTON_HEIGHT - PADDING_LEFT - PADDING_RIGHT - 10,
+                                                     AVATAR_COLLECTION_IMAGE_HEIGHT + 30);
     
-    _collectionNode.style.layoutPosition = CGPointMake(10, 10);
-    _collectionNode.style.preferredSize = CGSizeMake(maxConstrainedSize.width - 10 - NEXT_BUTTON_HEIGHT - 15, AVATAR_COLLECTION_IMAGE_HEIGHT + 30);
+    ASStackLayoutSpec *mainStack = [ASStackLayoutSpec stackLayoutSpecWithDirection:ASStackLayoutDirectionHorizontal
+                                                                           spacing:10
+                                                                    justifyContent:ASStackLayoutJustifyContentStart
+                                                                        alignItems:ASStackLayoutAlignItemsCenter
+                                                                          children:@[_collectionNode, _nextButton]];
     
-    return [ASAbsoluteLayoutSpec absoluteLayoutSpecWithChildren:@[_collectionNode, centerNextButtonSpec]];
+    ASCenterLayoutSpec *centerSpec = [ASCenterLayoutSpec centerLayoutSpecWithCenteringOptions:ASCenterLayoutSpecCenteringY
+                                                                                sizingOptions:ASCenterLayoutSpecSizingOptionDefault
+                                                                                        child:mainStack];
+    
+    return [ASInsetLayoutSpec insetLayoutSpecWithInsets:UIEdgeInsetsMake(0, PADDING_LEFT, 0, PADDING_RIGHT) child:centerSpec];
 }
 
 - (void)didLoad {

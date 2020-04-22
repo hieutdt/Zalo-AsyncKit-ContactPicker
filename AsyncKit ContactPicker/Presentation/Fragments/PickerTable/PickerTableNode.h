@@ -33,7 +33,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)setViewModels:(NSArray<PickerViewModel *> *)pickerModels;
 
-- (void)removeElement:(PickerViewModel *)element;
+- (void)uncheckElement:(PickerViewModel *)element;
+
+- (void)uncheckAllElements;
+
+- (void)searchByString:(NSString *)searchString;
 
 - (int)selectedCount;
 

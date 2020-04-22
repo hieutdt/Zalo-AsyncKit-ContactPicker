@@ -16,7 +16,7 @@
 #define SEARCH_BAR_HEIHGT 50
 #define COLLECTION_VIEW_HEIHGT 100
 
-@interface MainViewController () <ContactDidChangedDelegate, PickerTableNodeDelegate, PickerCollectionNodeDelegate>
+@interface MainViewController () <ContactDidChangedDelegate, PickerTableNodeDelegate, PickerCollectionNodeDelegate, UISearchBarDelegate>
 
 @property (nonatomic, strong) ASDisplayNode *contentNode;
 @property (nonatomic, strong) PickerTableNode *tableNode;
@@ -38,6 +38,10 @@
 
 @property (nonatomic, strong) ContactBusiness *contactBusiness;
 
+@property (nonatomic, strong) NSMutableArray<Contact *> *searchContacts;
+
+@property (nonatomic, strong) dispatch_queue_t serialQueue;
+
 @end
 
 @implementation MainViewController
@@ -48,6 +52,8 @@
     _contentNode = [[ASDisplayNode alloc] init];
     self = [super initWithNode:_contentNode];
     if (self) {
+        _serialQueue = dispatch_queue_create("MainViewSerialQueue", DISPATCH_QUEUE_SERIAL);
+        
         _tableNode = [[PickerTableNode alloc] init];
         _tableNode.delegate = self;
         
@@ -55,6 +61,9 @@
         _collectionNode.delegate = self;
         
         _searchBar = [[UISearchBar alloc] init];
+        _searchBar.placeholder = @"Search for contacts";
+        _searchBar.searchBarStyle = UISearchBarStyleMinimal;
+        _searchBar.delegate = self;
         
         _stackView = [[UIStackView alloc] init];
         _stackView.axis = UILayoutConstraintAxisVertical;
@@ -105,6 +114,8 @@
     [_stackView.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor].active = YES;
     [_stackView.topAnchor constraintEqualToAnchor:_searchBar.bottomAnchor].active = YES;
     [_stackView.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor].active = YES;
+    
+    self.collectionNode.hidden = YES;
     
     [self customInitNavigationBar];
     
@@ -165,9 +176,11 @@
 - (void)updateNavigationBar {
     if ([self.tableNode selectedCount] > 0) {
         self.subTitleLabel.hidden = NO;
+        self.titleLabel.text = @"Choose Friends";
         [self showCancelPickNavigationButton];
     } else {
         self.subTitleLabel.hidden = YES;
+        self.titleLabel.text = @"Contacts List";
         [self hideCancelPickNavigationButton];
     }
     
@@ -177,7 +190,8 @@
 #pragma mark - NavigationBarAction
 
 - (void)cancelPickContacts {
-    
+    [self.tableNode uncheckAllElements];
+    [self.collectionNode removeAllElements];
 }
 
 - (void)updateContactsTapped {
@@ -216,7 +230,7 @@
         if (!error) {
             if (contacts.count > 0) {
                 [self initContactsData:contacts];
-                self.pickerModels = [self getPickerModelsArrayFromContacts];
+                self.pickerModels = [self getPickerModelsArrayFromContacts:self.contacts];
                 [self.tableNode setViewModels:self.pickerModels];
                 
                 dispatch_async(dispatch_get_main_queue(), ^{
@@ -235,14 +249,14 @@
     self.sectionData = [self.contactBusiness sortedByAlphabetSectionsArrayFromContacts:self.contacts];
 }
 
-- (NSMutableArray<PickerViewModel *> *)getPickerModelsArrayFromContacts {
-    if (!self.contacts) {
+- (NSMutableArray<PickerViewModel *> *)getPickerModelsArrayFromContacts:(NSArray<Contact *> *)contacts {
+    if (!contacts) {
         return nil;
     }
     
     NSMutableArray<PickerViewModel *> *pickerModels = [[NSMutableArray alloc] init];
     
-    for (Contact *contact in self.contacts) {
+    for (Contact *contact in contacts) {
         PickerViewModel *pickerModel = [[PickerViewModel alloc] init];
         pickerModel.identifier = contact.identifier;
         pickerModel.name = contact.name;
@@ -277,13 +291,19 @@
         return;
     
     if (collectionNode == self.collectionNode) {
-        [self.tableNode removeElement:element];
+        [self.tableNode uncheckElement:element];
         [self updateNavigationBar];
     }
 }
 
 - (void)nextButtonTappedFromPickerCollectionNode:(PickerCollectionNode *)collectionNode {
     
+}
+
+#pragma mark - UISearchBarDelegate
+
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
+    [self.tableNode searchByString:searchText];
 }
 
 @end

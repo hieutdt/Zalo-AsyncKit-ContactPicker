@@ -152,4 +152,17 @@
     [[ContactAdaper instance] removeContactDidChangedDelegate:delegate];
 }
 
+- (NSArray<Contact *> *)filterContacts:(NSArray<Contact *> *)contacts
+                        bySearchString:(NSString *)searchString {
+    if (!searchString)
+        return contacts;
+    else if (searchString.length == 0)
+        return contacts;
+    
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"self.name contains[c] %@", searchString];
+    NSArray *filteredContacts = [contacts filteredArrayUsingPredicate:predicate];
+    
+    return filteredContacts;
+}
+
 @end

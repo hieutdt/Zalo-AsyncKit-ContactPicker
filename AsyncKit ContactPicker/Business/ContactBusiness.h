@@ -36,6 +36,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)removeContactDidChangedDelegate:(id<ContactDidChangedDelegate>)delegate;
 
+- (NSArray<Contact *> *)filterContacts:(NSArray<Contact *> *)contacts
+                        bySearchString:(NSString *)searchString;
+
 @end
 
 NS_ASSUME_NONNULL_END

@@ -17,9 +17,11 @@
 @property (nonatomic, strong) ASTableNode *tableNode;
 
 @property (strong, nonatomic) NSMutableArray<PickerViewModel *> *pickerModels;
+@property (strong, nonatomic) NSMutableArray<PickerViewModel *> *searchPickerModels;
 @property (strong, nonatomic) NSMutableArray<NSMutableArray *> *sectionsArray;
 
 @property (nonatomic, assign) int selectedCount;
+@property (nonatomic, assign) BOOL searching;
 
 @end
 
@@ -35,12 +37,14 @@
         _tableNode.delegate = self;
         
         _pickerModels = [[NSMutableArray alloc] init];
+        _searchPickerModels = [[NSMutableArray alloc] init];
         _sectionsArray = [[NSMutableArray alloc] init];
         for (int i = 0; i < ALPHABET_SECTIONS_NUMBER; i++) {
             [_sectionsArray addObject:[NSMutableArray new]];
         }
         
         _selectedCount = 0;
+        _searching = NO;
     }
     return self;
 }
@@ -57,12 +61,13 @@
 #pragma mark - PublicMethods
 
 - (void)setViewModels:(NSArray<PickerViewModel *> *)pickerModel {
+    [self.pickerModels removeAllObjects];
     self.pickerModels = [NSMutableArray arrayWithArray:pickerModel];
     [self fitPickerModelsData:self.pickerModels
                    toSections:self.sectionsArray];
 }
 
-- (void)removeElement:(PickerViewModel *)element {
+- (void)uncheckElement:(PickerViewModel *)element {
     if (self.selectedCount > 0) {
         self.selectedCount--;
         element.isChosen = NO;
@@ -81,8 +86,38 @@
     }
 }
 
+- (void)uncheckAllElements {
+    self.selectedCount = 0;
+    for (int i = 0; i < self.pickerModels.count; i++) {
+        self.pickerModels[i].isChosen = NO;
+    }
+    
+    [self reloadData];
+}
+
 - (int)selectedCount {
     return _selectedCount;
+}
+
+- (void)searchByString:(NSString *)searchString {
+    if (!searchString) {
+        self.searching = NO;
+    } else if (searchString.length == 0) {
+        self.searching = NO;
+    } else {
+        [_searchPickerModels removeAllObjects];
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"self.name contains[c] %@", searchString];
+        _searchPickerModels = [NSMutableArray arrayWithArray:[self.pickerModels filteredArrayUsingPredicate:predicate]];
+        self.searching = YES;
+    }
+    
+    if (self.searching) {
+        [self fitPickerModelsData:self.searchPickerModels toSections:self.sectionsArray];
+    } else {
+        [self fitPickerModelsData:self.pickerModels toSections:self.sectionsArray];
+    }
+    
+    [self reloadData];
 }
 
 #pragma mark - SetData
@@ -94,7 +129,7 @@
     assert(sectionsArray.count == ALPHABET_SECTIONS_NUMBER);
 #endif
     
-    if (!models || models.count == 0)
+    if (!models)
         return;
     if (!sectionsArray)
         return;
