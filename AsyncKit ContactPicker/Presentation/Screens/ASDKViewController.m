@@ -131,7 +131,13 @@
     [_stackView.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor].active = YES;
     [_stackView.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor].active = YES;
     [_stackView.topAnchor constraintEqualToAnchor:_searchBar.bottomAnchor].active = YES;
-    [_stackView.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor].active = YES;
+    
+    if (@available(iOS 11, *)) {
+        UILayoutGuide *guide = self.view.safeAreaLayoutGuide;
+        [_stackView.bottomAnchor constraintEqualToAnchor:guide.bottomAnchor].active = YES;
+    } else {
+        [_stackView.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor].active = YES;
+    }
     
     [_stateNode.view.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor].active = YES;
     [_stateNode.view.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor].active = YES;
@@ -162,8 +168,8 @@
     stackView.distribution = UIStackViewDistributionEqualCentering;
     stackView.alignment = UIStackViewAlignmentCenter;
     stackView.axis = UILayoutConstraintAxisVertical;
-
-    self.navigationItem.titleView = stackView;
+    
+    self.tabBarController.navigationItem.titleView = stackView;
     
     self.cancelButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel"
                                                              style:UIBarButtonItemStylePlain
@@ -181,19 +187,19 @@
 }
 
 - (void)showCancelPickNavigationButton {
-    [self.navigationItem setLeftBarButtonItem:self.cancelButtonItem animated:YES];
+    [self.tabBarController.navigationItem setLeftBarButtonItem:self.cancelButtonItem animated:YES];
 }
 
 - (void)hideCancelPickNavigationButton {
-    [self.navigationItem setLeftBarButtonItem:nil animated:YES];
+    [self.tabBarController.navigationItem setLeftBarButtonItem:nil animated:YES];
 }
 
 - (void)showUpdateContactNavigationButton {
-    [self.navigationItem setRightBarButtonItem:self.updateButtonItem animated:YES];
+    [self.tabBarController.navigationItem setRightBarButtonItem:self.updateButtonItem animated:YES];
 }
 
 - (void)hideUpdateContactNavigationButton {
-    [self.navigationItem setRightBarButtonItem:nil animated:YES];
+    [self.tabBarController.navigationItem setRightBarButtonItem:nil animated:YES];
 }
 
 - (void)updateNavigationBar {
