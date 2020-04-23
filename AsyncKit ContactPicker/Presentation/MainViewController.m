@@ -11,6 +11,8 @@
 #import "PickerCollectionNode.h"
 #import "StateView.h"
 
+#import "ImageCache.h"
+
 #import "Contact.h"
 #import "ContactBusiness.h"
 
@@ -323,6 +325,31 @@
     if (tableNode == self.tableNode && element) {
         [self.collectionNode removeElement:element];
         [self updateNavigationBar];
+    }
+}
+
+- (void)pickerTableNode:(PickerTableNode *)tableNode loadImageToCellNode:(PickerTableCellNode *)cellNode
+                                                             atIndexPath:(NSIndexPath *)indexPath {
+    if (tableNode != self.tableNode)
+        return;
+    if (indexPath.section >= self.sectionData.count)
+        return;
+    if (indexPath.row >= self.sectionData[indexPath.section].count)
+        return;
+    
+    Contact *contact = (Contact *)self.sectionData[indexPath.section][indexPath.row];
+    
+    UIImage *imageFromCache = [[ImageCache instance] imageForKey:contact.identifier];
+    if (imageFromCache) {
+        [cellNode setAvatar:imageFromCache];
+        [cellNode setNeedsLayout];
+    } else {
+        [self.contactBusiness loadContactImageByID:contact.identifier
+                                        completion:^(UIImage *image, NSError *error) {
+            [[ImageCache instance] setImage:image forKey:contact.identifier];
+            [cellNode setAvatar:image];
+            [cellNode setNeedsLayout];
+        }];
     }
 }
 

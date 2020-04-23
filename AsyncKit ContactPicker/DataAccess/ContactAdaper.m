@@ -147,7 +147,9 @@
     // Fetch multiple images concurrently
     dispatch_async(self.concurrentQueue, ^{
         @try {
-            NSArray<CNContact *> *contacts = [contactStore unifiedContactsMatchingPredicate:predicate keysToFetch:@[CNContactThumbnailImageDataKey] error:nil];
+            NSArray<CNContact *> *contacts = [contactStore unifiedContactsMatchingPredicate:predicate
+                                                                                keysToFetch:@[CNContactThumbnailImageDataKey]
+                                                                                      error:nil];
             
             if (contacts.count == 0) {
                 completionHandle(nil, error);
@@ -155,6 +157,11 @@
             }
             
             UIImage *image = [UIImage imageWithData:contacts[0].thumbnailImageData];
+            
+            if (image) {
+                NSLog(@"TONHIEU: co gia tri ne!");
+            }
+            
             completionHandle(image, nil);
             
         } @catch (NSException *e) {

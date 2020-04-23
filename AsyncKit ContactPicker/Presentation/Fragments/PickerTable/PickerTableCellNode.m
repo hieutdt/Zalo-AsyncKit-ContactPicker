@@ -104,8 +104,8 @@
 
 - (void)setAvatar:(UIImage *)avatarImage {
     if (avatarImage) {
-        self.avatarImageNode.image = [UIImage imageNamed:@"checked"];
-        self.avatarImageNode.backgroundColor = [UIColor redColor];
+        [self.avatarImageNode setImage:avatarImage];
+        self.shortNameLabel.hidden = YES;
     }
 }
 
