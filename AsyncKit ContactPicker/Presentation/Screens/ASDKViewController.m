@@ -6,7 +6,7 @@
 //  Copyright © 2020 Trần Đình Tôn Hiếu. All rights reserved.
 //
 
-#import "MainViewController.h"
+#import "ASDKViewController.h"
 #import "PickerTableNode.h"
 #import "PickerCollectionNode.h"
 #import "StateView.h"
@@ -19,7 +19,7 @@
 #define SEARCH_BAR_HEIHGT 50
 #define COLLECTION_VIEW_HEIHGT 100
 
-@interface MainViewController () <ContactDidChangedDelegate, PickerTableNodeDelegate, PickerCollectionNodeDelegate, UISearchBarDelegate>
+@interface ASDKViewController () <ContactDidChangedDelegate, PickerTableNodeDelegate, PickerCollectionNodeDelegate, UISearchBarDelegate>
 
 @property (nonatomic, strong) ASDisplayNode *contentNode;
 @property (nonatomic, strong) PickerTableNode *tableNode;
@@ -49,7 +49,7 @@
 
 @end
 
-@implementation MainViewController
+@implementation ASDKViewController
 
 #pragma mark - Lifecycle
 

@@ -1,5 +1,6 @@
 #import "SceneDelegate.h"
-#import "MainViewController.h"
+#import "ASDKViewController.h"
+#import "CKViewController.h"
 
 @interface SceneDelegate ()
 
@@ -11,8 +12,21 @@
 - (void)scene:(UIScene *)scene willConnectToSession:(UISceneSession *)session
                                             options:(UISceneConnectionOptions *)connectionOptions {
     _window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
-    MainViewController *vc = [[MainViewController alloc] init];
-    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:vc];
+    
+    ASDKViewController *ASDK = [[ASDKViewController alloc] init];
+    CKViewController *CK = [[CKViewController alloc] init];
+    
+    UITabBarItem *ASDKTabBarItem = [[UITabBarItem alloc] initWithTitle:@"ASDK" image:[UIImage imageNamed:@""] tag:0];
+    UITabBarItem *CKTabBarItem = [[UITabBarItem alloc] initWithTitle:@"CK" image:[UIImage imageNamed:@""] tag:1];
+    
+    ASDK.tabBarItem = ASDKTabBarItem;
+    CK.tabBarItem = CKTabBarItem;
+    
+    UITabBarController *tabBarController = [[UITabBarController alloc] init];
+    tabBarController.viewControllers = @[ASDK, CK];
+    tabBarController.selectedViewController = ASDK;
+    
+    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:tabBarController];
     
     _window.rootViewController = navigationController;
     _window.windowScene = (UIWindowScene *)scene;
