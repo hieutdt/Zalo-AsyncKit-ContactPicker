@@ -9,6 +9,7 @@
 #import "MainViewController.h"
 #import "PickerTableNode.h"
 #import "PickerCollectionNode.h"
+#import "StateView.h"
 
 #import "Contact.h"
 #import "ContactBusiness.h"
@@ -21,6 +22,8 @@
 @property (nonatomic, strong) ASDisplayNode *contentNode;
 @property (nonatomic, strong) PickerTableNode *tableNode;
 @property (nonatomic, strong) PickerCollectionNode *collectionNode;
+
+@property (nonatomic, strong) StateView *stateNode;
 
 @property (nonatomic, strong) UISearchBar *searchBar;
 @property (nonatomic, strong) UIStackView *stackView;
@@ -59,6 +62,8 @@
         
         _collectionNode = [[PickerCollectionNode alloc] init];
         _collectionNode.delegate = self;
+        
+        _stateNode = [[StateView alloc] init];
         
         _searchBar = [[UISearchBar alloc] init];
         _searchBar.placeholder = @"Search for contacts";
@@ -102,11 +107,22 @@
     
     [self.view addSubview:_searchBar];
     [self.view addSubview:_stackView];
+    [self.view addSubnode:_stateNode];
     
     _searchBar.translatesAutoresizingMaskIntoConstraints = NO;
+    _stateNode.view.translatesAutoresizingMaskIntoConstraints = NO;
+    
+    if (@available(iOS 11, *)) {
+        UILayoutGuide *guide = self.view.safeAreaLayoutGuide;
+        [_searchBar.topAnchor constraintEqualToAnchor:guide.topAnchor].active = YES;
+        [_stateNode.view.topAnchor constraintEqualToAnchor:guide.topAnchor].active = YES;
+    } else {
+        [_searchBar.topAnchor constraintEqualToAnchor:self.view.topAnchor constant:70].active = YES;
+        [_stateNode.view.topAnchor constraintEqualToAnchor:self.view.topAnchor constant:70].active = YES;
+    }
+    
     [_searchBar.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor].active = YES;
     [_searchBar.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor].active = YES;
-    [_searchBar.topAnchor constraintEqualToAnchor:self.view.topAnchor constant:65].active = YES;
     [_searchBar.heightAnchor constraintEqualToConstant:SEARCH_BAR_HEIHGT].active = YES;
     
     _stackView.translatesAutoresizingMaskIntoConstraints = NO;
@@ -115,7 +131,12 @@
     [_stackView.topAnchor constraintEqualToAnchor:_searchBar.bottomAnchor].active = YES;
     [_stackView.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor].active = YES;
     
+    [_stateNode.view.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor].active = YES;
+    [_stateNode.view.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor].active = YES;
+    [_stateNode.view.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor].active = YES;
+    
     self.collectionNode.hidden = YES;
+    self.stateNode.hidden = YES;
     
     [self customInitNavigationBar];
     
@@ -192,6 +213,7 @@
 - (void)cancelPickContacts {
     [self.tableNode uncheckAllElements];
     [self.collectionNode removeAllElements];
+    [self updateNavigationBar];
 }
 
 - (void)updateContactsTapped {
@@ -209,7 +231,7 @@
             break;
         }
         case ContactAuthorStateDenied: {
-//            [self showNotPermissionView];
+            [self showNotPermissionView];
             break;
         }
         default: {
@@ -217,12 +239,32 @@
                 if (granted) {
                     [self loadContacts];
                 } else {
-//                    [self showNotPermissionView];
+                    [self showNotPermissionView];
                 }
             }];
             break;
         }
     }
+}
+
+- (void)showNotPermissionView {
+    [self.stateNode setImage:[UIImage imageNamed:@"mixi"]];
+    [self.stateNode setTitle:@"KHÔNG CÓ QUYỀN TRUY CẬP"];
+    [self.stateNode setDescription:@"Ứng dụng không có quyền truy cập vào danh bạ. Đến Cài đặt để cấp quyền?"];
+    [self.stateNode setButtonTitle:@"Đến Cài đặt"];
+    [self.stateNode setButtonTappedAction:^{
+        [UIApplication.sharedApplication openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]
+                                         options:@{}
+                               completionHandler:nil];
+    }];
+    
+    self.stateNode.hidden = NO;
+    self.stateNode.alpha = 0;
+    [UIView animateWithDuration:0.7 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+        self.stateNode.alpha = 1;
+    } completion:nil];
+    
+    self.stateNode.hidden = NO;
 }
 
 - (void)loadContacts {
