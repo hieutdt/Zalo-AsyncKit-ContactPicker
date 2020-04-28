@@ -83,9 +83,10 @@ static NSString *kReuseIdentifier = @"PickerCollectionViewCell";
                                                                         alignItems:ASStackLayoutAlignItemsCenter
                                                                           children:@[_collectionNode, _nextButton]];
     
-    ASCenterLayoutSpec *centerSpec = [ASCenterLayoutSpec centerLayoutSpecWithCenteringOptions:ASCenterLayoutSpecCenteringY
-                                                                                sizingOptions:ASCenterLayoutSpecSizingOptionDefault
-                                                                                        child:mainStack];
+    ASCenterLayoutSpec *centerSpec = [ASCenterLayoutSpec
+                                      centerLayoutSpecWithCenteringOptions:ASCenterLayoutSpecCenteringY
+                                      sizingOptions:ASCenterLayoutSpecSizingOptionDefault
+                                      child:mainStack];
     
     return [ASInsetLayoutSpec insetLayoutSpecWithInsets:UIEdgeInsetsMake(0, PADDING_LEFT, 0, PADDING_RIGHT) child:centerSpec];
 }

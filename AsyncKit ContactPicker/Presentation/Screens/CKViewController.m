@@ -8,6 +8,7 @@
 
 #import "CKViewController.h"
 #import "CKPickerTableView.h"
+#import "CKPickerCollectionView.h"
 
 #import "ContactBusiness.h"
 
@@ -16,9 +17,13 @@
 
 #import "AppConsts.h"
 
-@interface CKViewController ()
+static const int kCollectionViewHeight = 100;
+
+@interface CKViewController () <CKPickerTableViewDelegate>
 
 @property (nonatomic, strong) CKPickerTableView *tableView;
+@property (nonatomic, strong) CKPickerCollectionView *collectionView;
+@property (nonatomic, strong) UIStackView *mainStack;
 
 @property (nonatomic, strong) ContactBusiness *contactBusiness;
 
@@ -35,8 +40,21 @@
     
     self.view.backgroundColor = [UIColor systemBlueColor];
     
-    _tableView = [[CKPickerTableView alloc] initWithFrame:self.view.bounds];
-    [self.view addSubview:_tableView];
+    _tableView = [[CKPickerTableView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height - kCollectionViewHeight)];
+    _tableView.delegate = self;
+    _collectionView = [[CKPickerCollectionView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, kCollectionViewHeight)];
+    
+    _mainStack = [[UIStackView alloc] initWithFrame:self.view.bounds];
+    _mainStack.axis = UILayoutConstraintAxisVertical;
+    [_mainStack addArrangedSubview:_tableView];
+    [_mainStack addArrangedSubview:_collectionView];
+    [self.view addSubview:_mainStack];
+    
+    if (@available(iOS 11, *)) {
+        UILayoutGuide *guide = self.view.safeAreaLayoutGuide;
+        [_mainStack.topAnchor constraintEqualToAnchor:guide.topAnchor].active = YES;
+        [_mainStack.bottomAnchor constraintEqualToAnchor:guide.bottomAnchor].active = YES;
+    }
     
     _contactBusiness = [[ContactBusiness alloc] init];
     
@@ -117,6 +135,12 @@
     }
     
     return pickerModels;
+}
+
+#pragma mark - CKPickerTableViewDelegate
+
+- (void)CKPickerTableView:(CKPickerTableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSLog(@"%@", indexPath);
 }
 
 

@@ -17,6 +17,8 @@
 		0454CD462446F94400D34849 /* ColorHelper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0454CD3B2446F94400D34849 /* ColorHelper.mm */; };
 		0454CD482446F94400D34849 /* StringHelper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0454CD3E2446F94400D34849 /* StringHelper.mm */; };
 		0454CD492446F94400D34849 /* ImageCache.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0454CD412446F94400D34849 /* ImageCache.mm */; };
+		0467E0022457D2A700243323 /* CKPickerCollectionView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0467E0012457D2A700243323 /* CKPickerCollectionView.mm */; };
+		0467E0032457D2A700243323 /* CKPickerCollectionView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0467E0012457D2A700243323 /* CKPickerCollectionView.mm */; };
 		046844A02451335200B47DB8 /* StateView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0468449F2451335200B47DB8 /* StateView.m */; };
 		046844A12451335200B47DB8 /* StateView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0468449F2451335200B47DB8 /* StateView.m */; };
 		046844A424514A8A00B47DB8 /* CKViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 046844A324514A8A00B47DB8 /* CKViewController.m */; };
@@ -39,10 +41,10 @@
 		049FCE2624475F7A00F285C4 /* PickerViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 049FCE2424475F7A00F285C4 /* PickerViewModel.m */; };
 		04A14839245297D2009EACC7 /* ComponentKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0412D4482452961800DEB7EC /* ComponentKit.framework */; };
 		04A1483A245297D2009EACC7 /* ComponentKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0412D4482452961800DEB7EC /* ComponentKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		04A1484024529B60009EACC7 /* ContactContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A1483F24529B60009EACC7 /* ContactContext.m */; };
-		04A1484124529B60009EACC7 /* ContactContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 04A1483F24529B60009EACC7 /* ContactContext.m */; };
 		04A1484F2452A22F009EACC7 /* CKPickerTableCellComponent.mm in Sources */ = {isa = PBXBuildFile; fileRef = 04A1484E2452A22F009EACC7 /* CKPickerTableCellComponent.mm */; };
 		04A148502452A22F009EACC7 /* CKPickerTableCellComponent.mm in Sources */ = {isa = PBXBuildFile; fileRef = 04A1484E2452A22F009EACC7 /* CKPickerTableCellComponent.mm */; };
+		04D9E6BB24571A9D00CE3D65 /* CKPickerCollectionCellComponent.mm in Sources */ = {isa = PBXBuildFile; fileRef = 04D9E6BA24571A9D00CE3D65 /* CKPickerCollectionCellComponent.mm */; };
+		04D9E6BC24571A9D00CE3D65 /* CKPickerCollectionCellComponent.mm in Sources */ = {isa = PBXBuildFile; fileRef = 04D9E6BA24571A9D00CE3D65 /* CKPickerCollectionCellComponent.mm */; };
 		04E716FD2446C255006D54BB /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E716FC2446C255006D54BB /* AppDelegate.m */; };
 		04E717002446C255006D54BB /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E716FF2446C255006D54BB /* SceneDelegate.m */; };
 		04E717082446C256006D54BB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 04E717072446C256006D54BB /* Assets.xcassets */; };
@@ -192,6 +194,8 @@
 		0454CD422446F94400D34849 /* ImageCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageCache.h; sourceTree = "<group>"; };
 		0454CD442446F94400D34849 /* ColorHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColorHelper.h; sourceTree = "<group>"; };
 		0454CD452446F94400D34849 /* AppConsts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppConsts.h; sourceTree = "<group>"; };
+		0467E0002457D2A700243323 /* CKPickerCollectionView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CKPickerCollectionView.h; sourceTree = "<group>"; };
+		0467E0012457D2A700243323 /* CKPickerCollectionView.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = CKPickerCollectionView.mm; sourceTree = "<group>"; };
 		0468449E2451335200B47DB8 /* StateView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StateView.h; sourceTree = "<group>"; };
 		0468449F2451335200B47DB8 /* StateView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = StateView.m; sourceTree = "<group>"; };
 		046844A224514A8A00B47DB8 /* CKViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CKViewController.h; sourceTree = "<group>"; };
@@ -213,10 +217,10 @@
 		049FCE2024475D9D00F285C4 /* PickerTableNode.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PickerTableNode.m; sourceTree = "<group>"; };
 		049FCE2324475F7A00F285C4 /* PickerViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PickerViewModel.h; sourceTree = "<group>"; };
 		049FCE2424475F7A00F285C4 /* PickerViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PickerViewModel.m; sourceTree = "<group>"; };
-		04A1483E24529B60009EACC7 /* ContactContext.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ContactContext.h; sourceTree = "<group>"; };
-		04A1483F24529B60009EACC7 /* ContactContext.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ContactContext.m; sourceTree = "<group>"; };
 		04A1484D2452A22F009EACC7 /* CKPickerTableCellComponent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CKPickerTableCellComponent.h; sourceTree = "<group>"; };
 		04A1484E2452A22F009EACC7 /* CKPickerTableCellComponent.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = CKPickerTableCellComponent.mm; sourceTree = "<group>"; };
+		04D9E6B924571A9D00CE3D65 /* CKPickerCollectionCellComponent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CKPickerCollectionCellComponent.h; sourceTree = "<group>"; };
+		04D9E6BA24571A9D00CE3D65 /* CKPickerCollectionCellComponent.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = CKPickerCollectionCellComponent.mm; sourceTree = "<group>"; };
 		04E716F82446C255006D54BB /* AsyncKit ContactPicker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "AsyncKit ContactPicker.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		04E716FB2446C255006D54BB /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		04E716FC2446C255006D54BB /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -304,8 +308,6 @@
 			children = (
 				0454CD372446F8DF00D34849 /* Contact.h */,
 				0454CD362446F8DF00D34849 /* Contact.mm */,
-				04A1483E24529B60009EACC7 /* ContactContext.h */,
-				04A1483F24529B60009EACC7 /* ContactContext.m */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -362,8 +364,8 @@
 		0476990E2448432C00CEF11A /* PickerTable */ = {
 			isa = PBXGroup;
 			children = (
-				04A148482452A1E9009EACC7 /* CK */,
-				04A148472452A1D7009EACC7 /* ASDK */,
+				04A148482452A1E9009EACC7 /* ComponentKit */,
+				04A148472452A1D7009EACC7 /* AsyncDisplayKit */,
 			);
 			path = PickerTable;
 			sourceTree = "<group>";
@@ -371,7 +373,8 @@
 		0476990F2448433900CEF11A /* PickerCollection */ = {
 			isa = PBXGroup;
 			children = (
-				04A148462452A1CF009EACC7 /* ASDK */,
+				04D9E6AA245718FD00CE3D65 /* ComponentKit */,
+				04A148462452A1CF009EACC7 /* AsyndDisplayKit */,
 			);
 			path = PickerCollection;
 			sourceTree = "<group>";
@@ -413,7 +416,7 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
-		04A148462452A1CF009EACC7 /* ASDK */ = {
+		04A148462452A1CF009EACC7 /* AsyndDisplayKit */ = {
 			isa = PBXGroup;
 			children = (
 				047699102448435C00CEF11A /* PickerCollectionCellNode.h */,
@@ -421,10 +424,10 @@
 				0476991424484F1B00CEF11A /* PickerCollectionNode.h */,
 				0476991524484F1B00CEF11A /* PickerCollectionNode.m */,
 			);
-			path = ASDK;
+			path = AsyndDisplayKit;
 			sourceTree = "<group>";
 		};
-		04A148472452A1D7009EACC7 /* ASDK */ = {
+		04A148472452A1D7009EACC7 /* AsyncDisplayKit */ = {
 			isa = PBXGroup;
 			children = (
 				049FCE1924474FBE00F285C4 /* PickerTableCellNode.h */,
@@ -432,10 +435,10 @@
 				049FCE1F24475D9D00F285C4 /* PickerTableNode.h */,
 				049FCE2024475D9D00F285C4 /* PickerTableNode.m */,
 			);
-			path = ASDK;
+			path = AsyncDisplayKit;
 			sourceTree = "<group>";
 		};
-		04A148482452A1E9009EACC7 /* CK */ = {
+		04A148482452A1E9009EACC7 /* ComponentKit */ = {
 			isa = PBXGroup;
 			children = (
 				048EF99C2452873900986FE3 /* CKPickerTableView.h */,
@@ -443,7 +446,18 @@
 				04A1484D2452A22F009EACC7 /* CKPickerTableCellComponent.h */,
 				04A1484E2452A22F009EACC7 /* CKPickerTableCellComponent.mm */,
 			);
-			path = CK;
+			path = ComponentKit;
+			sourceTree = "<group>";
+		};
+		04D9E6AA245718FD00CE3D65 /* ComponentKit */ = {
+			isa = PBXGroup;
+			children = (
+				04D9E6B924571A9D00CE3D65 /* CKPickerCollectionCellComponent.h */,
+				04D9E6BA24571A9D00CE3D65 /* CKPickerCollectionCellComponent.mm */,
+				0467E0002457D2A700243323 /* CKPickerCollectionView.h */,
+				0467E0012457D2A700243323 /* CKPickerCollectionView.mm */,
+			);
+			path = ComponentKit;
 			sourceTree = "<group>";
 		};
 		04E716EF2446C255006D54BB = {
@@ -790,8 +804,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				04A1484024529B60009EACC7 /* ContactContext.m in Sources */,
 				04E716FD2446C255006D54BB /* AppDelegate.m in Sources */,
+				0467E0022457D2A700243323 /* CKPickerCollectionView.mm in Sources */,
 				0476991624484F1B00CEF11A /* PickerCollectionNode.m in Sources */,
 				048EF99E2452873900986FE3 /* CKPickerTableView.mm in Sources */,
 				046844A02451335200B47DB8 /* StateView.m in Sources */,
@@ -799,6 +813,7 @@
 				049FCE2124475D9D00F285C4 /* PickerTableNode.m in Sources */,
 				0454CD302446F8B700D34849 /* ContactBusiness.m in Sources */,
 				0454CD352446F8C000D34849 /* ContactAdaper.m in Sources */,
+				04D9E6BB24571A9D00CE3D65 /* CKPickerCollectionCellComponent.mm in Sources */,
 				0454CD382446F8DF00D34849 /* Contact.mm in Sources */,
 				0454CD462446F94400D34849 /* ColorHelper.mm in Sources */,
 				047699122448435C00CEF11A /* PickerCollectionCellNode.m in Sources */,
@@ -818,18 +833,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				04A1484124529B60009EACC7 /* ContactContext.m in Sources */,
 				049FCE2224475D9D00F285C4 /* PickerTableNode.m in Sources */,
 				0476991724484F1B00CEF11A /* PickerCollectionNode.m in Sources */,
 				049600712452E636008A2197 /* ImageHelper.m in Sources */,
 				046844A12451335200B47DB8 /* StateView.m in Sources */,
 				049FCE2624475F7A00F285C4 /* PickerViewModel.m in Sources */,
 				04E717182446C256006D54BB /* AsyncKit_ContactPickerTests.m in Sources */,
+				04D9E6BC24571A9D00CE3D65 /* CKPickerCollectionCellComponent.mm in Sources */,
 				04A148502452A22F009EACC7 /* CKPickerTableCellComponent.mm in Sources */,
 				046844A524514A8A00B47DB8 /* CKViewController.m in Sources */,
 				0490DEE12446C58800ABB676 /* ASDKViewController.m in Sources */,
 				049FCE1C24474FBE00F285C4 /* PickerTableCellNode.m in Sources */,
 				048EF99F2452873900986FE3 /* CKPickerTableView.mm in Sources */,
+				0467E0032457D2A700243323 /* CKPickerCollectionView.mm in Sources */,
 				047699132448435C00CEF11A /* PickerCollectionCellNode.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

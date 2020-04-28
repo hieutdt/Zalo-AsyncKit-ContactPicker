@@ -7,8 +7,8 @@
 //
 
 #import "CKPickerTableCellComponent.h"
+#import "CKPickerTableView.h"
 #import "AppConsts.h"
-#import "ImageHelper.h"
 #import "StringHelper.h"
 
 #import <ComponentKit/CKComponentSubclass.h>
@@ -18,13 +18,14 @@
 @property (nonatomic, strong) CKImageComponent *checkerImageComponent;
 @property (nonatomic, strong) CKImageComponent *avatarImageComponent;
 @property (nonatomic, strong) PickerViewModel *viewModel;
+@property (nonatomic, assign) CKPickerTableView *context;
 
 @end
 
 @implementation CKPickerTableCellComponent
 
 + (instancetype)newWithPickerViewModel:(PickerViewModel *)viewModel
-                               context:(ImageCache *)context {
+                               context:(CKPickerTableView *)context {
     CKComponentScope scope(self);
     if (viewModel.isChosen) {
         scope.replaceState(scope, @YES);
@@ -55,8 +56,6 @@
         checkImage = [UIImage imageNamed:@"uncheck"];
     }
     
-//    avatarImage = [ImageHelper makeRoundedImage:avatarImage radius:30.f];
-    
     CKImageComponent *checkerImageComponent =
     [CKImageComponent
        newWithImage:checkImage
@@ -84,14 +83,18 @@
     [CKCenterLayoutComponent
      newWithCenteringOptions:CKCenterLayoutComponentCenteringXY
      sizingOptions:CKCenterLayoutComponentSizingOptionDefault
-     child:shortNameLabel size:{
+     child:shortNameLabel
+     size:{
         .width = 60, .height = 60
     }];
     
     CKImageComponent *avatarComponent =
     [CKImageComponent
     newWithImage:avatarImage
-    attributes:{}
+    attributes:{
+        {@selector(setClipsToBounds:), @YES},
+        {CKComponentViewAttribute::LayerAttribute(@selector(setCornerRadius:)), 30}
+    }
     size:{
         .height = 60, .width = 60
     }];
@@ -136,6 +139,7 @@
         c.checkerImageComponent = checkerImageComponent;
         c.avatarImageComponent = avatarComponent;
         c.viewModel = viewModel;
+        c.context = context;
     }
     
     return c;
@@ -154,6 +158,10 @@
             return @NO;
         }
     } mode:CKUpdateModeAsynchronous];
+    
+    if (self.context && [self.context respondsToSelector:@selector(didSelectCellOfElement:)]) {
+        [self.context didSelectCellOfElement:self.viewModel];
+    }
 }
 
 @end

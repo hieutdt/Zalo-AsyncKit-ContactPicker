@@ -1,8 +1,8 @@
 //
-//  CKPickerTableCellComponent.h
+//  CKPickerCollectionCellComponent.h
 //  AsyncKit ContactPicker
 //
-//  Created by Trần Đình Tôn Hiếu on 4/24/20.
+//  Created by Trần Đình Tôn Hiếu on 4/27/20.
 //  Copyright © 2020 Trần Đình Tôn Hiếu. All rights reserved.
 //
 
@@ -12,7 +12,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface CKPickerTableCellComponent : CKCompositeComponent
+@interface CKPickerCollectionCellComponent : CKCompositeComponent
 
 + (instancetype)newWithPickerViewModel:(PickerViewModel *)viewModel
                                context:(ImageCache *)context;

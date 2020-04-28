@@ -9,7 +9,6 @@
 #import "CKPickerTableView.h"
 #import <ComponentKit/ComponentKit.h>
 
-#import "ContactContext.h"
 #import "PickerViewModel.h"
 
 #import "CKPickerTableCellComponent.h"
@@ -70,9 +69,9 @@ static NSString * const kReuseIdentifier = @"componentKitPickerTableCell";
     _sizeRangeProvider = [CKComponentFlexibleSizeRangeProvider providerWithFlexibility:CKComponentSizeRangeFlexibleHeight];
     
     const CKSizeRange sizeRange = [_sizeRangeProvider sizeRangeForBoundingSize:self.bounds.size];
-    CKDataSourceConfiguration *configuration = [[CKDataSourceConfiguration<PickerViewModel *, ImageCache *> alloc]
+    CKDataSourceConfiguration *configuration = [[CKDataSourceConfiguration<PickerViewModel *, CKPickerTableView *> alloc]
                                                 initWithComponentProviderFunc:pickerTableComponentProvider
-                                                context:[ImageCache instance]
+                                                context:self
                                                 sizeRange:sizeRange];
     
     _dataSource = [[CKCollectionViewDataSource alloc] initWithCollectionView:self.collectionView
@@ -139,10 +138,23 @@ static NSString * const kReuseIdentifier = @"componentKitPickerTableCell";
     [self.collectionView reloadData];
 }
 
+#pragma mark - CallBackFromCKPickerTableCellComponent
+
+- (void)didSelectCellOfElement:(PickerViewModel *)element {
+    if (!element)
+        return;
+    
+    long index = [self.viewModels indexOfObject:element];
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:0];
+    
+    if (self.delegate && [self.delegate respondsToSelector:@selector(CKPickerTableView:didSelectRowAtIndexPath:)]) {
+        [self.delegate CKPickerTableView:self didSelectRowAtIndexPath:indexPath];
+    }
+}
 
 #pragma mark - CKComponentProvider
 
-static CKComponent *pickerTableComponentProvider(PickerViewModel *model, ImageCache *context){
+static CKComponent *pickerTableComponentProvider(PickerViewModel *model, CKPickerTableView *context) {
     return [CKPickerTableCellComponent newWithPickerViewModel:model
                                                       context:context];
 }
@@ -165,6 +177,13 @@ static CKComponent *pickerTableComponentProvider(PickerViewModel *model, ImageCa
   didEndDisplayingCell:(UICollectionViewCell *)cell
     forItemAtIndexPath:(NSIndexPath *)indexPath {
     [_dataSource announceDidEndDisplayingCell:cell];
+}
+
+- (void)collectionView:(UICollectionView *)collectionView
+didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    if (self.delegate && [self.delegate respondsToSelector:@selector(CKPickerTableView:didSelectRowAtIndexPath:)]) {
+        [self.delegate CKPickerTableView:self didSelectRowAtIndexPath:indexPath];
+    }
 }
 
 @end

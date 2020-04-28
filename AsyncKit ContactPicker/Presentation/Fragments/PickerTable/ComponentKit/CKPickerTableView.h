@@ -11,11 +11,23 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@class CKPickerTableView;
+
+@protocol CKPickerTableViewDelegate <NSObject>
+
+- (void)CKPickerTableView:(CKPickerTableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath;
+
+@end
+
 @interface CKPickerTableView : UIView
+
+@property (nonatomic, assign) id<CKPickerTableViewDelegate> delegate;
 
 - (void)setViewModels:(NSMutableArray<PickerViewModel *> *)viewModels;
 
 - (void)reloadData;
+
+- (void)didSelectCellOfElement:(PickerViewModel *)element;
 
 @end
 
