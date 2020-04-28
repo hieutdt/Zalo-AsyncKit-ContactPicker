@@ -9,14 +9,17 @@
 #import <ComponentKit/ComponentKit.h>
 #import "PickerViewModel.h"
 #import "ImageCache.h"
-#import "CKPickerTableView.h"
 
 NS_ASSUME_NONNULL_BEGIN
+
+@class CKPickerTableView;
 
 @interface CKPickerTableCellComponent : CKCompositeComponent
 
 + (instancetype)newWithPickerViewModel:(PickerViewModel *)viewModel
                                context:(CKPickerTableView *)context;
+
+- (void)setAvatar:(UIImage * _Nonnull)avatar;
 
 @end
 

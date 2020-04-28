@@ -9,6 +9,7 @@
 #import "CKViewController.h"
 #import "CKPickerTableView.h"
 #import "CKPickerCollectionView.h"
+#import "CKPickerCollectionCellComponent.h"
 
 #import "ContactBusiness.h"
 
@@ -16,6 +17,7 @@
 #import "PickerViewModel.h"
 
 #import "AppConsts.h"
+#import "ImageCache.h"
 
 static const int kCollectionViewHeight = 100;
 
@@ -40,21 +42,13 @@ static const int kCollectionViewHeight = 100;
     
     self.view.backgroundColor = [UIColor systemBlueColor];
     
-    _tableView = [[CKPickerTableView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height - kCollectionViewHeight)];
+    _tableView = [[CKPickerTableView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height - kCollectionViewHeight - 200)];
     _tableView.delegate = self;
-    _collectionView = [[CKPickerCollectionView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, kCollectionViewHeight)];
+    _collectionView = [[CKPickerCollectionView alloc] initWithFrame:CGRectMake(0, _tableView.frame.size.height, self.view.bounds.size.width, kCollectionViewHeight)];
+    _collectionView.backgroundColor = [UIColor systemYellowColor];
     
-    _mainStack = [[UIStackView alloc] initWithFrame:self.view.bounds];
-    _mainStack.axis = UILayoutConstraintAxisVertical;
-    [_mainStack addArrangedSubview:_tableView];
-    [_mainStack addArrangedSubview:_collectionView];
-    [self.view addSubview:_mainStack];
-    
-    if (@available(iOS 11, *)) {
-        UILayoutGuide *guide = self.view.safeAreaLayoutGuide;
-        [_mainStack.topAnchor constraintEqualToAnchor:guide.topAnchor].active = YES;
-        [_mainStack.bottomAnchor constraintEqualToAnchor:guide.bottomAnchor].active = YES;
-    }
+    [self.view addSubview:_tableView];
+    [self.view addSubview:_collectionView];
     
     _contactBusiness = [[ContactBusiness alloc] init];
     
@@ -139,8 +133,33 @@ static const int kCollectionViewHeight = 100;
 
 #pragma mark - CKPickerTableViewDelegate
 
-- (void)CKPickerTableView:(CKPickerTableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSLog(@"%@", indexPath);
+- (void)CKPickerTableView:(CKPickerTableView *)tableView
+  didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    long index = indexPath.row;
+    if (index >= self.viewModels.count)
+        return;
+    
+    PickerViewModel *model = self.viewModels[index];
+    [self.collectionView addElement:model withImage:nil];
+}
+
+- (void)CKPickerTableView:(CKPickerTableView *)tableView
+didUnSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    long index = indexPath.row;
+    if (index >= self.viewModels.count)
+        return;
+    
+    PickerViewModel *model = self.viewModels[index];
+    [self.collectionView removeElement:model];
+}
+
+- (void)loadImageToCellComponent:(CKPickerTableCellComponent *)cellComponent
+                     atIndexPath:(NSIndexPath *)indexPath {
+    Contact *contact = (Contact *)self.contacts[indexPath.row];
+    UIImage *imageFromCache = [[ImageCache instance] imageForKey:contact.identifier];
+    if (imageFromCache) {
+        [cellComponent setAvatar:imageFromCache];
+    }
 }
 
 

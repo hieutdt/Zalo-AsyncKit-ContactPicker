@@ -50,7 +50,11 @@
         .titleFont = [UIFont boldSystemFontOfSize:15],
         .titleColors = [UIColor blackColor],
         .attributes = {
-            {@selector(setBackgroundColor:), [UIColor colorWithRed:240/255.f green:241/255.f blue:242/255.f alpha:1]}
+            {@selector(setBackgroundColor:), [UIColor colorWithRed:240/255.f green:241/255.f blue:242/255.f alpha:1]},
+            {CKComponentViewAttribute::LayerAttribute(@selector(setCornerRadius:)), 20 / 2.f}
+        },
+        .size = {
+            .width = 20, .height = 20
         }
     }];
     
@@ -104,12 +108,12 @@
      newWithComponent:overlayComponent
      overlay:insetRemoveButton];
     
-    CKPickerCollectionCellComponent *c =
+    CKPickerCollectionCellComponent *c = [super newWithComponent:overlayRemoveButtonComponent];
     [super newWithComponent:[CKCenterLayoutComponent
                              newWithCenteringOptions:CKCenterLayoutComponentCenteringXY
                              sizingOptions:CKCenterLayoutComponentSizingOptionDefault
                              child:overlayRemoveButtonComponent
-                             size:{}]];
+                             size:{ .width = IMAGE_SIZE, .height = IMAGE_SIZE + 10 }]];
     
     if (c) {
         c.avatarImageComponent = avatarComponent;

@@ -25,7 +25,8 @@ static NSString * const kReuseIdentifier = @"componentKitPickerTableCell";
 @property (nonatomic, strong) CKComponentFlexibleSizeRangeProvider *sizeRangeProvider;
 
 @property (nonatomic, strong) NSMutableArray<PickerViewModel *> *viewModels;
-@property (strong, nonatomic) NSMutableArray<NSMutableArray *> *sectionsArray;
+@property (nonatomic, strong) NSMutableArray<NSMutableArray *> *sectionsArray;
+@property (nonatomic, assign) long selectedCount;
 
 @end
 
@@ -54,6 +55,8 @@ static NSString * const kReuseIdentifier = @"componentKitPickerTableCell";
     for (int i = 0; i < ALPHABET_SECTIONS_NUMBER; i++)
          [_sectionsArray addObject:[NSMutableArray new]];
     
+    _selectedCount = 0;
+    
     UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
     [flowLayout setScrollDirection:UICollectionViewScrollDirectionVertical];
     [flowLayout setMinimumInteritemSpacing:0];
@@ -66,7 +69,8 @@ static NSString * const kReuseIdentifier = @"componentKitPickerTableCell";
     
     [self addSubview:_collectionView];
     
-    _sizeRangeProvider = [CKComponentFlexibleSizeRangeProvider providerWithFlexibility:CKComponentSizeRangeFlexibleHeight];
+    _sizeRangeProvider = [CKComponentFlexibleSizeRangeProvider
+                          providerWithFlexibility:CKComponentSizeRangeFlexibleHeight];
     
     const CKSizeRange sizeRange = [_sizeRangeProvider sizeRangeForBoundingSize:self.bounds.size];
     CKDataSourceConfiguration *configuration = [[CKDataSourceConfiguration<PickerViewModel *, CKPickerTableView *> alloc]
@@ -138,6 +142,10 @@ static NSString * const kReuseIdentifier = @"componentKitPickerTableCell";
     [self.collectionView reloadData];
 }
 
+- (long)selectedCount {
+    return _selectedCount;
+}
+
 #pragma mark - CallBackFromCKPickerTableCellComponent
 
 - (void)didSelectCellOfElement:(PickerViewModel *)element {
@@ -148,7 +156,40 @@ static NSString * const kReuseIdentifier = @"componentKitPickerTableCell";
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:0];
     
     if (self.delegate && [self.delegate respondsToSelector:@selector(CKPickerTableView:didSelectRowAtIndexPath:)]) {
-        [self.delegate CKPickerTableView:self didSelectRowAtIndexPath:indexPath];
+        [self.delegate CKPickerTableView:self
+                 didSelectRowAtIndexPath:indexPath];
+    }
+    
+    _selectedCount++;
+}
+
+- (void)didUnSelectCellOfElement:(PickerViewModel *)element {
+    if (!element)
+        return;
+    
+    long index = [self.viewModels indexOfObject:element];
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:0];
+    
+    if (self.delegate && [self.delegate respondsToSelector:@selector(CKPickerTableView:didUnSelectRowAtIndexPath:)]) {
+        [self.delegate CKPickerTableView:self
+               didUnSelectRowAtIndexPath:indexPath];
+    }
+    
+    _selectedCount--;
+}
+
+- (void)loadImageToCellComponent:(CKPickerTableCellComponent *)cellComponent
+                         element:(PickerViewModel *)element {
+    if (!cellComponent || !element)
+        return;
+    
+    if (self.delegate &&
+        [self.delegate respondsToSelector:@selector(loadImageToCellComponent:atIndexPath:)]) {
+        long index = [self.viewModels indexOfObject:element];
+        NSIndexPath *indexPath = [NSIndexPath indexPathForItem:index
+                                                     inSection:0];
+        [self.delegate loadImageToCellComponent:cellComponent
+                                    atIndexPath:indexPath];
     }
 }
 
@@ -182,7 +223,8 @@ static CKComponent *pickerTableComponentProvider(PickerViewModel *model, CKPicke
 - (void)collectionView:(UICollectionView *)collectionView
 didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     if (self.delegate && [self.delegate respondsToSelector:@selector(CKPickerTableView:didSelectRowAtIndexPath:)]) {
-        [self.delegate CKPickerTableView:self didSelectRowAtIndexPath:indexPath];
+        [self.delegate CKPickerTableView:self
+                 didSelectRowAtIndexPath:indexPath];
     }
 }
 

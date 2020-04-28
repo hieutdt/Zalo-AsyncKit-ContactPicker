@@ -10,6 +10,7 @@
 #import "CKPickerTableView.h"
 #import "AppConsts.h"
 #import "StringHelper.h"
+#import "ImageCache.h"
 
 #import <ComponentKit/CKComponentSubclass.h>
 
@@ -33,20 +34,26 @@
         scope.replaceState(scope, @NO);
     }
     
-    UIImage *avatarImage = [[UIImage alloc] init];
-    switch (viewModel.gradientColorCode) {
-        case GRADIENT_COLOR_BLUE:
-            avatarImage = [UIImage imageNamed:@"gradientBlue"];
-            break;
-        case GRADIENT_COLOR_RED:
-            avatarImage = [UIImage imageNamed:@"gradientRed"];
-            break;
-        case GRADIENT_COLOR_ORANGE:
-            avatarImage = [UIImage imageNamed:@"gradientOrange"];
-            break;
-        case GRADIENT_COLOR_GREEN:
-            avatarImage = [UIImage imageNamed:@"gradientGreen"];
-            break;
+    UIImage *avatarImage = [[ImageCache instance] imageForKey:viewModel.identifier];
+    BOOL hasAvatar = NO;
+    
+    if (!avatarImage) {
+        switch (viewModel.gradientColorCode) {
+            case GRADIENT_COLOR_BLUE:
+                avatarImage = [UIImage imageNamed:@"gradientBlue"];
+                break;
+            case GRADIENT_COLOR_RED:
+                avatarImage = [UIImage imageNamed:@"gradientRed"];
+                break;
+            case GRADIENT_COLOR_ORANGE:
+                avatarImage = [UIImage imageNamed:@"gradientOrange"];
+                break;
+            case GRADIENT_COLOR_GREEN:
+                avatarImage = [UIImage imageNamed:@"gradientGreen"];
+                break;
+        }
+    } else {
+        hasAvatar = YES;
     }
     
     UIImage *checkImage = [[UIImage alloc] init];
@@ -78,15 +85,17 @@
         {@selector(setUserInteractionEnabled:), NO}
     }
      size:{}];
-    
-    CKCenterLayoutComponent *centerTextComponent =
-    [CKCenterLayoutComponent
-     newWithCenteringOptions:CKCenterLayoutComponentCenteringXY
-     sizingOptions:CKCenterLayoutComponentSizingOptionDefault
-     child:shortNameLabel
-     size:{
-        .width = 60, .height = 60
-    }];
+    CKCenterLayoutComponent *centerTextComponent = nil;
+    if (!hasAvatar) {
+        centerTextComponent =
+        [CKCenterLayoutComponent
+         newWithCenteringOptions:CKCenterLayoutComponentCenteringXY
+         sizingOptions:CKCenterLayoutComponentSizingOptionDefault
+         child:shortNameLabel
+         size:{
+            .width = 60, .height = 60
+        }];
+    }
     
     CKImageComponent *avatarComponent =
     [CKImageComponent
@@ -150,6 +159,9 @@
 }
 
 - (void)didTap {
+    if (!self.viewModel.isChosen && self.context.selectedCount == MAX_PICK)
+        return;
+    
     [self updateState:^(id *oldState) {
         self.viewModel.isChosen = !self.viewModel.isChosen;
         if (self.viewModel.isChosen) {
@@ -159,9 +171,49 @@
         }
     } mode:CKUpdateModeAsynchronous];
     
-    if (self.context && [self.context respondsToSelector:@selector(didSelectCellOfElement:)]) {
-        [self.context didSelectCellOfElement:self.viewModel];
+    if (!self.viewModel.isChosen) {
+        if (self.context && [self.context respondsToSelector:@selector(didSelectCellOfElement:)]) {
+            [self.context didSelectCellOfElement:self.viewModel];
+        }
+    } else {
+        if (self.context && [self.context respondsToSelector:@selector(didUnSelectCellOfElement:)]) {
+            [self.context didUnSelectCellOfElement:self.viewModel];
+        }
     }
+}
+
+- (UIImage *)getAvatarImage:(PickerViewModel *)viewModel {
+    UIImage *avatarImage = [[ImageCache instance] imageForKey:viewModel.identifier];
+    if (avatarImage)
+        return avatarImage;
+    
+    switch (viewModel.gradientColorCode) {
+        case GRADIENT_COLOR_BLUE:
+            avatarImage = [UIImage imageNamed:@"gradientBlue"];
+            break;
+        case GRADIENT_COLOR_RED:
+            avatarImage = [UIImage imageNamed:@"gradientRed"];
+            break;
+        case GRADIENT_COLOR_ORANGE:
+            avatarImage = [UIImage imageNamed:@"gradientOrange"];
+            break;
+        case GRADIENT_COLOR_GREEN:
+            avatarImage = [UIImage imageNamed:@"gradientGreen"];
+            break;
+    }
+    
+    return avatarImage;
+}
+
+- (void)setAvatar:(UIImage *)avatar {
+    [self updateState:^(id *oldState) {
+        self.viewModel.isChosen = !self.viewModel.isChosen;
+        if (self.viewModel.isChosen) {
+            return @YES;
+        } else {
+            return @NO;
+        }
+    } mode:CKUpdateModeAsynchronous];
 }
 
 @end

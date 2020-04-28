@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "PickerViewModel.h"
+#import "CKPickerTableCellComponent.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -15,7 +16,14 @@ NS_ASSUME_NONNULL_BEGIN
 
 @protocol CKPickerTableViewDelegate <NSObject>
 
-- (void)CKPickerTableView:(CKPickerTableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath;
+- (void)CKPickerTableView:(CKPickerTableView *)tableView
+  didSelectRowAtIndexPath:(NSIndexPath *)indexPath;
+
+- (void)CKPickerTableView:(CKPickerTableView *)tableView
+didUnSelectRowAtIndexPath:(NSIndexPath *)indexPath;
+
+- (void)loadImageToCellComponent:(CKPickerTableCellComponent *)cellComponent
+                     atIndexPath:(NSIndexPath *)indexPath;
 
 @end
 
@@ -28,6 +36,10 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)reloadData;
 
 - (void)didSelectCellOfElement:(PickerViewModel *)element;
+
+- (void)didUnSelectCellOfElement:(PickerViewModel *)element;
+
+- (long)selectedCount;
 
 @end
 

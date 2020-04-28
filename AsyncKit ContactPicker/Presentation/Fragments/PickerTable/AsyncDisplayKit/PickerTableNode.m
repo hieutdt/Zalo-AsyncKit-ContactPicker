@@ -179,7 +179,8 @@
     return [NSString stringWithFormat:@"%c", sectionNameChar].uppercaseString;
 }
 
-- (ASCellNodeBlock)tableNode:(ASTableNode *)tableNode nodeBlockForRowAtIndexPath:(NSIndexPath *)indexPath {
+- (ASCellNodeBlock)tableNode:(ASTableNode *)tableNode
+  nodeBlockForRowAtIndexPath:(NSIndexPath *)indexPath {
     PickerViewModel *model = self.sectionsArray[indexPath.section][indexPath.row];
     
     ASCellNode *(^ASCellNodeBlock)(void) = ^ASCellNode *() {
@@ -190,7 +191,9 @@
         [cellNode setSelectionStyle:UITableViewCellSelectionStyleNone];
         
         if (self.delegate && [self.delegate respondsToSelector:@selector(pickerTableNode:loadImageToCellNode:atIndexPath:)]) {
-            [self.delegate pickerTableNode:self loadImageToCellNode:cellNode atIndexPath:indexPath];
+            [self.delegate pickerTableNode:self
+                       loadImageToCellNode:cellNode
+                               atIndexPath:indexPath];
         }
         
         return cellNode;

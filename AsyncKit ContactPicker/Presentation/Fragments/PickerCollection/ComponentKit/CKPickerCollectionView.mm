@@ -50,8 +50,6 @@ static const int kMaxPick = 5;
     
     UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
     [flowLayout setScrollDirection:UICollectionViewScrollDirectionHorizontal];
-    [flowLayout setMinimumInteritemSpacing:10];
-    [flowLayout setMinimumLineSpacing:0];
     
     _collectionView = [[UICollectionView alloc] initWithFrame:self.bounds
                                          collectionViewLayout:flowLayout];
@@ -61,7 +59,7 @@ static const int kMaxPick = 5;
     [self addSubview:_collectionView];
     
     _sizeRangeProvider = [CKComponentFlexibleSizeRangeProvider
-                          providerWithFlexibility:CKComponentSizeRangeFlexibleHeight];
+                          providerWithFlexibility:CKComponentSizeRangeFlexibleWidthAndHeight];
     
     const CKSizeRange sizeRange = [_sizeRangeProvider sizeRangeForBoundingSize:self.bounds.size];
     
@@ -82,7 +80,7 @@ static const int kMaxPick = 5;
     [_dataSource applyChangeset:initialChangeset mode:CKUpdateModeAsynchronous userInfo:nil];
 }
 
-- (void)enqueue:(NSMutableArray<PickerViewModel *> *)models {
+- (void)enqueue:(NSArray<PickerViewModel *> *)models {
     NSMutableDictionary<NSIndexPath *, PickerViewModel *> *items = [NSMutableDictionary new];
     for (NSInteger i = 0; i < models.count; i++) {
         [items setObject:models[i] forKey:[NSIndexPath indexPathForItem:i inSection:0]];
@@ -92,7 +90,21 @@ static const int kMaxPick = 5;
                                          withInsertedItems:items]
                                         build];
     
-    [_dataSource applyChangeset:changeset mode:CKUpdateModeAsynchronous userInfo:nil];
+    [_dataSource applyChangeset:changeset mode:CKUpdateModeSynchronous userInfo:nil];
+}
+
+- (void)dequeue:(NSArray<PickerViewModel *> *)models {
+    NSMutableArray *removeItems = [[NSMutableArray alloc] init];
+    for (NSInteger i = 0; i < models.count; i++) {
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:i inSection:0];
+        [removeItems addObject:@{indexPath : models[i]}];
+    }
+    
+    CKDataSourceChangeset *changeset = [[[CKDataSourceChangesetBuilder dataSourceChangeset]
+                                         withRemovedItems:[NSSet setWithArray:removeItems]]
+                                        build];
+    
+    [_dataSource applyChangeset:changeset mode:CKUpdateModeSynchronous userInfo:nil];
 }
 
 - (void)reloadData {
@@ -112,7 +124,7 @@ static const int kMaxPick = 5;
     
     [self.collectionView performBatchUpdates:^{
         [self.viewModels addObject:pickerModel];
-        [self enqueue:self.viewModels];
+        [self enqueue:@[pickerModel]];
         
         NSIndexPath *indexPath = [NSIndexPath indexPathForItem:self.viewModels.count - 1
                                                      inSection:0];
@@ -120,6 +132,24 @@ static const int kMaxPick = 5;
         
     } completion:^(BOOL finished) {
         [self scrollToBottom:self.collectionView];
+        [self layoutIfNeeded];
+    }];
+}
+
+- (void)removeElement:(PickerViewModel *)pickerModel {
+    if (!pickerModel)
+        return;
+    
+    [self.collectionView performBatchUpdates:^{
+        long index = [self.viewModels indexOfObject:pickerModel];
+        NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:0];
+        
+        [self.viewModels removeObject:pickerModel];
+        [self dequeue:@[pickerModel]];
+        
+        [self.collectionView deleteItemsAtIndexPaths:@[indexPath]];
+        
+    } completion:^(BOOL finished) {
         [self layoutIfNeeded];
     }];
 }
