@@ -11,6 +11,8 @@
 		0412D4642452964500DEB7EC /* CKSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0412D4602452961800DEB7EC /* CKSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		0412D4672452964500DEB7EC /* RenderCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0412D45E2452961800DEB7EC /* RenderCore.framework */; };
 		0412D4682452964500DEB7EC /* RenderCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0412D45E2452961800DEB7EC /* RenderCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		041BCD6D24583F4B005AA467 /* CKViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 041BCD6C24583F4B005AA467 /* CKViewController.xib */; };
+		041BCD6E24583F4B005AA467 /* CKViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 041BCD6C24583F4B005AA467 /* CKViewController.xib */; };
 		0454CD302446F8B700D34849 /* ContactBusiness.m in Sources */ = {isa = PBXBuildFile; fileRef = 0454CD2E2446F8B700D34849 /* ContactBusiness.m */; };
 		0454CD352446F8C000D34849 /* ContactAdaper.m in Sources */ = {isa = PBXBuildFile; fileRef = 0454CD312446F8C000D34849 /* ContactAdaper.m */; };
 		0454CD382446F8DF00D34849 /* Contact.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0454CD362446F8DF00D34849 /* Contact.mm */; };
@@ -21,8 +23,8 @@
 		0467E0032457D2A700243323 /* CKPickerCollectionView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0467E0012457D2A700243323 /* CKPickerCollectionView.mm */; };
 		046844A02451335200B47DB8 /* StateView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0468449F2451335200B47DB8 /* StateView.m */; };
 		046844A12451335200B47DB8 /* StateView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0468449F2451335200B47DB8 /* StateView.m */; };
-		046844A424514A8A00B47DB8 /* CKViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 046844A324514A8A00B47DB8 /* CKViewController.m */; };
-		046844A524514A8A00B47DB8 /* CKViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 046844A324514A8A00B47DB8 /* CKViewController.m */; };
+		046844A424514A8A00B47DB8 /* CKViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 046844A324514A8A00B47DB8 /* CKViewController.mm */; };
+		046844A524514A8A00B47DB8 /* CKViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 046844A324514A8A00B47DB8 /* CKViewController.mm */; };
 		047699122448435C00CEF11A /* PickerCollectionCellNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 047699112448435C00CEF11A /* PickerCollectionCellNode.m */; };
 		047699132448435C00CEF11A /* PickerCollectionCellNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 047699112448435C00CEF11A /* PickerCollectionCellNode.m */; };
 		0476991624484F1B00CEF11A /* PickerCollectionNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 0476991524484F1B00CEF11A /* PickerCollectionNode.m */; };
@@ -180,6 +182,7 @@
 
 /* Begin PBXFileReference section */
 		0412D4342452961800DEB7EC /* ComponentKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ComponentKit.xcodeproj; path = Carthage/Checkouts/ComponentKit/ComponentKit.xcodeproj; sourceTree = "<group>"; };
+		041BCD6C24583F4B005AA467 /* CKViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CKViewController.xib; sourceTree = "<group>"; };
 		0454CD2E2446F8B700D34849 /* ContactBusiness.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactBusiness.m; sourceTree = "<group>"; };
 		0454CD2F2446F8B700D34849 /* ContactBusiness.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactBusiness.h; sourceTree = "<group>"; };
 		0454CD312446F8C000D34849 /* ContactAdaper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactAdaper.m; sourceTree = "<group>"; };
@@ -199,7 +202,7 @@
 		0468449E2451335200B47DB8 /* StateView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = StateView.h; sourceTree = "<group>"; };
 		0468449F2451335200B47DB8 /* StateView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = StateView.m; sourceTree = "<group>"; };
 		046844A224514A8A00B47DB8 /* CKViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CKViewController.h; sourceTree = "<group>"; };
-		046844A324514A8A00B47DB8 /* CKViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CKViewController.m; sourceTree = "<group>"; };
+		046844A324514A8A00B47DB8 /* CKViewController.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = CKViewController.mm; sourceTree = "<group>"; };
 		047699102448435C00CEF11A /* PickerCollectionCellNode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PickerCollectionCellNode.h; sourceTree = "<group>"; };
 		047699112448435C00CEF11A /* PickerCollectionCellNode.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PickerCollectionCellNode.m; sourceTree = "<group>"; };
 		0476991424484F1B00CEF11A /* PickerCollectionNode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PickerCollectionNode.h; sourceTree = "<group>"; };
@@ -288,7 +291,8 @@
 				0490DEDE2446C58800ABB676 /* ASDKViewController.h */,
 				0490DEDF2446C58800ABB676 /* ASDKViewController.m */,
 				046844A224514A8A00B47DB8 /* CKViewController.h */,
-				046844A324514A8A00B47DB8 /* CKViewController.m */,
+				046844A324514A8A00B47DB8 /* CKViewController.mm */,
+				041BCD6C24583F4B005AA467 /* CKViewController.xib */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
@@ -722,6 +726,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				04E7170B2446C256006D54BB /* LaunchScreen.storyboard in Resources */,
+				041BCD6D24583F4B005AA467 /* CKViewController.xib in Resources */,
 				04E717082446C256006D54BB /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -730,6 +735,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				041BCD6E24583F4B005AA467 /* CKViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -821,7 +827,7 @@
 				04E717002446C255006D54BB /* SceneDelegate.m in Sources */,
 				04A1484F2452A22F009EACC7 /* CKPickerTableCellComponent.mm in Sources */,
 				0490DEE02446C58800ABB676 /* ASDKViewController.m in Sources */,
-				046844A424514A8A00B47DB8 /* CKViewController.m in Sources */,
+				046844A424514A8A00B47DB8 /* CKViewController.mm in Sources */,
 				0454CD492446F94400D34849 /* ImageCache.mm in Sources */,
 				049600702452E636008A2197 /* ImageHelper.m in Sources */,
 				049FCE2524475F7A00F285C4 /* PickerViewModel.m in Sources */,
@@ -841,7 +847,7 @@
 				04E717182446C256006D54BB /* AsyncKit_ContactPickerTests.m in Sources */,
 				04D9E6BC24571A9D00CE3D65 /* CKPickerCollectionCellComponent.mm in Sources */,
 				04A148502452A22F009EACC7 /* CKPickerTableCellComponent.mm in Sources */,
-				046844A524514A8A00B47DB8 /* CKViewController.m in Sources */,
+				046844A524514A8A00B47DB8 /* CKViewController.mm in Sources */,
 				0490DEE12446C58800ABB676 /* ASDKViewController.m in Sources */,
 				049FCE1C24474FBE00F285C4 /* PickerTableCellNode.m in Sources */,
 				048EF99F2452873900986FE3 /* CKPickerTableView.mm in Sources */,

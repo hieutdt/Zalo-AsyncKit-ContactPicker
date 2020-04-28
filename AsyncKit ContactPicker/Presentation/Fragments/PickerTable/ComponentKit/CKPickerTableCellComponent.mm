@@ -169,7 +169,7 @@
         } else {
             return @NO;
         }
-    } mode:CKUpdateModeAsynchronous];
+    } mode:CKUpdateModeSynchronous];
     
     if (!self.viewModel.isChosen) {
         if (self.context && [self.context respondsToSelector:@selector(didSelectCellOfElement:)]) {

@@ -41,6 +41,14 @@ static NSString * const kReuseIdentifier = @"componentKitPickerTableCell";
     return self;
 }
 
+- (instancetype)initWithCoder:(NSCoder *)coder {
+    self = [super initWithCoder:coder];
+    if (self) {
+        [self customInit];
+    }
+    return self;
+}
+
 - (instancetype)init {
     self = [super init];
     if (self) {
@@ -218,14 +226,6 @@ static CKComponent *pickerTableComponentProvider(PickerViewModel *model, CKPicke
   didEndDisplayingCell:(UICollectionViewCell *)cell
     forItemAtIndexPath:(NSIndexPath *)indexPath {
     [_dataSource announceDidEndDisplayingCell:cell];
-}
-
-- (void)collectionView:(UICollectionView *)collectionView
-didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    if (self.delegate && [self.delegate respondsToSelector:@selector(CKPickerTableView:didSelectRowAtIndexPath:)]) {
-        [self.delegate CKPickerTableView:self
-                 didSelectRowAtIndexPath:indexPath];
-    }
 }
 
 @end

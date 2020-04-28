@@ -23,9 +23,8 @@ static const int kCollectionViewHeight = 100;
 
 @interface CKViewController () <CKPickerTableViewDelegate>
 
-@property (nonatomic, strong) CKPickerTableView *tableView;
-@property (nonatomic, strong) CKPickerCollectionView *collectionView;
-@property (nonatomic, strong) UIStackView *mainStack;
+@property (weak, nonatomic) IBOutlet CKPickerTableView *tableView;
+@property (weak, nonatomic) IBOutlet CKPickerCollectionView *collectionView;
 
 @property (nonatomic, strong) ContactBusiness *contactBusiness;
 
@@ -40,15 +39,7 @@ static const int kCollectionViewHeight = 100;
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    self.view.backgroundColor = [UIColor systemBlueColor];
-    
-    _tableView = [[CKPickerTableView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height - kCollectionViewHeight - 200)];
     _tableView.delegate = self;
-    _collectionView = [[CKPickerCollectionView alloc] initWithFrame:CGRectMake(0, _tableView.frame.size.height, self.view.bounds.size.width, kCollectionViewHeight)];
-    _collectionView.backgroundColor = [UIColor systemYellowColor];
-    
-    [self.view addSubview:_tableView];
-    [self.view addSubview:_collectionView];
     
     _contactBusiness = [[ContactBusiness alloc] init];
     
