@@ -24,6 +24,7 @@ static const int kMaxPick = 5;
 
 @property (nonatomic, strong) NSMutableArray<PickerViewModel *> *viewModels;
 @property (nonatomic, strong) NSCache<NSString *, UIImage *> *imageCache;
+@property (nonatomic, strong) dispatch_queue_t serialQueue;
 
 @end
 
@@ -55,6 +56,8 @@ static const int kMaxPick = 5;
 
 - (void)customInit {
     _viewModels = [[NSMutableArray alloc] init];
+    
+    _serialQueue = dispatch_queue_create("CKPickerCollectionViewQueue", DISPATCH_QUEUE_SERIAL);
     
     UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
     [flowLayout setScrollDirection:UICollectionViewScrollDirectionHorizontal];
@@ -118,41 +121,45 @@ static const int kMaxPick = 5;
     
     self.hidden = NO;
     
-    [self.collectionView performBatchUpdates:^{
-        [self.viewModels addObject:pickerModel];
-        [self enqueue:@[pickerModel]];
-        
-        NSIndexPath *indexPath = [NSIndexPath indexPathForItem:self.viewModels.count - 1
-                                                     inSection:0];
-        [self.collectionView insertItemsAtIndexPaths:@[indexPath]];
-        
-    } completion:^(BOOL finished) {
-        [self scrollToBottom:self.collectionView];
-        [self layoutIfNeeded];
-    }];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.collectionView performBatchUpdates:^{
+            [self.viewModels addObject:pickerModel];
+            [self enqueue:@[pickerModel]];
+            
+            NSIndexPath *indexPath = [NSIndexPath indexPathForItem:self.viewModels.count - 1
+                                                         inSection:0];
+            [self.collectionView insertItemsAtIndexPaths:@[indexPath]];
+            
+        } completion:^(BOOL finished) {
+            [self scrollToBottom:self.collectionView];
+            [self layoutIfNeeded];
+        }];
+    });
 }
 
 - (void)removeElement:(PickerViewModel *)pickerModel {
     if (!pickerModel)
         return;
     
-    [self.collectionView performBatchUpdates:^{
-        long index = [self.viewModels indexOfObject:pickerModel];
-        NSIndexPath *indexPath = [NSIndexPath indexPathForItem:index inSection:0];
-        
-        [self.viewModels removeObject:pickerModel];
-        
-        // Delete in datasource
-        CKDataSourceChangeset *changeset = [[[CKDataSourceChangesetBuilder dataSourceChangeset]
-                                             withRemovedItems:[NSSet setWithObject:indexPath]]
-                                            build];
-        [_dataSource applyChangeset:changeset mode:CKUpdateModeSynchronous userInfo:nil];
-        
-        [self.collectionView deleteItemsAtIndexPaths:@[indexPath]];
-        
-    } completion:^(BOOL finished) {
-        [self layoutIfNeeded];
-    }];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [self.collectionView performBatchUpdates:^{
+            long index = [self.viewModels indexOfObject:pickerModel];
+            NSIndexPath *indexPath = [NSIndexPath indexPathForItem:index inSection:0];
+            
+            [self.viewModels removeObject:pickerModel];
+            
+            // Delete in datasource
+            CKDataSourceChangeset *changeset = [[[CKDataSourceChangesetBuilder dataSourceChangeset]
+                                                 withRemovedItems:[NSSet setWithObject:indexPath]]
+                                                build];
+            [_dataSource applyChangeset:changeset mode:CKUpdateModeSynchronous userInfo:nil];
+            
+            [self.collectionView deleteItemsAtIndexPaths:@[indexPath]];
+            
+        } completion:^(BOOL finished) {
+            [self layoutIfNeeded];
+        }];
+    });
 }
 
 #pragma mark - CKComponentProvider

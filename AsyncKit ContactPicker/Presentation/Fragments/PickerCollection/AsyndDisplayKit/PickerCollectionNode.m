@@ -97,7 +97,7 @@ static NSString *kReuseIdentifier = @"PickerCollectionViewCell";
 
 #pragma mark - SetData
 
-- (void)addElement:(PickerViewModel *)pickerModel withImage:( UIImage * _Nullable)image {
+- (void)addElement:(PickerViewModel *)pickerModel withImage:(UIImage * _Nullable)image {
     if (self.models.count == MAX_PICK)
         return;
     
@@ -109,7 +109,8 @@ static NSString *kReuseIdentifier = @"PickerCollectionViewCell";
     [self.collectionNode performBatchUpdates:^{
         [self.models addObject:pickerModel];
         if (image) {
-            [self.imageCache setObject:image forKey:pickerModel.identifier];
+            [self.imageCache setObject:image
+                                forKey:pickerModel.identifier];
         }
         
         NSIndexPath *indexPath = [NSIndexPath indexPathForRow:self.models.count - 1
@@ -173,6 +174,11 @@ static NSString *kReuseIdentifier = @"PickerCollectionViewCell";
         PickerCollectionCellNode *cellNode = [[PickerCollectionCellNode alloc] init];
         [cellNode setUpPickerModelForCell:model];
         cellNode.delegate = weakSelf;
+        UIImage *avatar = [self.imageCache objectForKey:model.identifier];
+        if (avatar) {
+            [cellNode setUpImageForCell:avatar];
+        }
+        
         return cellNode;
     };
     

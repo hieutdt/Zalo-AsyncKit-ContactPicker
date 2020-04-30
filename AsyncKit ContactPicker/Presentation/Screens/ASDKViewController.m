@@ -321,9 +321,25 @@
 #pragma mark - PickerTableNodeDelegate
 
 - (void)pickerTableNode:(PickerTableNode *)tableNode checkedCellOfElement:(PickerViewModel *)element {
-    if (tableNode == self.tableNode && element) {
-        [self.collectionNode addElement:element withImage:nil];
+    UIImage *imageFromCache = [[ImageCache instance] imageForKey:element.identifier];
+    if (!element)
+        return;
+    
+    if (imageFromCache) {
+        [self.collectionNode addElement:element
+                              withImage:imageFromCache];
         [self updateNavigationBar];
+    } else {
+        [self.contactBusiness loadContactImageByID:element.identifier
+                                        completion:^(UIImage *image, NSError *error) {
+            [[ImageCache instance] setImage:image
+                                     forKey:element.identifier];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.collectionNode addElement:element
+                                      withImage:image];
+                [self updateNavigationBar];
+            });
+        }];
     }
 }
 

@@ -249,7 +249,10 @@
 
 - (void)tableView:(UITableView *)tableView willDisplayHeaderView:(UIView *)view
                                                       forSection:(NSInteger)section {
-    view.tintColor = [UIColor whiteColor];
+    view.tintColor = [UIColor colorWithRed:243/255.f
+                                     green:247/255.f
+                                      blue:249/255.f
+                                     alpha:1];
 }
 
 @end
