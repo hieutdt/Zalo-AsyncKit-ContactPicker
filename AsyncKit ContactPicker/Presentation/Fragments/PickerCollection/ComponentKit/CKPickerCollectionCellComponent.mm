@@ -9,6 +9,8 @@
 #import "CKPickerCollectionCellComponent.h"
 #import "AppConsts.h"
 #import "StringHelper.h"
+#import "CKPickerCollectionView.h"
+#import "ImageCache.h"
 
 #define IMAGE_SIZE 60
 
@@ -18,28 +20,21 @@
 @property (nonatomic, strong) CKLabelComponent *nameLabelComponent;
 @property (nonatomic, strong) CKButtonComponent *removeButtonComponent;
 
+@property (nonatomic, assign) CKPickerCollectionView *context;
+@property (nonatomic, assign) PickerViewModel *model;
+
 @end
 
 @implementation CKPickerCollectionCellComponent
 
 + (instancetype)newWithPickerViewModel:(PickerViewModel *)viewModel
-                               context:(ImageCache *)context {
+                               context:(CKPickerCollectionView *)context {
     CKComponentScope scope(self);
     
-    UIImage *avatarImage = [[UIImage alloc] init];
-    switch (viewModel.gradientColorCode) {
-        case GRADIENT_COLOR_BLUE:
-            avatarImage = [UIImage imageNamed:@"gradientBlue"];
-            break;
-        case GRADIENT_COLOR_RED:
-            avatarImage = [UIImage imageNamed:@"gradientRed"];
-            break;
-        case GRADIENT_COLOR_ORANGE:
-            avatarImage = [UIImage imageNamed:@"gradientOrange"];
-            break;
-        case GRADIENT_COLOR_GREEN:
-            avatarImage = [UIImage imageNamed:@"gradientGreen"];
-            break;
+    UIImage *avatarImage = [[ImageCache instance] imageForKey:viewModel.identifier];
+    if (!avatarImage) {
+        avatarImage = [CKPickerCollectionCellComponent
+                       imageByColorCode:viewModel.gradientColorCode];
     }
     
     CKButtonComponent *removeButtonComponent =
@@ -50,7 +45,10 @@
         .titleFont = [UIFont boldSystemFontOfSize:15],
         .titleColors = [UIColor blackColor],
         .attributes = {
-            {@selector(setBackgroundColor:), [UIColor colorWithRed:240/255.f green:241/255.f blue:242/255.f alpha:1]},
+            {@selector(setBackgroundColor:), [UIColor colorWithRed:240/255.f
+                                                             green:241/255.f
+                                                              blue:242/255.f
+                                                             alpha:1]},
             {CKComponentViewAttribute::LayerAttribute(@selector(setCornerRadius:)), 20 / 2.f}
         },
         .size = {
@@ -103,10 +101,18 @@
      newWithInsets:UIEdgeInsetsMake(0, INFINITY, INFINITY, 0)
      component:removeButtonComponent];
     
-    CKOverlayLayoutComponent *overlayRemoveButtonComponent =
-    [CKOverlayLayoutComponent
-     newWithComponent:overlayComponent
-     overlay:insetRemoveButton];
+    CKOverlayLayoutComponent *overlayRemoveButtonComponent = nil;
+    if (![[ImageCache instance] imageForKey:viewModel.identifier]) {
+        overlayRemoveButtonComponent =
+        [CKOverlayLayoutComponent
+         newWithComponent:overlayComponent
+         overlay:insetRemoveButton];
+    } else {
+        overlayRemoveButtonComponent =
+        [CKOverlayLayoutComponent
+         newWithComponent:avatarComponent
+         overlay:insetRemoveButton];
+    }
     
     CKPickerCollectionCellComponent *c = [super newWithComponent:overlayRemoveButtonComponent];
     [super newWithComponent:[CKCenterLayoutComponent
@@ -119,6 +125,8 @@
         c.avatarImageComponent = avatarComponent;
         c.nameLabelComponent = shortNameComponent;
         c.removeButtonComponent = removeButtonComponent;
+        c.model = viewModel;
+        c.context = context;
     }
     
     return c;
@@ -128,8 +136,33 @@
     return @NO;
 }
 
++ (UIImage *)imageByColorCode:(int)colorCode {
+    UIImage *avatarImage = [[UIImage alloc] init];
+    switch (colorCode) {
+        case GRADIENT_COLOR_BLUE:
+            avatarImage = [UIImage imageNamed:@"gradientBlue"];
+            break;
+        case GRADIENT_COLOR_RED:
+            avatarImage = [UIImage imageNamed:@"gradientRed"];
+            break;
+        case GRADIENT_COLOR_ORANGE:
+            avatarImage = [UIImage imageNamed:@"gradientOrange"];
+            break;
+        case GRADIENT_COLOR_GREEN:
+            avatarImage = [UIImage imageNamed:@"gradientGreen"];
+            break;
+    }
+    return avatarImage;
+}
+
 - (void)removeButtonTapped {
-    
+    if (self.context && self.context.delegate &&
+        [self.context.delegate respondsToSelector:@selector(collectionView:removeElement:)]) {
+        [self.context.delegate collectionView:self.context
+                                removeElement:self.model];
+        
+        [self.context removeElement:self.model];
+    }
 }
 
 @end

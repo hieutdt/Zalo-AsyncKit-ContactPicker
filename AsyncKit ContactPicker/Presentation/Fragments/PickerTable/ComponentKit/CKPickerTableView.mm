@@ -186,6 +186,36 @@ static NSString * const kReuseIdentifier = @"componentKitPickerTableCell";
     _selectedCount--;
 }
 
+- (void)unselectCellOfElement:(PickerViewModel *)element {
+    if (!element)
+        return;
+    
+    long section = [element getSectionIndex];
+    if (section >= self.sectionsArray.count)
+        return;
+    
+    long index = [self.sectionsArray[section] indexOfObject:element];
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index
+                                                inSection:section];
+    
+    element.isChosen = !element.isChosen;
+    
+    [self.collectionView performBatchUpdates:^{
+        CKDataSourceChangeset *changeset = [[[CKDataSourceChangesetBuilder dataSourceChangeset]
+                                             withUpdatedItems:@{ indexPath : element }]
+                                            build];
+        
+        [_dataSource applyChangeset:changeset
+                               mode:CKUpdateModeSynchronous
+                           userInfo:nil];
+        
+        _selectedCount--;
+        
+    } completion:^(BOOL finished) {
+        [self layoutIfNeeded];
+    }];
+}
+
 - (void)loadImageToCellComponent:(CKPickerTableCellComponent *)cellComponent
                          element:(PickerViewModel *)element {
     if (!cellComponent || !element)

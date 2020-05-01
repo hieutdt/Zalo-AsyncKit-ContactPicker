@@ -10,7 +10,6 @@
 #import "PickerCollectionCellNode.h"
 #import "AppConsts.h"
 
-#define NEXT_BUTTON_HEIGHT 60
 #define PADDING_LEFT 15
 #define PADDING_RIGHT 15
 

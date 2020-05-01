@@ -11,7 +11,7 @@
 #import <ComponentKit/ComponentKit.h>
 
 #import "PickerViewModel.h"
-#import "ImageCache.h"
+#import "AppConsts.h"
 
 static NSString * const kReuseIdentifier = @"componentKitPickerCollectionCell";
 static const int kMaxPick = 5;
@@ -19,11 +19,11 @@ static const int kMaxPick = 5;
 @interface CKPickerCollectionView () <CKComponentProvider, UICollectionViewDelegateFlowLayout>
 
 @property (nonatomic, strong) UICollectionView *collectionView;
+@property (nonatomic, strong) UIButton *nextButton;
 @property (nonatomic, strong) CKCollectionViewDataSource *dataSource;
 @property (nonatomic, strong) CKComponentFlexibleSizeRangeProvider *sizeRangeProvider;
 
 @property (nonatomic, strong) NSMutableArray<PickerViewModel *> *viewModels;
-@property (nonatomic, strong) NSCache<NSString *, UIImage *> *imageCache;
 @property (nonatomic, strong) dispatch_queue_t serialQueue;
 
 @end
@@ -55,6 +55,11 @@ static const int kMaxPick = 5;
 }
 
 - (void)customInit {
+    self.layer.shadowRadius = 3;
+    self.layer.shadowOffset = CGSizeZero;
+    self.layer.shadowColor = [UIColor blackColor].CGColor;
+    self.layer.shadowOpacity = 0.3;
+    
     _viewModels = [[NSMutableArray alloc] init];
     
     _serialQueue = dispatch_queue_create("CKPickerCollectionViewQueue", DISPATCH_QUEUE_SERIAL);
@@ -69,15 +74,39 @@ static const int kMaxPick = 5;
     _collectionView.delegate = self;
     
     [self addSubview:_collectionView];
+    _collectionView.translatesAutoresizingMaskIntoConstraints = NO;
+    [_collectionView.topAnchor constraintEqualToAnchor:self.topAnchor].active = YES;
+    [_collectionView.leadingAnchor constraintEqualToAnchor:self.leadingAnchor].active = YES;
+    [_collectionView.heightAnchor constraintEqualToConstant:100].active = YES;
+    
+    _nextButton = [[UIButton alloc] init];
+    [_nextButton setTitle:@"→" forState:UIControlStateNormal];
+    _nextButton.titleLabel.textColor = [UIColor whiteColor];
+    _nextButton.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
+    _nextButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
+    [_nextButton setBackgroundColor:[UIColor colorWithRed:52/255.f green:152/255.f blue:219/255.f alpha:1]];
+    [_nextButton.titleLabel setFont:[UIFont boldSystemFontOfSize:30]];
+    _nextButton.layer.cornerRadius = NEXT_BUTTON_HEIGHT / 2;
+    
+    [self addSubview:_nextButton];
+    _nextButton.translatesAutoresizingMaskIntoConstraints = NO;
+    [_nextButton.centerYAnchor constraintEqualToAnchor:self.collectionView.centerYAnchor].active = YES;
+    [_nextButton.widthAnchor constraintEqualToConstant:NEXT_BUTTON_HEIGHT].active = YES;
+    [_nextButton.heightAnchor constraintEqualToConstant:NEXT_BUTTON_HEIGHT].active = YES;
+    [_nextButton.trailingAnchor constraintEqualToAnchor:self.trailingAnchor
+                                               constant:-10].active = YES;
+    
+    [_collectionView.trailingAnchor constraintEqualToAnchor:_nextButton.leadingAnchor
+                                                   constant:-10].active = YES;
     
     _sizeRangeProvider = [CKComponentFlexibleSizeRangeProvider
                           providerWithFlexibility:CKComponentSizeRangeFlexibleWidthAndHeight];
     
     const CKSizeRange sizeRange = [_sizeRangeProvider sizeRangeForBoundingSize:self.bounds.size];
     
-    CKDataSourceConfiguration *configuration = [[CKDataSourceConfiguration<PickerViewModel *, ImageCache *> alloc]
+    CKDataSourceConfiguration *configuration = [[CKDataSourceConfiguration<PickerViewModel *, CKPickerCollectionView *> alloc]
                                                 initWithComponentProviderFunc:pickerCollectionComponentProvider
-                                                context:[ImageCache instance]
+                                                context:self
                                                 sizeRange:sizeRange];
     
     _dataSource = [[CKCollectionViewDataSource alloc] initWithCollectionView:self.collectionView
@@ -112,7 +141,8 @@ static const int kMaxPick = 5;
 
 #pragma mark - PublicMethods
 
-- (void)addElement:(PickerViewModel *)pickerModel withImage:(UIImage *)image {
+- (void)addElement:(PickerViewModel *)pickerModel
+         withImage:(UIImage *)image {
     if (self.viewModels.count == kMaxPick)
         return;
     
@@ -121,50 +151,48 @@ static const int kMaxPick = 5;
     
     self.hidden = NO;
     
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [self.collectionView performBatchUpdates:^{
-            [self.viewModels addObject:pickerModel];
-            [self enqueue:@[pickerModel]];
-            
-            NSIndexPath *indexPath = [NSIndexPath indexPathForItem:self.viewModels.count - 1
-                                                         inSection:0];
-            [self.collectionView insertItemsAtIndexPaths:@[indexPath]];
-            
-        } completion:^(BOOL finished) {
-            [self scrollToBottom:self.collectionView];
-            [self layoutIfNeeded];
-        }];
-    });
+    [self.collectionView performBatchUpdates:^{
+        [self.viewModels addObject:pickerModel];
+        [self enqueue:@[pickerModel]];
+        
+        NSIndexPath *indexPath = [NSIndexPath indexPathForItem:self.viewModels.count - 1
+                                                     inSection:0];
+        [self.collectionView insertItemsAtIndexPaths:@[indexPath]];
+    } completion:^(BOOL finished) {
+        [self scrollToBottom:self.collectionView];
+        [self layoutIfNeeded];
+    }];
 }
 
 - (void)removeElement:(PickerViewModel *)pickerModel {
     if (!pickerModel)
         return;
     
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [self.collectionView performBatchUpdates:^{
-            long index = [self.viewModels indexOfObject:pickerModel];
-            NSIndexPath *indexPath = [NSIndexPath indexPathForItem:index inSection:0];
-            
-            [self.viewModels removeObject:pickerModel];
-            
-            // Delete in datasource
-            CKDataSourceChangeset *changeset = [[[CKDataSourceChangesetBuilder dataSourceChangeset]
-                                                 withRemovedItems:[NSSet setWithObject:indexPath]]
-                                                build];
-            [_dataSource applyChangeset:changeset mode:CKUpdateModeSynchronous userInfo:nil];
-            
-            [self.collectionView deleteItemsAtIndexPaths:@[indexPath]];
-            
-        } completion:^(BOOL finished) {
-            [self layoutIfNeeded];
-        }];
-    });
+    [self.collectionView performBatchUpdates:^{
+        long index = [self.viewModels indexOfObject:pickerModel];
+        NSIndexPath *indexPath = [NSIndexPath indexPathForItem:index inSection:0];
+        
+        [self.viewModels removeObject:pickerModel];
+        
+        // Delete in datasource
+        CKDataSourceChangeset *changeset = [[[CKDataSourceChangesetBuilder dataSourceChangeset]
+                                             withRemovedItems:[NSSet setWithObject:indexPath]]
+                                            build];
+        [_dataSource applyChangeset:changeset
+                               mode:CKUpdateModeSynchronous
+                           userInfo:nil];
+        
+        [self.collectionView deleteItemsAtIndexPaths:@[indexPath]];
+    } completion:^(BOOL finished) {
+        [self layoutIfNeeded];
+        if (self.viewModels.count == 0)
+            self.hidden = YES;
+    }];
 }
 
 #pragma mark - CKComponentProvider
 
-static CKComponent *pickerCollectionComponentProvider(PickerViewModel *model, ImageCache *context) {
+static CKComponent *pickerCollectionComponentProvider(PickerViewModel *model, CKPickerCollectionView *context) {
     return [CKPickerCollectionCellComponent newWithPickerViewModel:model
                                                            context:context];
 }

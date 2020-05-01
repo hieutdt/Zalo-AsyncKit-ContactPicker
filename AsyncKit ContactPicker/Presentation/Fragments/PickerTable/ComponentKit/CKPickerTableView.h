@@ -39,6 +39,8 @@ didUnSelectRowAtIndexPath:(NSIndexPath *)indexPath;
 
 - (void)didUnSelectCellOfElement:(PickerViewModel *)element;
 
+- (void)unselectCellOfElement:(PickerViewModel *)elemeent;
+
 - (long)selectedCount;
 
 @end

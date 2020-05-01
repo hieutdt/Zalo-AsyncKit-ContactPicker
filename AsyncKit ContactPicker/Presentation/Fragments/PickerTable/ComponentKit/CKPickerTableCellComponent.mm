@@ -213,7 +213,7 @@
         } else {
             return @NO;
         }
-    } mode:CKUpdateModeAsynchronous];
+    } mode:CKUpdateModeSynchronous];
 }
 
 @end

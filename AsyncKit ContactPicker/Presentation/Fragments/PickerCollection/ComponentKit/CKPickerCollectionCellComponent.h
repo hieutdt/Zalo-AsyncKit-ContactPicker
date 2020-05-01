@@ -10,12 +10,14 @@
 #import "PickerViewModel.h"
 #import "ImageCache.h"
 
+@class CKPickerCollectionView;
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface CKPickerCollectionCellComponent : CKCompositeComponent
 
 + (instancetype)newWithPickerViewModel:(PickerViewModel *)viewModel
-                               context:(ImageCache *)context;
+                               context:(CKPickerCollectionView *)context;
 
 @end
 

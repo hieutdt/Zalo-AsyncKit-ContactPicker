@@ -21,7 +21,7 @@
 
 static const int kCollectionViewHeight = 100;
 
-@interface CKViewController () <CKPickerTableViewDelegate>
+@interface CKViewController () <CKPickerTableViewDelegate, CKPickerCollectionViewDelegate>
 
 @property (weak, nonatomic) IBOutlet CKPickerTableView *tableView;
 @property (weak, nonatomic) IBOutlet CKPickerCollectionView *collectionView;
@@ -40,6 +40,8 @@ static const int kCollectionViewHeight = 100;
     [super viewDidLoad];
     
     _tableView.delegate = self;
+    _collectionView.delegate = self;
+    _collectionView.hidden = YES;
     
     _contactBusiness = [[ContactBusiness alloc] init];
     
@@ -131,7 +133,24 @@ static const int kCollectionViewHeight = 100;
         return;
     
     PickerViewModel *model = self.viewModels[index];
-    [self.collectionView addElement:model withImage:nil];
+    UIImage *imageFromCache = [[ImageCache instance] imageForKey:model.identifier];
+    if (imageFromCache) {
+        [self.collectionView addElement:model
+                              withImage:imageFromCache];
+    } else {
+        [self.contactBusiness loadContactImageByID:model.identifier
+                                        completion:^(UIImage *image, NSError *error) {
+            if (image) {
+                [[ImageCache instance] setImage:image
+                                         forKey:model.identifier];
+            }
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self.collectionView addElement:model
+                                      withImage:image];
+            });
+        }];
+    }
 }
 
 - (void)CKPickerTableView:(CKPickerTableView *)tableView
@@ -153,5 +172,16 @@ didUnSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     }
 }
 
+#pragma mark - PickerCollectionViewDelegate
+
+- (void)collectionView:(CKPickerCollectionView *)collectionView
+         removeElement:(PickerViewModel *)element {
+    if (!element)
+        return;
+    
+    if (collectionView == self.collectionView) {
+        [self.tableView unselectCellOfElement:element];
+    }
+}
 
 @end

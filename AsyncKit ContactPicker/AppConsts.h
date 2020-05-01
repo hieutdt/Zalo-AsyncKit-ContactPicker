@@ -32,6 +32,8 @@ typedef NS_ENUM(NSInteger, ContactAuthorState) {
 #define GRADIENT_COLOR_ORANGE   2
 #define GRADIENT_COLOR_GREEN    3
 
+#define NEXT_BUTTON_HEIGHT 60
+
 static const int FIRST_ALPHABET_ASCII_CODE = 97;
 static const int ALPHABET_SECTIONS_NUMBER = 27;
 
