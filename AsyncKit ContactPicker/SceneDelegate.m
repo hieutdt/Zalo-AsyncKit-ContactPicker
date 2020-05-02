@@ -1,6 +1,7 @@
 #import "SceneDelegate.h"
 #import "ASDKViewController.h"
 #import "CKViewController.h"
+#import "IGLKViewController.h"
 
 @interface SceneDelegate ()
 
@@ -15,18 +16,28 @@
     
     ASDKViewController *ASDK = [[ASDKViewController alloc] init];
     CKViewController *CK = [[CKViewController alloc] init];
+    IGLKViewController *IGLK = [[IGLKViewController alloc] init];
     
-    UITabBarItem *ASDKTabBarItem = [[UITabBarItem alloc] initWithTitle:@"ASDK" image:[UIImage imageNamed:@""] tag:0];
-    UITabBarItem *CKTabBarItem = [[UITabBarItem alloc] initWithTitle:@"CK" image:[UIImage imageNamed:@""] tag:1];
+    UITabBarItem *ASDKTabBarItem = [[UITabBarItem alloc] initWithTitle:@"ASDK"
+                                                                 image:[UIImage imageNamed:@""]
+                                                                   tag:0];
+    UITabBarItem *CKTabBarItem = [[UITabBarItem alloc] initWithTitle:@"CK"
+                                                               image:[UIImage imageNamed:@""]
+                                                                 tag:1];
+    UITabBarItem *IGLKTabBarItem = [[UITabBarItem alloc] initWithTitle:@"IGLK"
+                                                                 image:[UIImage imageNamed:@""]
+                                                                   tag:2];
     
     ASDK.tabBarItem = ASDKTabBarItem;
     CK.tabBarItem = CKTabBarItem;
+    IGLK.tabBarItem = IGLKTabBarItem;
     
     UITabBarController *tabBarController = [[UITabBarController alloc] init];
-    tabBarController.viewControllers = @[ASDK, CK];
+    tabBarController.viewControllers = @[ASDK, CK, IGLK];
     tabBarController.selectedViewController = ASDK;
     
-    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:tabBarController];
+    UINavigationController *navigationController = [[UINavigationController alloc]
+                                                    initWithRootViewController:tabBarController];
     
     _window.rootViewController = navigationController;
     _window.windowScene = (UIWindowScene *)scene;

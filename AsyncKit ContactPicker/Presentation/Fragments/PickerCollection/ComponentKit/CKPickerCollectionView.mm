@@ -76,7 +76,8 @@ static const int kMaxPick = 5;
     [self addSubview:_collectionView];
     _collectionView.translatesAutoresizingMaskIntoConstraints = NO;
     [_collectionView.topAnchor constraintEqualToAnchor:self.topAnchor].active = YES;
-    [_collectionView.leadingAnchor constraintEqualToAnchor:self.leadingAnchor].active = YES;
+    [_collectionView.leadingAnchor constraintEqualToAnchor:self.leadingAnchor
+                                                  constant:5].active = YES;
     [_collectionView.heightAnchor constraintEqualToConstant:100].active = YES;
     
     _nextButton = [[UIButton alloc] init];
@@ -84,7 +85,10 @@ static const int kMaxPick = 5;
     _nextButton.titleLabel.textColor = [UIColor whiteColor];
     _nextButton.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
     _nextButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
-    [_nextButton setBackgroundColor:[UIColor colorWithRed:52/255.f green:152/255.f blue:219/255.f alpha:1]];
+    [_nextButton setBackgroundColor:[UIColor colorWithRed:52/255.f
+                                                    green:152/255.f
+                                                     blue:219/255.f
+                                                    alpha:1]];
     [_nextButton.titleLabel setFont:[UIFont boldSystemFontOfSize:30]];
     _nextButton.layer.cornerRadius = NEXT_BUTTON_HEIGHT / 2;
     
@@ -155,9 +159,6 @@ static const int kMaxPick = 5;
         [self.viewModels addObject:pickerModel];
         [self enqueue:@[pickerModel]];
         
-        NSIndexPath *indexPath = [NSIndexPath indexPathForItem:self.viewModels.count - 1
-                                                     inSection:0];
-        [self.collectionView insertItemsAtIndexPaths:@[indexPath]];
     } completion:^(BOOL finished) {
         [self scrollToBottom:self.collectionView];
         [self layoutIfNeeded];
@@ -170,9 +171,12 @@ static const int kMaxPick = 5;
     
     [self.collectionView performBatchUpdates:^{
         long index = [self.viewModels indexOfObject:pickerModel];
-        NSIndexPath *indexPath = [NSIndexPath indexPathForItem:index inSection:0];
+        NSIndexPath *indexPath = [NSIndexPath indexPathForItem:index
+                                                     inSection:0];
         
         [self.viewModels removeObject:pickerModel];
+        if (self.viewModels.count == 0)
+            self.hidden = YES;
         
         // Delete in datasource
         CKDataSourceChangeset *changeset = [[[CKDataSourceChangesetBuilder dataSourceChangeset]
@@ -182,11 +186,8 @@ static const int kMaxPick = 5;
                                mode:CKUpdateModeSynchronous
                            userInfo:nil];
         
-        [self.collectionView deleteItemsAtIndexPaths:@[indexPath]];
     } completion:^(BOOL finished) {
         [self layoutIfNeeded];
-        if (self.viewModels.count == 0)
-            self.hidden = YES;
     }];
 }
 

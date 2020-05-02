@@ -33,8 +33,6 @@ didUnSelectRowAtIndexPath:(NSIndexPath *)indexPath;
 
 - (void)setViewModels:(NSMutableArray<PickerViewModel *> *)viewModels;
 
-- (void)reloadData;
-
 - (void)didSelectCellOfElement:(PickerViewModel *)element;
 
 - (void)didUnSelectCellOfElement:(PickerViewModel *)element;
@@ -42,6 +40,8 @@ didUnSelectRowAtIndexPath:(NSIndexPath *)indexPath;
 - (void)unselectCellOfElement:(PickerViewModel *)elemeent;
 
 - (long)selectedCount;
+
+- (void)searchByString:(NSString *)searchString;
 
 @end
 

@@ -10,6 +10,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CKViewController">
             <connections>
                 <outlet property="collectionView" destination="ARt-OA-mGH" id="zUS-wD-gei"/>
+                <outlet property="searchBar" destination="BcY-VR-U2Y" id="duW-xL-zyz"/>
                 <outlet property="tableView" destination="Tt6-SN-dS5" id="9n8-bq-wQb"/>
                 <outlet property="view" destination="DNS-lc-4Yq" id="kau-iD-XUI"/>
             </connections>
@@ -20,14 +21,18 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="2DC-qE-lo6">
-                    <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                    <rect key="frame" x="0.0" y="44" width="414" height="852"/>
                     <subviews>
+                        <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="BcY-VR-U2Y">
+                            <rect key="frame" x="0.0" y="0.0" width="414" height="92"/>
+                            <textInputTraits key="textInputTraits"/>
+                        </searchBar>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Tt6-SN-dS5" customClass="CKPickerTableView">
-                            <rect key="frame" x="0.0" y="0.0" width="414" height="746"/>
+                            <rect key="frame" x="0.0" y="92" width="414" height="610"/>
                             <color key="backgroundColor" systemColor="systemGreenColor" red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ARt-OA-mGH" customClass="CKPickerCollectionView">
-                            <rect key="frame" x="0.0" y="746" width="414" height="150"/>
+                            <rect key="frame" x="0.0" y="702" width="414" height="150"/>
                             <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="150" id="IqO-Wa-bg0"/>
@@ -41,10 +46,10 @@
                 <constraint firstItem="2DC-qE-lo6" firstAttribute="trailing" secondItem="wuL-56-ynQ" secondAttribute="trailing" id="1QW-4Y-wZT"/>
                 <constraint firstAttribute="bottom" secondItem="2DC-qE-lo6" secondAttribute="bottom" id="G6D-zS-O5w"/>
                 <constraint firstItem="2DC-qE-lo6" firstAttribute="leading" secondItem="wuL-56-ynQ" secondAttribute="leading" id="WvX-Cd-far"/>
-                <constraint firstItem="2DC-qE-lo6" firstAttribute="top" secondItem="wuL-56-ynQ" secondAttribute="top" constant="-44" id="lfF-6Z-oYA"/>
+                <constraint firstItem="2DC-qE-lo6" firstAttribute="top" secondItem="wuL-56-ynQ" secondAttribute="top" id="lfF-6Z-oYA"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="wuL-56-ynQ"/>
-            <point key="canvasLocation" x="76.811594202898561" y="70.982142857142847"/>
+            <point key="canvasLocation" x="87" y="100"/>
         </view>
     </objects>
 </document>

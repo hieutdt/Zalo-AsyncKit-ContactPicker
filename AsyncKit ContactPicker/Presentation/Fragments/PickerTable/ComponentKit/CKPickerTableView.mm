@@ -25,8 +25,10 @@ static NSString * const kReuseIdentifier = @"componentKitPickerTableCell";
 @property (nonatomic, strong) CKComponentFlexibleSizeRangeProvider *sizeRangeProvider;
 
 @property (nonatomic, strong) NSMutableArray<PickerViewModel *> *viewModels;
+@property (nonatomic, strong) NSMutableArray<PickerViewModel *> *searchModels;
 @property (nonatomic, strong) NSMutableArray<NSMutableArray *> *sectionsArray;
 @property (nonatomic, assign) long selectedCount;
+@property (nonatomic, assign) BOOL searching;
 
 @end
 
@@ -81,7 +83,8 @@ static NSString * const kReuseIdentifier = @"componentKitPickerTableCell";
                           providerWithFlexibility:CKComponentSizeRangeFlexibleHeight];
     
     const CKSizeRange sizeRange = [_sizeRangeProvider sizeRangeForBoundingSize:self.bounds.size];
-    CKDataSourceConfiguration *configuration = [[CKDataSourceConfiguration<PickerViewModel *, CKPickerTableView *> alloc]
+    CKDataSourceConfiguration *configuration = [[CKDataSourceConfiguration<PickerViewModel *, CKPickerTableView *>
+                                                 alloc]
                                                 initWithComponentProviderFunc:pickerTableComponentProvider
                                                 context:self
                                                 sizeRange:sizeRange];
@@ -95,14 +98,17 @@ static NSString * const kReuseIdentifier = @"componentKitPickerTableCell";
                                                 withInsertedSections:indexSet]
                                                build];
     
-    [_dataSource applyChangeset:initialChangeset mode:CKUpdateModeAsynchronous userInfo:nil];
+    [_dataSource applyChangeset:initialChangeset
+                           mode:CKUpdateModeSynchronous
+                       userInfo:nil];
 }
 
 - (void)enqueue:(NSMutableArray<NSMutableArray *> *)sections {
     NSMutableDictionary<NSIndexPath *, PickerViewModel *> *items = [NSMutableDictionary new];
     for (NSInteger i = 0; i < sections.count; i++) {
         for (NSInteger j = 0; j < sections[i].count; j++) {
-            [items setObject:sections[i][j] forKey:[NSIndexPath indexPathForItem:j inSection:i]];
+            [items setObject:sections[i][j]
+                      forKey:[NSIndexPath indexPathForItem:j inSection:i]];
         }
     }
     
@@ -110,7 +116,9 @@ static NSString * const kReuseIdentifier = @"componentKitPickerTableCell";
                                          withInsertedItems:items]
                                         build];
     
-    [_dataSource applyChangeset:changeset mode:CKUpdateModeAsynchronous userInfo:nil];
+    [_dataSource applyChangeset:changeset
+                           mode:CKUpdateModeSynchronous
+                       userInfo:nil];
 }
 
 - (void)setViewModels:(NSMutableArray<PickerViewModel *> *)viewModels {
@@ -146,12 +154,52 @@ static NSString * const kReuseIdentifier = @"componentKitPickerTableCell";
     }
 }
 
-- (void)reloadData {
-    [self.collectionView reloadData];
-}
-
 - (long)selectedCount {
     return _selectedCount;
+}
+
+- (void)searchByString:(NSString *)searchString {
+    if (!searchString) {
+        self.searching = NO;
+    } else if (searchString.length == 0) {
+        self.searching = NO;
+    } else {
+        [_searchModels removeAllObjects];
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"self.name contains[c] %@", searchString];
+        _searchModels = [NSMutableArray arrayWithArray:[self.viewModels filteredArrayUsingPredicate:predicate]];
+        self.searching = YES;
+    }
+    
+    [self removeAllCells:self.sectionsArray];
+    
+    if (self.searching) {
+        [self fitPickerModelsData:self.searchModels
+                       toSections:self.sectionsArray];
+    } else {
+        [self fitPickerModelsData:self.viewModels
+                       toSections:self.sectionsArray];
+    }
+    
+    [self enqueue:self.sectionsArray];
+}
+
+- (void)removeAllCells:(NSMutableArray<NSMutableArray *> *)sections {
+    NSMutableSet *removeSet = [[NSMutableSet alloc] init];
+    for (NSInteger i = 0; i < sections.count; i++) {
+        for (NSInteger j = 0; j < sections[i].count; j++) {
+            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:j
+                                                        inSection:i];
+            [removeSet addObject:indexPath];
+        }
+    }
+    
+    CKDataSourceChangeset *changeset = [[[CKDataSourceChangesetBuilder dataSourceChangeset]
+                                         withRemovedItems:removeSet]
+                                        build];
+    
+    [_dataSource applyChangeset:changeset
+                           mode:CKUpdateModeSynchronous
+                       userInfo:nil];
 }
 
 #pragma mark - CallBackFromCKPickerTableCellComponent

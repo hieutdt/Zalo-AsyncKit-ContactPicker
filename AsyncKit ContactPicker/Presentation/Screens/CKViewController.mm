@@ -21,10 +21,11 @@
 
 static const int kCollectionViewHeight = 100;
 
-@interface CKViewController () <CKPickerTableViewDelegate, CKPickerCollectionViewDelegate>
+@interface CKViewController () <CKPickerTableViewDelegate, CKPickerCollectionViewDelegate, UISearchBarDelegate>
 
 @property (weak, nonatomic) IBOutlet CKPickerTableView *tableView;
 @property (weak, nonatomic) IBOutlet CKPickerCollectionView *collectionView;
+@property (weak, nonatomic) IBOutlet UISearchBar *searchBar;
 
 @property (nonatomic, strong) ContactBusiness *contactBusiness;
 
@@ -42,6 +43,9 @@ static const int kCollectionViewHeight = 100;
     _tableView.delegate = self;
     _collectionView.delegate = self;
     _collectionView.hidden = YES;
+    
+    _searchBar.delegate = self;
+    _searchBar.placeholder = @"Search for contacts";
     
     _contactBusiness = [[ContactBusiness alloc] init];
     
@@ -90,7 +94,6 @@ static const int kCollectionViewHeight = 100;
                 
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [self.tableView setViewModels:self.viewModels];
-                    [self.tableView reloadData];
                 });
             }
         }
@@ -182,6 +185,12 @@ didUnSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (collectionView == self.collectionView) {
         [self.tableView unselectCellOfElement:element];
     }
+}
+
+#pragma mark - UISearchBarDelegate
+
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
+    [self.tableView searchByString:searchText];
 }
 
 @end

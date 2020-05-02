@@ -13,6 +13,8 @@
 		0412D4682452964500DEB7EC /* RenderCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0412D45E2452961800DEB7EC /* RenderCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		041BCD6D24583F4B005AA467 /* CKViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 041BCD6C24583F4B005AA467 /* CKViewController.xib */; };
 		041BCD6E24583F4B005AA467 /* CKViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 041BCD6C24583F4B005AA467 /* CKViewController.xib */; };
+		044BC371245D604400E41101 /* IGLKViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 044BC370245D604400E41101 /* IGLKViewController.m */; };
+		044BC372245D604400E41101 /* IGLKViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 044BC370245D604400E41101 /* IGLKViewController.m */; };
 		0454CD302446F8B700D34849 /* ContactBusiness.m in Sources */ = {isa = PBXBuildFile; fileRef = 0454CD2E2446F8B700D34849 /* ContactBusiness.m */; };
 		0454CD352446F8C000D34849 /* ContactAdaper.m in Sources */ = {isa = PBXBuildFile; fileRef = 0454CD312446F8C000D34849 /* ContactAdaper.m */; };
 		0454CD382446F8DF00D34849 /* Contact.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0454CD362446F8DF00D34849 /* Contact.mm */; };
@@ -54,6 +56,8 @@
 		04E7170E2446C256006D54BB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E7170D2446C256006D54BB /* main.m */; };
 		04E717182446C256006D54BB /* AsyncKit_ContactPickerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E717172446C256006D54BB /* AsyncKit_ContactPickerTests.m */; };
 		04FB17352452925D00D8DABA /* Contacts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 049FCE1D24475BDA00F285C4 /* Contacts.framework */; };
+		4AE0431EDFB1E2717035EFB5 /* Pods_AsyncKit_ContactPickerTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00AAC0A0EECD08B95643EAE9 /* Pods_AsyncKit_ContactPickerTests.framework */; };
+		AA576A2FCBD4DE7AB218FBB6 /* Pods_AsyncKit_ContactPicker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7BB827A89BEAECF58358A1D /* Pods_AsyncKit_ContactPicker.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -181,8 +185,11 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		00AAC0A0EECD08B95643EAE9 /* Pods_AsyncKit_ContactPickerTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AsyncKit_ContactPickerTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		0412D4342452961800DEB7EC /* ComponentKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ComponentKit.xcodeproj; path = Carthage/Checkouts/ComponentKit/ComponentKit.xcodeproj; sourceTree = "<group>"; };
 		041BCD6C24583F4B005AA467 /* CKViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CKViewController.xib; sourceTree = "<group>"; };
+		044BC36F245D604400E41101 /* IGLKViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IGLKViewController.h; sourceTree = "<group>"; };
+		044BC370245D604400E41101 /* IGLKViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IGLKViewController.m; sourceTree = "<group>"; };
 		0454CD2E2446F8B700D34849 /* ContactBusiness.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactBusiness.m; sourceTree = "<group>"; };
 		0454CD2F2446F8B700D34849 /* ContactBusiness.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactBusiness.h; sourceTree = "<group>"; };
 		0454CD312446F8C000D34849 /* ContactAdaper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactAdaper.m; sourceTree = "<group>"; };
@@ -240,6 +247,7 @@
 		903AA29F5BF80D5202F316EA /* Pods-AsyncKit ContactPickerTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AsyncKit ContactPickerTests.release.xcconfig"; path = "Target Support Files/Pods-AsyncKit ContactPickerTests/Pods-AsyncKit ContactPickerTests.release.xcconfig"; sourceTree = "<group>"; };
 		CF36407A5BD2E2ACB938C66D /* Pods-AsyncKit ContactPickerTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AsyncKit ContactPickerTests.debug.xcconfig"; path = "Target Support Files/Pods-AsyncKit ContactPickerTests/Pods-AsyncKit ContactPickerTests.debug.xcconfig"; sourceTree = "<group>"; };
 		F53918B5CE8C78D535940334 /* Pods-AsyncKit ContactPicker.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AsyncKit ContactPicker.release.xcconfig"; path = "Target Support Files/Pods-AsyncKit ContactPicker/Pods-AsyncKit ContactPicker.release.xcconfig"; sourceTree = "<group>"; };
+		F7BB827A89BEAECF58358A1D /* Pods_AsyncKit_ContactPicker.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AsyncKit_ContactPicker.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -251,6 +259,7 @@
 				04A14839245297D2009EACC7 /* ComponentKit.framework in Frameworks */,
 				0412D4672452964500DEB7EC /* RenderCore.framework in Frameworks */,
 				04FB17352452925D00D8DABA /* Contacts.framework in Frameworks */,
+				AA576A2FCBD4DE7AB218FBB6 /* Pods_AsyncKit_ContactPicker.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -258,6 +267,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4AE0431EDFB1E2717035EFB5 /* Pods_AsyncKit_ContactPickerTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -293,6 +303,8 @@
 				046844A224514A8A00B47DB8 /* CKViewController.h */,
 				046844A324514A8A00B47DB8 /* CKViewController.mm */,
 				041BCD6C24583F4B005AA467 /* CKViewController.xib */,
+				044BC36F245D604400E41101 /* IGLKViewController.h */,
+				044BC370245D604400E41101 /* IGLKViewController.m */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
@@ -519,6 +531,8 @@
 			children = (
 				0412D4342452961800DEB7EC /* ComponentKit.xcodeproj */,
 				049FCE1D24475BDA00F285C4 /* Contacts.framework */,
+				F7BB827A89BEAECF58358A1D /* Pods_AsyncKit_ContactPicker.framework */,
+				00AAC0A0EECD08B95643EAE9 /* Pods_AsyncKit_ContactPickerTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -827,6 +841,7 @@
 				04E717002446C255006D54BB /* SceneDelegate.m in Sources */,
 				04A1484F2452A22F009EACC7 /* CKPickerTableCellComponent.mm in Sources */,
 				0490DEE02446C58800ABB676 /* ASDKViewController.m in Sources */,
+				044BC371245D604400E41101 /* IGLKViewController.m in Sources */,
 				046844A424514A8A00B47DB8 /* CKViewController.mm in Sources */,
 				0454CD492446F94400D34849 /* ImageCache.mm in Sources */,
 				049600702452E636008A2197 /* ImageHelper.m in Sources */,
@@ -851,6 +866,7 @@
 				0490DEE12446C58800ABB676 /* ASDKViewController.m in Sources */,
 				049FCE1C24474FBE00F285C4 /* PickerTableCellNode.m in Sources */,
 				048EF99F2452873900986FE3 /* CKPickerTableView.mm in Sources */,
+				044BC372245D604400E41101 /* IGLKViewController.m in Sources */,
 				0467E0032457D2A700243323 /* CKPickerCollectionView.mm in Sources */,
 				047699132448435C00CEF11A /* PickerCollectionCellNode.m in Sources */,
 			);
