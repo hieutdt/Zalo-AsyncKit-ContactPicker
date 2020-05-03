@@ -26,16 +26,6 @@
     return self;
 }
 
-- (CGSize)sizeForItemAtIndex:(NSInteger)index {
-    return CGSizeMake(self.collectionContext.containerSize.width, AVATAR_IMAGE_HEIHGT + 20);
-}
-
-- (UICollectionViewCell *)cellForItemAtIndex:(NSInteger)index {
-    return [self.collectionContext dequeueReusableCellOfClass:[IGLKPickerTableCell class]
-                                         forSectionController:self
-                                                      atIndex:index];
-}
-
 
 #pragma mark - IGListBindingSectionControllerDataSource
 
@@ -47,12 +37,6 @@
         return results;
     }
     return nil;
-}
-
-- (void)didUpdateToObject:(id)object {
-    if ([object isKindOfClass:[PickerViewModel class]]) {
-        _currentModel = (PickerViewModel *)object;
-    }
 }
 
 - (NSInteger)numberOfItems {

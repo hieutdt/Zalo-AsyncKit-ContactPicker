@@ -37,6 +37,8 @@
 }
 
 - (void)customInit {
+    self.backgroundColor = [UIColor whiteColor];
+    
     _checkerImageView = [[UIImageView alloc] init];
     _avatarImageView = [[UIImageView alloc] init];
     _nameLabel = [[UILabel alloc] init];
@@ -61,6 +63,7 @@
     [_avatarImageView.bottomAnchor constraintEqualToAnchor:self.bottomAnchor constant:-10].active = YES;
     [_avatarImageView.heightAnchor constraintEqualToConstant:AVATAR_IMAGE_HEIHGT].active = YES;
     [_avatarImageView.widthAnchor constraintEqualToConstant:AVATAR_IMAGE_HEIHGT].active = YES;
+    _avatarImageView.layer.cornerRadius = AVATAR_IMAGE_HEIHGT / 2.f;
     
     [_nameLabel.leadingAnchor constraintEqualToAnchor:_avatarImageView.trailingAnchor
                                              constant:10].active = YES;

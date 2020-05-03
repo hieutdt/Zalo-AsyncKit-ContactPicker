@@ -12,7 +12,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface IGLKPickerTableSectionController : IGListBindingSectionController <IGListBindingSectionControllerDataSource>
+@interface IGLKPickerTableSectionController : IGListBindingSectionController<PickerViewModel *> <IGListBindingSectionControllerDataSource>
 
 @end
 

@@ -14,8 +14,9 @@
 #import "AppConsts.h"
 
 #import "IGLKPickerTableView.h"
+#import "IGLKPickerTableSectionController.h"
 
-@interface IGLKViewController ()
+@interface IGLKViewController () <IGListAdapterDataSource>
 
 @property (nonatomic, strong) NSMutableArray<Contact *> *contacts;
 @property (nonatomic, strong) NSMutableArray<NSMutableArray *> *sectionData;
