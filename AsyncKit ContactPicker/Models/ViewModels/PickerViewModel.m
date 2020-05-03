@@ -41,7 +41,7 @@
     } else {
         @try {
             PickerViewModel *otherModel = (PickerViewModel *)object;
-            return [self.name isEqual:otherModel.name];
+            return [self.name isEqual:otherModel.name] && self.isChosen == otherModel.isChosen;
         } @catch (NSError *error) {
             return false;
         }

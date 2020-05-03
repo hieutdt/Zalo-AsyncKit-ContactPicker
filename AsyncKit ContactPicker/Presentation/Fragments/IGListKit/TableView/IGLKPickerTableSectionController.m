@@ -33,8 +33,8 @@
                                viewModelsForObject:(id)object {
     if (object && [object isKindOfClass:[PickerViewModel class]]) {
         PickerViewModel *model = (PickerViewModel *)object;
-        NSArray<id<IGListDiffable>> *results = @[model];
-        return results;
+        _currentModel = model;
+        return @[model];
     }
     return nil;
 }
@@ -55,11 +55,13 @@
     IGLKPickerTableCell *cell =  [self.collectionContext dequeueReusableCellOfClass:[IGLKPickerTableCell class]
                                                                forSectionController:self
                                                                             atIndex:index];
-    if (cell) {
-        [cell setName:self.currentModel.name];
-    }
-    
     return cell;
+}
+
+- (void)didSelectItemAtIndex:(NSInteger)index {
+    if (self.delegate && [self.delegate respondsToSelector:@selector(didSelectItemAtModel:)]) {
+        [self.delegate didSelectItemAtModel:_currentModel];
+    }
 }
 
 @end

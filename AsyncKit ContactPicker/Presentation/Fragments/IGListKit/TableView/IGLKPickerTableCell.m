@@ -52,9 +52,9 @@
     [self addSubview:_nameLabel];
     
     [_checkerImageView.leadingAnchor constraintEqualToAnchor:self.leadingAnchor
-                                                    constant:5].active = YES;
+                                                    constant:15].active = YES;
     [_checkerImageView.trailingAnchor constraintEqualToAnchor:_avatarImageView.leadingAnchor
-                                                     constant:-10].active = YES;
+                                                     constant:-15].active = YES;
     [_checkerImageView.centerYAnchor constraintEqualToAnchor:_avatarImageView.centerYAnchor].active = YES;
     [_checkerImageView.heightAnchor constraintEqualToConstant:CHECKER_IMAGE_HEIGHT].active = YES;
     [_checkerImageView.widthAnchor constraintEqualToConstant:CHECKER_IMAGE_HEIGHT].active = YES;
@@ -64,9 +64,10 @@
     [_avatarImageView.heightAnchor constraintEqualToConstant:AVATAR_IMAGE_HEIHGT].active = YES;
     [_avatarImageView.widthAnchor constraintEqualToConstant:AVATAR_IMAGE_HEIHGT].active = YES;
     _avatarImageView.layer.cornerRadius = AVATAR_IMAGE_HEIHGT / 2.f;
+    _avatarImageView.layer.masksToBounds = YES;
     
     [_nameLabel.leadingAnchor constraintEqualToAnchor:_avatarImageView.trailingAnchor
-                                             constant:10].active = YES;
+                                             constant:15].active = YES;
     [_nameLabel.trailingAnchor constraintEqualToAnchor:self.trailingAnchor constant:-10].active = YES;
     [_nameLabel.centerYAnchor constraintEqualToAnchor:_avatarImageView.centerYAnchor].active = YES;
 }

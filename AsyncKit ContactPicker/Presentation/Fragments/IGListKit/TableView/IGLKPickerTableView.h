@@ -11,7 +11,21 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@class IGLKPickerTableView;
+
+@protocol IGLKPickerTableViewDelegate <NSObject>
+
+- (void)pickerTableView:(IGLKPickerTableView *)tableView
+ checkedCellAtIndexPath:(NSIndexPath *)indexPath;
+
+- (void)pickerTableView:(IGLKPickerTableView *)tableView
+uncheckedCellAtIndexPath:(NSIndexPath *)indexPath;
+
+@end
+
 @interface IGLKPickerTableView : UIView
+
+@property (nonatomic, assign) id<IGLKPickerTableViewDelegate> delegate;
 
 - (void)setViewModels:(NSMutableArray<PickerViewModel *> *)viewModels;
 

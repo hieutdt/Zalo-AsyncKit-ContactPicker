@@ -11,12 +11,14 @@
 
 #import "PickerViewModel.h"
 #import "IGLKPickerTableSectionController.h"
+#import "AppConsts.h"
 
-@interface IGLKPickerTableView () <IGListAdapterDataSource>
+@interface IGLKPickerTableView () <IGListAdapterDataSource, IGLKPickerTableSectionControllerDelegate>
 
 @property (nonatomic, strong) UICollectionView *collectionView;
 @property (nonatomic, strong) IGListAdapter *adapter;
 @property (nonatomic, strong) NSMutableArray<PickerViewModel *> *viewModels;
+@property (nonatomic, assign) int selectedCount;
 
 @end
 
@@ -49,12 +51,13 @@
 - (void)customInit {
     self.backgroundColor = [UIColor whiteColor];
     
+    _selectedCount = 0;
+    
     UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
     flowLayout.scrollDirection = UICollectionViewScrollDirectionVertical;
     
     _collectionView = [[UICollectionView alloc] initWithFrame:self.bounds
                                          collectionViewLayout:flowLayout];
-    _collectionView.backgroundColor = [UIColor systemRedColor];
     [self addSubview:_collectionView];
     
     _collectionView.translatesAutoresizingMaskIntoConstraints = NO;
@@ -62,6 +65,7 @@
     [_collectionView.leadingAnchor constraintEqualToAnchor:self.leadingAnchor].active = YES;
     [_collectionView.trailingAnchor constraintEqualToAnchor:self.trailingAnchor].active = YES;
     [_collectionView.bottomAnchor constraintEqualToAnchor:self.bottomAnchor].active = YES;
+    _collectionView.backgroundColor = [UIColor whiteColor];
     
     IGListAdapterUpdater *updater = [[IGListAdapterUpdater alloc] init];
     _adapter = [[IGListAdapter alloc] initWithUpdater:updater
@@ -71,6 +75,7 @@
     
     _viewModels = [[NSMutableArray alloc] init];
 }
+
 
 #pragma mark - PublicMethods
 
@@ -90,6 +95,7 @@
     }
 }
 
+
 #pragma mark - IGListAdapterDataSource
 
 - (NSArray<id<IGListDiffable>> *)objectsForListAdapter:(IGListAdapter *)listAdapter {
@@ -98,11 +104,51 @@
 
 - (IGListSectionController *)listAdapter:(IGListAdapter *)listAdapter
               sectionControllerForObject:(id)object {
-    return [[IGLKPickerTableSectionController alloc] init];
+    IGLKPickerTableSectionController *sectionController =  [[IGLKPickerTableSectionController alloc] init];
+    sectionController.delegate = self;
+    return sectionController;
 }
 
 - (UIView *)emptyViewForListAdapter:(IGListAdapter *)listAdapter {
     return nil;
+}
+
+
+#pragma mark - IGLKPickerTableSectionControllerDelegate
+
+- (void)didSelectItemAtModel:(PickerViewModel *)model {
+    if (!model)
+        return;
+    
+    if (![self.viewModels containsObject:model])
+        return;
+    
+    int index = [self.viewModels indexOfObject:model];
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index
+                                                inSection:0];
+    if (!model)
+        return;
+    
+    if (model.isChosen) {
+        self.selectedCount--;
+        if (self.delegate &&
+            [self.delegate respondsToSelector:@selector(pickerTableView:uncheckedCellAtIndexPath:)]) {
+            [self.delegate pickerTableView:self
+                  uncheckedCellAtIndexPath:indexPath];
+        }
+    } else if (self.selectedCount < MAX_PICK) {
+        self.selectedCount++;
+        if (self.delegate &&
+            [self.delegate respondsToSelector:@selector(pickerTableView:checkedCellAtIndexPath:)]) {
+            [self.delegate pickerTableView:self
+                    checkedCellAtIndexPath:indexPath];
+        }
+    } else {
+        return;
+    }
+    
+    model.isChosen = !model.isChosen;
+    [self.adapter reloadObjects:@[model]];
 }
 
 @end

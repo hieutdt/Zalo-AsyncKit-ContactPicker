@@ -222,7 +222,7 @@
         if (self.delegate && [self.delegate respondsToSelector:@selector(pickerTableNode:uncheckedCellOfElement:)]) {
             [self.delegate pickerTableNode:self uncheckedCellOfElement:model];
         }
-    } else if (self.selectedCount < 5) {
+    } else if (self.selectedCount < MAX_PICK) {
         self.selectedCount++;
         if (self.delegate && [self.delegate respondsToSelector:@selector(pickerTableNode:checkedCellOfElement:)]) {
             [self.delegate pickerTableNode:self checkedCellOfElement:model];
