@@ -7,10 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <IGListKit/IGListKit.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface PickerViewModel : NSObject
+@interface PickerViewModel : NSObject <IGListDiffable>
 
 @property (strong, nonatomic) NSString *identifier;
 @property (strong, nonatomic) NSString *name;

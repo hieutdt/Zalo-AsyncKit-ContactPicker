@@ -29,4 +29,23 @@
     return [[_name lowercaseString] characterAtIndex:0] - FIRST_ALPHABET_ASCII_CODE;
 }
 
+#pragma mark - IGListDiffable
+
+- (id<NSObject>)diffIdentifier {
+    return _identifier;
+}
+
+- (BOOL)isEqualToDiffableObject:(id<IGListDiffable>)object {
+    if (object == self) {
+        return YES;
+    } else {
+        @try {
+            PickerViewModel *otherModel = (PickerViewModel *)object;
+            return [self.name isEqual:otherModel.name];
+        } @catch (NSError *error) {
+            return false;
+        }
+    }
+}
+
 @end

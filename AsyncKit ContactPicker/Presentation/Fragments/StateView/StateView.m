@@ -31,7 +31,10 @@
         _titleNode = [[ASTextNode alloc] init];
         _textNode = [[ASTextNode alloc] init];
         _buttonNode = [[ASButtonNode alloc] init];
-        _buttonNode.backgroundColor = [UIColor colorWithRed:93/255.f green:173/255.f blue:226/255.f alpha:1];
+        _buttonNode.backgroundColor = [UIColor colorWithRed:93/255.f
+                                                      green:173/255.f
+                                                       blue:226/255.f
+                                                      alpha:1];
         [_buttonNode addTarget:self
                         action:@selector(buttonNodeTapped)
               forControlEvents:ASControlNodeEventTouchUpInside];
