@@ -61,6 +61,14 @@
 		04E7170B2446C256006D54BB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 04E717092446C256006D54BB /* LaunchScreen.storyboard */; };
 		04E7170E2446C256006D54BB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E7170D2446C256006D54BB /* main.m */; };
 		04E717182446C256006D54BB /* AsyncKit_ContactPickerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E717172446C256006D54BB /* AsyncKit_ContactPickerTests.m */; };
+		04F71B572460570C00095E82 /* IGLKPickerCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04F71B562460570C00095E82 /* IGLKPickerCollectionView.m */; };
+		04F71B582460570C00095E82 /* IGLKPickerCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 04F71B562460570C00095E82 /* IGLKPickerCollectionView.m */; };
+		04F71B6924605A8B00095E82 /* IGLKPickerCollectionSectionController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04F71B6824605A8B00095E82 /* IGLKPickerCollectionSectionController.m */; };
+		04F71B6A24605A8B00095E82 /* IGLKPickerCollectionSectionController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04F71B6824605A8B00095E82 /* IGLKPickerCollectionSectionController.m */; };
+		04F71B6D24605E2000095E82 /* IGLKPickerCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04F71B6C24605E2000095E82 /* IGLKPickerCollectionCell.m */; };
+		04F71B6E24605E2000095E82 /* IGLKPickerCollectionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 04F71B6C24605E2000095E82 /* IGLKPickerCollectionCell.m */; };
+		04F71B702460751B00095E82 /* IGLKViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04F71B6F2460751B00095E82 /* IGLKViewController.xib */; };
+		04F71B712460751B00095E82 /* IGLKViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04F71B6F2460751B00095E82 /* IGLKViewController.xib */; };
 		04FB17352452925D00D8DABA /* Contacts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 049FCE1D24475BDA00F285C4 /* Contacts.framework */; };
 		4AE0431EDFB1E2717035EFB5 /* Pods_AsyncKit_ContactPickerTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00AAC0A0EECD08B95643EAE9 /* Pods_AsyncKit_ContactPickerTests.framework */; };
 		AA576A2FCBD4DE7AB218FBB6 /* Pods_AsyncKit_ContactPicker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7BB827A89BEAECF58358A1D /* Pods_AsyncKit_ContactPicker.framework */; };
@@ -255,6 +263,13 @@
 		04E717132446C256006D54BB /* AsyncKit ContactPickerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "AsyncKit ContactPickerTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		04E717172446C256006D54BB /* AsyncKit_ContactPickerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AsyncKit_ContactPickerTests.m; sourceTree = "<group>"; };
 		04E717192446C256006D54BB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		04F71B552460570C00095E82 /* IGLKPickerCollectionView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IGLKPickerCollectionView.h; sourceTree = "<group>"; };
+		04F71B562460570C00095E82 /* IGLKPickerCollectionView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IGLKPickerCollectionView.m; sourceTree = "<group>"; };
+		04F71B6724605A8B00095E82 /* IGLKPickerCollectionSectionController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IGLKPickerCollectionSectionController.h; sourceTree = "<group>"; };
+		04F71B6824605A8B00095E82 /* IGLKPickerCollectionSectionController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IGLKPickerCollectionSectionController.m; sourceTree = "<group>"; };
+		04F71B6B24605E2000095E82 /* IGLKPickerCollectionCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IGLKPickerCollectionCell.h; sourceTree = "<group>"; };
+		04F71B6C24605E2000095E82 /* IGLKPickerCollectionCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IGLKPickerCollectionCell.m; sourceTree = "<group>"; };
+		04F71B6F2460751B00095E82 /* IGLKViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = IGLKViewController.xib; sourceTree = "<group>"; };
 		42DF802F4A06EFF3255D17BC /* Pods-AsyncKit ContactPicker.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AsyncKit ContactPicker.debug.xcconfig"; path = "Target Support Files/Pods-AsyncKit ContactPicker/Pods-AsyncKit ContactPicker.debug.xcconfig"; sourceTree = "<group>"; };
 		903AA29F5BF80D5202F316EA /* Pods-AsyncKit ContactPickerTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AsyncKit ContactPickerTests.release.xcconfig"; path = "Target Support Files/Pods-AsyncKit ContactPickerTests/Pods-AsyncKit ContactPickerTests.release.xcconfig"; sourceTree = "<group>"; };
 		CF36407A5BD2E2ACB938C66D /* Pods-AsyncKit ContactPickerTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AsyncKit ContactPickerTests.debug.xcconfig"; path = "Target Support Files/Pods-AsyncKit ContactPickerTests/Pods-AsyncKit ContactPickerTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -310,6 +325,7 @@
 		044BC381245D631C00E41101 /* IGListKit */ = {
 			isa = PBXGroup;
 			children = (
+				04AF788E245FD26E00D37A81 /* CollectionView */,
 				04E6C55A245DC42B00C79414 /* TableView */,
 			);
 			path = IGListKit;
@@ -325,6 +341,7 @@
 				041BCD6C24583F4B005AA467 /* CKViewController.xib */,
 				044BC36F245D604400E41101 /* IGLKViewController.h */,
 				044BC370245D604400E41101 /* IGLKViewController.m */,
+				04F71B6F2460751B00095E82 /* IGLKViewController.xib */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
@@ -438,14 +455,8 @@
 		04A148472452A1D7009EACC7 /* AsyncDisplayKit */ = {
 			isa = PBXGroup;
 			children = (
-				047699102448435C00CEF11A /* PickerCollectionCellNode.h */,
-				047699112448435C00CEF11A /* PickerCollectionCellNode.m */,
-				0476991424484F1B00CEF11A /* PickerCollectionNode.h */,
-				0476991524484F1B00CEF11A /* PickerCollectionNode.m */,
-				049FCE1924474FBE00F285C4 /* PickerTableCellNode.h */,
-				049FCE1A24474FBE00F285C4 /* PickerTableCellNode.m */,
-				049FCE1F24475D9D00F285C4 /* PickerTableNode.h */,
-				049FCE2024475D9D00F285C4 /* PickerTableNode.m */,
+				04AF789E245FD2D700D37A81 /* CollectionView */,
+				04AF789D245FD2BC00D37A81 /* TableView */,
 			);
 			path = AsyncDisplayKit;
 			sourceTree = "<group>";
@@ -453,16 +464,67 @@
 		04A148482452A1E9009EACC7 /* ComponentKit */ = {
 			isa = PBXGroup;
 			children = (
-				04D9E6B924571A9D00CE3D65 /* CKPickerCollectionCellComponent.h */,
-				04D9E6BA24571A9D00CE3D65 /* CKPickerCollectionCellComponent.mm */,
-				0467E0002457D2A700243323 /* CKPickerCollectionView.h */,
-				0467E0012457D2A700243323 /* CKPickerCollectionView.mm */,
+				04AF78A0245FD30100D37A81 /* CollectionView */,
+				04AF789F245FD2F500D37A81 /* TableView */,
+			);
+			path = ComponentKit;
+			sourceTree = "<group>";
+		};
+		04AF788E245FD26E00D37A81 /* CollectionView */ = {
+			isa = PBXGroup;
+			children = (
+				04F71B552460570C00095E82 /* IGLKPickerCollectionView.h */,
+				04F71B562460570C00095E82 /* IGLKPickerCollectionView.m */,
+				04F71B6724605A8B00095E82 /* IGLKPickerCollectionSectionController.h */,
+				04F71B6824605A8B00095E82 /* IGLKPickerCollectionSectionController.m */,
+				04F71B6B24605E2000095E82 /* IGLKPickerCollectionCell.h */,
+				04F71B6C24605E2000095E82 /* IGLKPickerCollectionCell.m */,
+			);
+			path = CollectionView;
+			sourceTree = "<group>";
+		};
+		04AF789D245FD2BC00D37A81 /* TableView */ = {
+			isa = PBXGroup;
+			children = (
+				049FCE1924474FBE00F285C4 /* PickerTableCellNode.h */,
+				049FCE1A24474FBE00F285C4 /* PickerTableCellNode.m */,
+				049FCE1F24475D9D00F285C4 /* PickerTableNode.h */,
+				049FCE2024475D9D00F285C4 /* PickerTableNode.m */,
+			);
+			path = TableView;
+			sourceTree = "<group>";
+		};
+		04AF789E245FD2D700D37A81 /* CollectionView */ = {
+			isa = PBXGroup;
+			children = (
+				047699102448435C00CEF11A /* PickerCollectionCellNode.h */,
+				047699112448435C00CEF11A /* PickerCollectionCellNode.m */,
+				0476991424484F1B00CEF11A /* PickerCollectionNode.h */,
+				0476991524484F1B00CEF11A /* PickerCollectionNode.m */,
+			);
+			path = CollectionView;
+			sourceTree = "<group>";
+		};
+		04AF789F245FD2F500D37A81 /* TableView */ = {
+			isa = PBXGroup;
+			children = (
 				048EF99C2452873900986FE3 /* CKPickerTableView.h */,
 				048EF99D2452873900986FE3 /* CKPickerTableView.mm */,
 				04A1484D2452A22F009EACC7 /* CKPickerTableCellComponent.h */,
 				04A1484E2452A22F009EACC7 /* CKPickerTableCellComponent.mm */,
 			);
-			path = ComponentKit;
+			path = TableView;
+			sourceTree = "<group>";
+		};
+		04AF78A0245FD30100D37A81 /* CollectionView */ = {
+			isa = PBXGroup;
+			children = (
+				04D9E6B924571A9D00CE3D65 /* CKPickerCollectionCellComponent.h */,
+				04D9E6BA24571A9D00CE3D65 /* CKPickerCollectionCellComponent.mm */,
+				0467E0002457D2A700243323 /* CKPickerCollectionView.h */,
+				0467E0012457D2A700243323 /* CKPickerCollectionView.mm */,
+			);
+			path = CollectionView;
 			sourceTree = "<group>";
 		};
 		04E6C55A245DC42B00C79414 /* TableView */ = {
@@ -742,6 +804,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				04E7170B2446C256006D54BB /* LaunchScreen.storyboard in Resources */,
+				04F71B702460751B00095E82 /* IGLKViewController.xib in Resources */,
 				041BCD6D24583F4B005AA467 /* CKViewController.xib in Resources */,
 				04E717082446C256006D54BB /* Assets.xcassets in Resources */,
 			);
@@ -752,6 +815,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				041BCD6E24583F4B005AA467 /* CKViewController.xib in Resources */,
+				04F71B712460751B00095E82 /* IGLKViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -841,10 +905,13 @@
 				0454CD382446F8DF00D34849 /* Contact.mm in Sources */,
 				0454CD462446F94400D34849 /* ColorHelper.mm in Sources */,
 				047699122448435C00CEF11A /* PickerCollectionCellNode.m in Sources */,
+				04F71B572460570C00095E82 /* IGLKPickerCollectionView.m in Sources */,
 				0454CD482446F94400D34849 /* StringHelper.mm in Sources */,
+				04F71B6D24605E2000095E82 /* IGLKPickerCollectionCell.m in Sources */,
 				04E717002446C255006D54BB /* SceneDelegate.m in Sources */,
 				04A1484F2452A22F009EACC7 /* CKPickerTableCellComponent.mm in Sources */,
 				0490DEE02446C58800ABB676 /* ASDKViewController.m in Sources */,
+				04F71B6924605A8B00095E82 /* IGLKPickerCollectionSectionController.m in Sources */,
 				04E6C546245DC3B700C79414 /* IGLKPickerTableSectionController.m in Sources */,
 				044BC371245D604400E41101 /* IGLKViewController.m in Sources */,
 				046844A424514A8A00B47DB8 /* CKViewController.mm in Sources */,
@@ -863,6 +930,8 @@
 				0476991724484F1B00CEF11A /* PickerCollectionNode.m in Sources */,
 				049600712452E636008A2197 /* ImageHelper.m in Sources */,
 				046844A12451335200B47DB8 /* StateView.m in Sources */,
+				04F71B6A24605A8B00095E82 /* IGLKPickerCollectionSectionController.m in Sources */,
+				04F71B582460570C00095E82 /* IGLKPickerCollectionView.m in Sources */,
 				049FCE2624475F7A00F285C4 /* PickerViewModel.m in Sources */,
 				04E717182446C256006D54BB /* AsyncKit_ContactPickerTests.m in Sources */,
 				04D9E6BC24571A9D00CE3D65 /* CKPickerCollectionCellComponent.mm in Sources */,
@@ -877,6 +946,7 @@
 				04E6C559245DC41600C79414 /* IGLKPickerTableCell.m in Sources */,
 				04E6C547245DC3B700C79414 /* IGLKPickerTableSectionController.m in Sources */,
 				047699132448435C00CEF11A /* PickerCollectionCellNode.m in Sources */,
+				04F71B6E24605E2000095E82 /* IGLKPickerCollectionCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -10,7 +10,7 @@
 #import "IGLKPickerTableCell.h"
 #import "AppConsts.h"
 
-@interface IGLKPickerTableSectionController ()
+@interface IGLKPickerTableSectionController () <IGListBindingSectionControllerDataSource>
 
 @property (nonatomic, strong) PickerViewModel *currentModel;
 

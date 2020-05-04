@@ -19,7 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-@interface IGLKPickerTableSectionController : IGListBindingSectionController<PickerViewModel *> <IGListBindingSectionControllerDataSource>
+@interface IGLKPickerTableSectionController : IGListBindingSectionController<PickerViewModel *> 
 
 @property (nonatomic, assign) id<IGLKPickerTableSectionControllerDelegate> delegate;
 

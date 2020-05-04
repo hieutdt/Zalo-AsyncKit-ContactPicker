@@ -14,9 +14,9 @@
 #import "AppConsts.h"
 
 #import "IGLKPickerTableView.h"
-#import "IGLKPickerTableSectionController.h"
+#import "IGLKPickerCollectionView.h"
 
-@interface IGLKViewController () <IGListAdapterDataSource>
+@interface IGLKViewController () <IGLKPickerTableViewDelegate>
 
 @property (nonatomic, strong) NSMutableArray<Contact *> *contacts;
 @property (nonatomic, strong) NSMutableArray<NSMutableArray *> *sectionData;
@@ -25,7 +25,10 @@
 
 @property (nonatomic, strong) ContactBusiness *contactBusiness;
 
-@property (nonatomic, strong) IGLKPickerTableView *tableView;
+@property (nonatomic, weak) IBOutlet UISearchBar *searchBar;
+@property (nonatomic, weak) IBOutlet IGLKPickerTableView *tableView;
+@property (nonatomic, weak) IBOutlet IGLKPickerCollectionView *collectionView;
+
 
 @end
 
@@ -48,11 +51,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.view.backgroundColor = [UIColor systemBlueColor];
     
-    _tableView = [[IGLKPickerTableView alloc] initWithFrame:self.view.bounds];
+    _tableView.delegate = self;
     [_tableView setViewController:self];
-    [self.view addSubview:_tableView];
     
     [self checkPermissionAndLoadContacts];
 }
@@ -127,6 +128,25 @@
     return pickerModels;
 }
 
+#pragma mark - IGLKPickerTableViewDelegate
+
+- (void)pickerTableView:(IGLKPickerTableView *)tableView
+ checkedCellAtIndexPath:(NSIndexPath *)indexPath {
+    PickerViewModel *model = [self.pickerModels objectAtIndex:indexPath.row];
+    if (!model)
+        return;
+    
+    [self.collectionView addElement:model];
+}
+
+- (void)pickerTableView:(IGLKPickerTableView *)tableView
+uncheckedCellAtIndexPath:(NSIndexPath *)indexPath {
+    PickerViewModel *model = [self.pickerModels objectAtIndex:indexPath.row];
+    if (!model)
+        return;
+    
+    [self.collectionView removeElement:model];
+}
 
 
 @end

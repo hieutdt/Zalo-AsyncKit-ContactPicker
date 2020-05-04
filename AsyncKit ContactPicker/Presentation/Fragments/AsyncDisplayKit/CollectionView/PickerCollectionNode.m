@@ -60,7 +60,10 @@ static NSString *kReuseIdentifier = @"PickerCollectionViewCell";
                      forState:UIControlStateNormal];
         _nextButton.contentVerticalAlignment = ASVerticalAlignmentCenter;
         _nextButton.contentHorizontalAlignment = ASHorizontalAlignmentMiddle;
-        [_nextButton setBackgroundColor:[UIColor colorWithRed:52/255.f green:152/255.f blue:219/255.f alpha:1]];
+        [_nextButton setBackgroundColor:[UIColor colorWithRed:52/255.f
+                                                        green:152/255.f
+                                                         blue:219/255.f
+                                                        alpha:1]];
         _nextButton.cornerRadius = NEXT_BUTTON_HEIGHT / 2.f;
         [_nextButton addTarget:self
                         action:@selector(nextButtonTapped)
