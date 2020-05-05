@@ -103,12 +103,10 @@
     [_adapter reloadObjects:@[model]];
 }
 
-- (void)reloadCellAtIndex:(NSInteger)index {
-    if (index >= self.viewModels.count)
-        return;
-    
-    PickerViewModel *viewModel = self.viewModels[index];
-    [_adapter reloadObjects:@[viewModel]];
+- (void)reloadModel:(PickerViewModel *)model {
+    if (model) {
+        [_adapter reloadObjects:@[model]];
+    }
 }
 
 #pragma mark - IGListAdapterDataSource
@@ -139,25 +137,22 @@
     if (![self.viewModels containsObject:model])
         return;
     
-    long index = [self.viewModels indexOfObject:model];
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index
-                                                inSection:0];
     if (!model)
         return;
     
     if (model.isChosen) {
         self.selectedCount--;
         if (self.delegate &&
-            [self.delegate respondsToSelector:@selector(pickerTableView:uncheckedCellAtIndexPath:)]) {
+            [self.delegate respondsToSelector:@selector(pickerTableView:uncheckedCellOfModel:)]) {
             [self.delegate pickerTableView:self
-                  uncheckedCellAtIndexPath:indexPath];
+                        uncheckedCellOfModel:model];
         }
     } else if (self.selectedCount < MAX_PICK) {
         self.selectedCount++;
         if (self.delegate &&
-            [self.delegate respondsToSelector:@selector(pickerTableView:checkedCellAtIndexPath:)]) {
+            [self.delegate respondsToSelector:@selector(pickerTableView:checkedCellOfModel:)]) {
             [self.delegate pickerTableView:self
-                    checkedCellAtIndexPath:indexPath];
+                        checkedCellOfModel:model];
         }
     } else {
         return;
@@ -169,14 +164,14 @@
 
 - (void)sectionController:(IGLKPickerTableSectionController *)sectionController
           loadImageToCell:(IGLKPickerTableCell *)cell
-                  atIndex:(NSInteger)index {
+                  ofModel:(nonnull PickerViewModel *)model {
     if (!sectionController || !cell)
         return;
     
-    if (self.delegate && [self.delegate respondsToSelector:@selector(pickerTableView:loadImageToCell:atIndex:)]) {
+    if (self.delegate && [self.delegate respondsToSelector:@selector(pickerTableView:loadImageToCell:ofModel:)]) {
         [self.delegate pickerTableView:self
                        loadImageToCell:cell
-                               atIndex:index];
+                               ofModel:model];
     }
 }
 

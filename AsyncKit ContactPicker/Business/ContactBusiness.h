@@ -39,6 +39,9 @@ NS_ASSUME_NONNULL_BEGIN
 - (NSArray<Contact *> *)filterContacts:(NSArray<Contact *> *)contacts
                         bySearchString:(NSString *)searchString;
 
+- (NSArray<Contact *> *)sortedContacts:(NSArray<Contact *> *)contacts
+                             ascending:(BOOL)ascending;
+
 @end
 
 NS_ASSUME_NONNULL_END

@@ -57,6 +57,7 @@
     [_tableView setViewController:self];
     
     _collectionView.delegate = self;
+    _collectionView.hidden = YES;
     
     _searchBar.placeholder = @"Search for contacts";
     _searchBar.delegate = self;
@@ -111,7 +112,7 @@
     if (!contacts)
         return;
     
-    self.contacts = [NSMutableArray arrayWithArray:contacts];
+    self.contacts = [NSMutableArray arrayWithArray:[self.contactBusiness sortedContacts:contacts ascending:YES]];
     self.sectionData = [self.contactBusiness sortedByAlphabetSectionsArrayFromContacts:self.contacts];
 }
 
@@ -136,8 +137,8 @@
 
 #pragma mark - IGLKPickerTableViewDelegate
 
-- (void)pickerTableView:(IGLKPickerTableView *)tableView checkedCellAtIndexPath:(NSIndexPath *)indexPath {
-    PickerViewModel *model = [self.pickerModels objectAtIndex:indexPath.row];
+- (void)pickerTableView:(IGLKPickerTableView *)tableView
+     checkedCellOfModel:(PickerViewModel *)model {
     if (!model)
         return;
     
@@ -146,8 +147,8 @@
     }
 }
 
-- (void)pickerTableView:(IGLKPickerTableView *)tableView uncheckedCellAtIndexPath:(NSIndexPath *)indexPath {
-    PickerViewModel *model = [self.pickerModels objectAtIndex:indexPath.row];
+- (void)pickerTableView:(IGLKPickerTableView *)tableView
+   uncheckedCellOfModel:(PickerViewModel *)model {
     if (!model)
         return;
     
@@ -158,25 +159,24 @@
 
 - (void)pickerTableView:(IGLKPickerTableView *)tableView
         loadImageToCell:(IGLKPickerTableCell *)cell
-                atIndex:(NSInteger)index {
+                ofModel:(nonnull PickerViewModel *)model {
     if (!cell)
         return;
     
+    if (!model)
+        return;
+    
     if (tableView == self.tableView) {
-        if (index >= self.contacts.count)
-            return;
-        
-        Contact *contact = self.contacts[index];
-        UIImage *imageFromCache = [[ImageCache instance] imageForKey:contact.identifier];
+        UIImage *imageFromCache = [[ImageCache instance] imageForKey:model.identifier];
         if (imageFromCache) {
-            [self.tableView reloadCellAtIndex:index];
+            [self.tableView reloadModel:model];
         } else {
-            [self.contactBusiness loadContactImageByID:contact.identifier
+            [self.contactBusiness loadContactImageByID:model.identifier
                                             completion:^(UIImage *image, NSError *error) {
                 if (image) {
                     [[ImageCache instance] setImage:image
-                                             forKey:contact.identifier];
-                    [self.tableView reloadCellAtIndex:index];
+                                             forKey:model.identifier];
+                    [self.tableView reloadModel:model];
                 }
             }];
         }
@@ -196,7 +196,16 @@
 #pragma mark - UISearchBarDelegate
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
-    
+    if (searchText.length == 0) {
+        [self.tableView setViewModels:self.pickerModels];
+        [self.tableView reloadData];
+    } else {
+        NSPredicate *predicate = [NSPredicate predicateWithFormat:@"self.name contains[c] %@", searchText];
+        NSMutableArray<PickerViewModel *> *searchModels = [NSMutableArray arrayWithArray:[self.pickerModels filteredArrayUsingPredicate:predicate]];
+        
+        [self.tableView setViewModels:searchModels];
+        [self.tableView reloadData];
+    }
 }
 
 @end

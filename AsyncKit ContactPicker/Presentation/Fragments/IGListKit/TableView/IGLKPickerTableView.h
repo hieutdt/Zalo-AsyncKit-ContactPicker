@@ -17,14 +17,14 @@ NS_ASSUME_NONNULL_BEGIN
 @protocol IGLKPickerTableViewDelegate <NSObject>
 
 - (void)pickerTableView:(IGLKPickerTableView *)tableView
- checkedCellAtIndexPath:(NSIndexPath *)indexPath;
+     checkedCellOfModel:(PickerViewModel *)model;
 
 - (void)pickerTableView:(IGLKPickerTableView *)tableView
-uncheckedCellAtIndexPath:(NSIndexPath *)indexPath;
+   uncheckedCellOfModel:(PickerViewModel *)model;
 
 - (void)pickerTableView:(IGLKPickerTableView *)tableView
         loadImageToCell:(IGLKPickerTableCell *)cell
-                atIndex:(NSInteger)index;
+                ofModel:(PickerViewModel *)model;
 
 @end
 
@@ -36,7 +36,7 @@ uncheckedCellAtIndexPath:(NSIndexPath *)indexPath;
 
 - (void)reloadData;
 
-- (void)reloadCellAtIndex:(NSInteger)index;
+- (void)reloadModel:(PickerViewModel *)model;
 
 - (void)setViewController:(UIViewController *)vc;
 

@@ -112,9 +112,11 @@
     }
     
     if (self.searching) {
-        [self fitPickerModelsData:self.searchPickerModels toSections:self.sectionsArray];
+        [self fitPickerModelsData:self.searchPickerModels
+                       toSections:self.sectionsArray];
     } else {
-        [self fitPickerModelsData:self.pickerModels toSections:self.sectionsArray];
+        [self fitPickerModelsData:self.pickerModels
+                       toSections:self.sectionsArray];
     }
     
     [self reloadData];

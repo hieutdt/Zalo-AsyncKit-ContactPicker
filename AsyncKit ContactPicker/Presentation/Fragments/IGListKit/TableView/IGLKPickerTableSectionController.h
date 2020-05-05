@@ -23,7 +23,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)sectionController:(IGLKPickerTableSectionController *)sectionController
           loadImageToCell:(IGLKPickerTableCell *)cell
-                  atIndex:(NSInteger)index;
+                  ofModel:(PickerViewModel *)model;
 
 @end
 

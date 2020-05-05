@@ -165,4 +165,11 @@
     return filteredContacts;
 }
 
+- (NSArray<Contact *> *)sortedContacts:(NSArray<Contact *> *)contacts
+                             ascending:(BOOL)ascending {
+    NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:@"self.name"
+                                                               ascending:ascending];
+    return [contacts sortedArrayUsingDescriptors:@[descriptor]];
+}
+
 @end

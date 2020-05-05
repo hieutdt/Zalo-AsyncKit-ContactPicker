@@ -55,10 +55,10 @@
     IGLKPickerTableCell *cell =  [self.collectionContext dequeueReusableCellOfClass:[IGLKPickerTableCell class]
                                                                forSectionController:self
                                                                             atIndex:index];
-    if (self.delegate && [self.delegate respondsToSelector:@selector(sectionController:loadImageToCell:atIndex:)]) {
+    if (self.delegate && [self.delegate respondsToSelector:@selector(sectionController:loadImageToCell:ofModel:)]) {
         [self.delegate sectionController:self
                          loadImageToCell:cell
-                                 atIndex:index];
+                                 ofModel:_currentModel];
     }
     return cell;
 }
