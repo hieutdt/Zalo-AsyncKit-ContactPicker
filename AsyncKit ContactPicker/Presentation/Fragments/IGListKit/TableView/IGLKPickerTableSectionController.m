@@ -55,13 +55,18 @@
     IGLKPickerTableCell *cell =  [self.collectionContext dequeueReusableCellOfClass:[IGLKPickerTableCell class]
                                                                forSectionController:self
                                                                             atIndex:index];
-    
+    if (self.delegate && [self.delegate respondsToSelector:@selector(sectionController:loadImageToCell:atIndex:)]) {
+        [self.delegate sectionController:self
+                         loadImageToCell:cell
+                                 atIndex:index];
+    }
     return cell;
 }
 
 - (void)didSelectItemAtIndex:(NSInteger)index {
-    if (self.delegate && [self.delegate respondsToSelector:@selector(didSelectItemAtModel:)]) {
-        [self.delegate didSelectItemAtModel:_currentModel];
+    if (self.delegate && [self.delegate respondsToSelector:@selector(sectionController:didSelectItemAtModel:)]) {
+        [self.delegate sectionController:self
+                    didSelectItemAtModel:_currentModel];
     }
 }
 

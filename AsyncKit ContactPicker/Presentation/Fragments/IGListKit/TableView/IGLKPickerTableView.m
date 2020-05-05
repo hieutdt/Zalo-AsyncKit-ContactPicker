@@ -103,6 +103,13 @@
     [_adapter reloadObjects:@[model]];
 }
 
+- (void)reloadCellAtIndex:(NSInteger)index {
+    if (index >= self.viewModels.count)
+        return;
+    
+    PickerViewModel *viewModel = self.viewModels[index];
+    [_adapter reloadObjects:@[viewModel]];
+}
 
 #pragma mark - IGListAdapterDataSource
 
@@ -124,7 +131,8 @@
 
 #pragma mark - IGLKPickerTableSectionControllerDelegate
 
-- (void)didSelectItemAtModel:(PickerViewModel *)model {
+- (void)sectionController:(IGLKPickerTableSectionController *)sectionController
+     didSelectItemAtModel:(PickerViewModel *)model {
     if (!model)
         return;
     
@@ -157,6 +165,19 @@
     
     model.isChosen = !model.isChosen;
     [self.adapter reloadObjects:@[model]];
+}
+
+- (void)sectionController:(IGLKPickerTableSectionController *)sectionController
+          loadImageToCell:(IGLKPickerTableCell *)cell
+                  atIndex:(NSInteger)index {
+    if (!sectionController || !cell)
+        return;
+    
+    if (self.delegate && [self.delegate respondsToSelector:@selector(pickerTableView:loadImageToCell:atIndex:)]) {
+        [self.delegate pickerTableView:self
+                       loadImageToCell:cell
+                               atIndex:index];
+    }
 }
 
 @end

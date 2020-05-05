@@ -9,13 +9,21 @@
 #import <IGListKit/IGListKit.h>
 
 #import "PickerViewModel.h"
+#import "IGLKPickerTableCell.h"
 
 NS_ASSUME_NONNULL_BEGIN
+
+@class IGLKPickerTableSectionController;
 
 @protocol IGLKPickerTableSectionControllerDelegate <NSObject>
 
 @required
-- (void)didSelectItemAtModel:(PickerViewModel *)model;
+- (void)sectionController:(IGLKPickerTableSectionController *)sectionController
+     didSelectItemAtModel:(PickerViewModel *)model;
+
+- (void)sectionController:(IGLKPickerTableSectionController *)sectionController
+          loadImageToCell:(IGLKPickerTableCell *)cell
+                  atIndex:(NSInteger)index;
 
 @end
 

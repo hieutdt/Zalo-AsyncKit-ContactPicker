@@ -12,6 +12,7 @@
 #import "ContactBusiness.h"
 #import "PickerViewModel.h"
 #import "AppConsts.h"
+#import "ImageCache.h"
 
 #import "IGLKPickerTableView.h"
 #import "IGLKPickerCollectionView.h"
@@ -140,7 +141,9 @@
     if (!model)
         return;
     
-    [self.collectionView addElement:model];
+    if (tableView == self.tableView) {
+        [self.collectionView addElement:model];
+    }
 }
 
 - (void)pickerTableView:(IGLKPickerTableView *)tableView uncheckedCellAtIndexPath:(NSIndexPath *)indexPath {
@@ -148,7 +151,36 @@
     if (!model)
         return;
     
-    [self.collectionView removeElement:model];
+    if (tableView == self.tableView) {
+        [self.collectionView removeElement:model];
+    }
+}
+
+- (void)pickerTableView:(IGLKPickerTableView *)tableView
+        loadImageToCell:(IGLKPickerTableCell *)cell
+                atIndex:(NSInteger)index {
+    if (!cell)
+        return;
+    
+    if (tableView == self.tableView) {
+        if (index >= self.contacts.count)
+            return;
+        
+        Contact *contact = self.contacts[index];
+        UIImage *imageFromCache = [[ImageCache instance] imageForKey:contact.identifier];
+        if (imageFromCache) {
+            [self.tableView reloadCellAtIndex:index];
+        } else {
+            [self.contactBusiness loadContactImageByID:contact.identifier
+                                            completion:^(UIImage *image, NSError *error) {
+                if (image) {
+                    [[ImageCache instance] setImage:image
+                                             forKey:contact.identifier];
+                    [self.tableView reloadCellAtIndex:index];
+                }
+            }];
+        }
+    }
 }
 
 #pragma mark - IGLKPickerCollectionViewDelegate

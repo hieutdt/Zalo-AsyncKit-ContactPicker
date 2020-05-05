@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "PickerViewModel.h"
+#import "IGLKPickerTableCell.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -21,6 +22,10 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)pickerTableView:(IGLKPickerTableView *)tableView
 uncheckedCellAtIndexPath:(NSIndexPath *)indexPath;
 
+- (void)pickerTableView:(IGLKPickerTableView *)tableView
+        loadImageToCell:(IGLKPickerTableCell *)cell
+                atIndex:(NSInteger)index;
+
 @end
 
 @interface IGLKPickerTableView : UIView
@@ -30,6 +35,8 @@ uncheckedCellAtIndexPath:(NSIndexPath *)indexPath;
 - (void)setViewModels:(NSMutableArray<PickerViewModel *> *)viewModels;
 
 - (void)reloadData;
+
+- (void)reloadCellAtIndex:(NSInteger)index;
 
 - (void)setViewController:(UIViewController *)vc;
 

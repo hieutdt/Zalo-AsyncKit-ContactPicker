@@ -10,6 +10,7 @@
 #import "AppConsts.h"
 #import "PickerViewModel.h"
 #import "StringHelper.h"
+#import "ImageCache.h"
 
 @interface IGLKPickerTableCell ()
 
@@ -82,9 +83,6 @@
     _shortNameLabel.font = [UIFont boldSystemFontOfSize:23];
 }
 
-- (void)setName:(NSString *)name {
-    [_nameLabel setText:name];
-}
 
 #pragma mark - IGListBindable
 
@@ -97,19 +95,26 @@
     [_nameLabel setText:model.name];
     [_shortNameLabel setText:[StringHelper getShortName:model.name]];
     
-    switch (model.gradientColorCode) {
-        case GRADIENT_COLOR_BLUE:
-            [_avatarImageView setImage:[UIImage imageNamed:@"gradientBlue"]];
-            break;
-        case GRADIENT_COLOR_RED:
-            [_avatarImageView setImage:[UIImage imageNamed:@"gradientRed"]];
-            break;
-        case GRADIENT_COLOR_GREEN:
-            [_avatarImageView setImage:[UIImage imageNamed:@"gradientGreen"]];
-            break;
-        case GRADIENT_COLOR_ORANGE:
-            [_avatarImageView setImage:[UIImage imageNamed:@"gradientOrange"]];
-            break;
+    UIImage *avatarImage = [[ImageCache instance] imageForKey:model.identifier];
+    if (avatarImage) {
+        [self.avatarImageView setImage:avatarImage];
+        self.shortNameLabel.hidden = YES;
+    } else {
+        self.shortNameLabel.hidden = NO;
+        switch (model.gradientColorCode) {
+            case GRADIENT_COLOR_BLUE:
+                [_avatarImageView setImage:[UIImage imageNamed:@"gradientBlue"]];
+                break;
+            case GRADIENT_COLOR_RED:
+                [_avatarImageView setImage:[UIImage imageNamed:@"gradientRed"]];
+                break;
+            case GRADIENT_COLOR_GREEN:
+                [_avatarImageView setImage:[UIImage imageNamed:@"gradientGreen"]];
+                break;
+            case GRADIENT_COLOR_ORANGE:
+                [_avatarImageView setImage:[UIImage imageNamed:@"gradientOrange"]];
+                break;
+        }
     }
     
     if (model.isChosen) {

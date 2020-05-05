@@ -13,8 +13,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface IGLKPickerTableCell : UICollectionViewCell <IGListBindable>
 
-- (void)setName:(NSString *)name;
-
 @end
 
 NS_ASSUME_NONNULL_END
