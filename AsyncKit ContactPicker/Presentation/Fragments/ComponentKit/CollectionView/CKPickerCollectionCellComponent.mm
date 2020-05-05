@@ -12,8 +12,6 @@
 #import "CKPickerCollectionView.h"
 #import "ImageCache.h"
 
-#define IMAGE_SIZE 60
-
 @interface CKPickerCollectionCellComponent ()
 
 @property (nonatomic, strong) CKImageComponent *avatarImageComponent;
@@ -77,7 +75,7 @@
      sizingOptions:CKCenterLayoutComponentSizingOptionDefault
      child:shortNameComponent
      size:{
-        .width = IMAGE_SIZE, .height = IMAGE_SIZE
+        .width = AVATAR_COLLECTION_IMAGE_HEIGHT, .height = AVATAR_COLLECTION_IMAGE_HEIGHT
     }];
     
     CKImageComponent *avatarComponent =
@@ -85,10 +83,10 @@
      newWithImage:avatarImage
      attributes:{
         {@selector(setClipsToBounds:), @YES},
-        {CKComponentViewAttribute::LayerAttribute(@selector(setCornerRadius:)), IMAGE_SIZE / 2.f}
+        {CKComponentViewAttribute::LayerAttribute(@selector(setCornerRadius:)), AVATAR_COLLECTION_IMAGE_HEIGHT / 2.f}
     }
      size:{
-        .width = IMAGE_SIZE, .height = IMAGE_SIZE
+        .width = AVATAR_COLLECTION_IMAGE_HEIGHT, .height = AVATAR_COLLECTION_IMAGE_HEIGHT
     }];
     
     CKOverlayLayoutComponent *overlayComponent =
@@ -119,7 +117,7 @@
                              newWithCenteringOptions:CKCenterLayoutComponentCenteringXY
                              sizingOptions:CKCenterLayoutComponentSizingOptionDefault
                              child:overlayRemoveButtonComponent
-                             size:{ .width = IMAGE_SIZE, .height = IMAGE_SIZE + 10 }]];
+                             size:{ .width = AVATAR_COLLECTION_IMAGE_HEIGHT, .height = AVATAR_COLLECTION_IMAGE_HEIGHT + 10 }]];
     
     if (c) {
         c.avatarImageComponent = avatarComponent;

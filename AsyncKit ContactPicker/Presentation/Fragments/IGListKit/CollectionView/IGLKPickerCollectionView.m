@@ -110,7 +110,9 @@
     
     self.hidden = NO;
     [self.viewModels addObject:element];
-    [self.adapter performUpdatesAnimated:YES completion:nil];
+    [self.adapter performUpdatesAnimated:YES completion:^(BOOL finished) {
+        [self scrollToBottom:self.collectionView];
+    }];
 }
 
 - (void)removeElement:(PickerViewModel *)element {
@@ -169,6 +171,14 @@
         [self.delegate collectionView:self
                            removeItem:model];
     }
+}
+
+#pragma mark - Action
+
+- (void)scrollToBottom:(UICollectionView *)collectionView {
+    [collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:collectionView.numberOfSections - 1]
+                           atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally
+                                   animated:YES];
 }
 
 

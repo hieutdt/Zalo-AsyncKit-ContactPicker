@@ -10,6 +10,7 @@
 
 #import "AppConsts.h"
 #import "StringHelper.h"
+#import "ImageCache.h"
 
 @interface IGLKPickerCollectionCell ()
 
@@ -104,19 +105,26 @@
     
     [_shortNameLabel setText:[StringHelper getShortName:_viewModel.name]];
     
-    switch (_viewModel.gradientColorCode) {
-        case GRADIENT_COLOR_BLUE:
-            [_avatarImageView setImage:[UIImage imageNamed:@"gradientBlue"]];
-            break;
-        case GRADIENT_COLOR_RED:
-            [_avatarImageView setImage:[UIImage imageNamed:@"gradientRed"]];
-            break;
-        case GRADIENT_COLOR_GREEN:
-            [_avatarImageView setImage:[UIImage imageNamed:@"gradientGreen"]];
-            break;
-        case GRADIENT_COLOR_ORANGE:
-            [_avatarImageView setImage:[UIImage imageNamed:@"gradientOrange"]];
-            break;
+    UIImage *avatar = [[ImageCache instance] imageForKey:_viewModel.identifier];
+    if (avatar) {
+        [_avatarImageView setImage:avatar];
+        self.shortNameLabel.hidden = YES;
+    } else {
+        self.shortNameLabel.hidden = NO;
+        switch (_viewModel.gradientColorCode) {
+            case GRADIENT_COLOR_BLUE:
+                [_avatarImageView setImage:[UIImage imageNamed:@"gradientBlue"]];
+                break;
+            case GRADIENT_COLOR_RED:
+                [_avatarImageView setImage:[UIImage imageNamed:@"gradientRed"]];
+                break;
+            case GRADIENT_COLOR_GREEN:
+                [_avatarImageView setImage:[UIImage imageNamed:@"gradientGreen"]];
+                break;
+            case GRADIENT_COLOR_ORANGE:
+                [_avatarImageView setImage:[UIImage imageNamed:@"gradientOrange"]];
+                break;
+        }
     }
 }
 
