@@ -95,6 +95,14 @@
     }
 }
 
+- (void)uncheckModel:(PickerViewModel *)model {
+    if (!model)
+        return;
+    self.selectedCount--;
+    model.isChosen = NO;
+    [_adapter reloadObjects:@[model]];
+}
+
 
 #pragma mark - IGListAdapterDataSource
 

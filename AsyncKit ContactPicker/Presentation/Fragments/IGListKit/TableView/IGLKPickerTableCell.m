@@ -9,12 +9,14 @@
 #import "IGLKPickerTableCell.h"
 #import "AppConsts.h"
 #import "PickerViewModel.h"
+#import "StringHelper.h"
 
 @interface IGLKPickerTableCell ()
 
 @property (nonatomic, strong) UIImageView *checkerImageView;
 @property (nonatomic, strong) UIImageView *avatarImageView;
 @property (nonatomic, strong) UILabel *nameLabel;
+@property (nonatomic, strong) UILabel *shortNameLabel;
 
 @end
 
@@ -42,14 +44,17 @@
     _checkerImageView = [[UIImageView alloc] init];
     _avatarImageView = [[UIImageView alloc] init];
     _nameLabel = [[UILabel alloc] init];
+    _shortNameLabel = [[UILabel alloc] init];
     
     _checkerImageView.translatesAutoresizingMaskIntoConstraints = NO;
     _avatarImageView.translatesAutoresizingMaskIntoConstraints = NO;
     _nameLabel.translatesAutoresizingMaskIntoConstraints = NO;
+    _shortNameLabel.translatesAutoresizingMaskIntoConstraints = NO;
     
     [self addSubview:_checkerImageView];
     [self addSubview:_avatarImageView];
     [self addSubview:_nameLabel];
+    [self addSubview:_shortNameLabel];
     
     [_checkerImageView.leadingAnchor constraintEqualToAnchor:self.leadingAnchor
                                                     constant:15].active = YES;
@@ -70,6 +75,11 @@
                                              constant:15].active = YES;
     [_nameLabel.trailingAnchor constraintEqualToAnchor:self.trailingAnchor constant:-10].active = YES;
     [_nameLabel.centerYAnchor constraintEqualToAnchor:_avatarImageView.centerYAnchor].active = YES;
+    
+    [_shortNameLabel.centerXAnchor constraintEqualToAnchor:_avatarImageView.centerXAnchor].active = YES;
+    [_shortNameLabel.centerYAnchor constraintEqualToAnchor:_avatarImageView.centerYAnchor].active = YES;
+    _shortNameLabel.textColor = [UIColor whiteColor];
+    _shortNameLabel.font = [UIFont boldSystemFontOfSize:23];
 }
 
 - (void)setName:(NSString *)name {
@@ -85,6 +95,8 @@
     PickerViewModel *model = (PickerViewModel *)viewModel;
     
     [_nameLabel setText:model.name];
+    [_shortNameLabel setText:[StringHelper getShortName:model.name]];
+    
     switch (model.gradientColorCode) {
         case GRADIENT_COLOR_BLUE:
             [_avatarImageView setImage:[UIImage imageNamed:@"gradientBlue"]];

@@ -55,6 +55,7 @@
     IGLKPickerTableCell *cell =  [self.collectionContext dequeueReusableCellOfClass:[IGLKPickerTableCell class]
                                                                forSectionController:self
                                                                             atIndex:index];
+    
     return cell;
 }
 

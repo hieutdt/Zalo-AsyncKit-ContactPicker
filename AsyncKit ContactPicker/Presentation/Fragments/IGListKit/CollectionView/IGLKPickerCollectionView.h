@@ -9,10 +9,23 @@
 #import <UIKit/UIKit.h>
 #import <IGListKit/IGListKit.h>
 #import "PickerViewModel.h"
+#import "IGLKPickerCollectionCell.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
+@class IGLKPickerCollectionView;
+
+@protocol IGLKPickerCollectionViewDelegate <NSObject>
+
+@required
+- (void)collectionView:(IGLKPickerCollectionView *)collectionView
+            removeItem:(PickerViewModel *)item;
+
+@end
+
 @interface IGLKPickerCollectionView : UIView
+
+@property (nonatomic, strong) id<IGLKPickerCollectionViewDelegate> delegate;
 
 - (void)addElement:(PickerViewModel *)element;
 

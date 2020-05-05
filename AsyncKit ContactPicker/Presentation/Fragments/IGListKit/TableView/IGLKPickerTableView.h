@@ -33,6 +33,8 @@ uncheckedCellAtIndexPath:(NSIndexPath *)indexPath;
 
 - (void)setViewController:(UIViewController *)vc;
 
+- (void)uncheckModel:(PickerViewModel *)model;
+
 @end
 
 NS_ASSUME_NONNULL_END

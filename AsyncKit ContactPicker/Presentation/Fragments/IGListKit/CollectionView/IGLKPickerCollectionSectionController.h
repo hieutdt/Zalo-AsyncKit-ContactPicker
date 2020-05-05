@@ -8,9 +8,23 @@
 
 #import <IGListKit/IGListKit.h>
 
+#import "PickerViewModel.h"
+#import "IGLKPickerCollectionCell.h"
+
 NS_ASSUME_NONNULL_BEGIN
 
+@class IGLKPickerCollectionSectionController;
+
+@protocol IGLKPickerCollectionSectionControllerDelegate <NSObject>
+
+- (void)sectionController:(IGLKPickerCollectionSectionController *)sectionController
+               removeItem:(PickerViewModel *)model;
+
+@end
+
 @interface IGLKPickerCollectionSectionController : IGListBindingSectionController <IGListBindingSectionControllerDataSource>
+
+@property (nonatomic, assign) id<IGLKPickerCollectionSectionControllerDelegate> delegate;
 
 @end
 

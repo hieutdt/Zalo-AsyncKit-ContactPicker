@@ -9,7 +9,6 @@
 #import "IGLKPickerCollectionCell.h"
 
 #import "AppConsts.h"
-#import "PickerViewModel.h"
 #import "StringHelper.h"
 
 @interface IGLKPickerCollectionCell ()
@@ -17,6 +16,7 @@
 @property (nonatomic, strong) UIImageView *avatarImageView;
 @property (nonatomic, strong) UILabel *shortNameLabel;
 @property (nonatomic, strong) UIButton *removeButton;
+@property (nonatomic, assign) PickerViewModel *viewModel;
 
 @end
 
@@ -70,7 +70,7 @@
     
     [_shortNameLabel.centerYAnchor constraintEqualToAnchor:_avatarImageView.centerYAnchor].active = YES;
     [_shortNameLabel.centerXAnchor constraintEqualToAnchor:_avatarImageView.centerXAnchor].active = YES;
-    _shortNameLabel.font = [UIFont boldSystemFontOfSize:20];
+    _shortNameLabel.font = [UIFont boldSystemFontOfSize:23];
     _shortNameLabel.textColor = [UIColor whiteColor];
     
     [_removeButton.topAnchor constraintEqualToAnchor:self.topAnchor].active = YES;
@@ -83,6 +83,15 @@
     _removeButton.layer.masksToBounds = YES;
     _removeButton.layer.borderColor = [UIColor whiteColor].CGColor;
     _removeButton.layer.borderWidth = 2;
+    [_removeButton addTarget:self
+                      action:@selector(removeButtonTapped)
+            forControlEvents:UIControlEventTouchUpInside];
+}
+
+- (void)removeButtonTapped {
+    if (self.delegate && [self.delegate respondsToSelector:@selector(removeButtonTappedAtModel:)]) {
+        [self.delegate removeButtonTappedAtModel:_viewModel];
+    }
 }
 
 #pragma mark - IGListBindable
@@ -91,11 +100,11 @@
     if (!viewModel)
         return;
     
-    PickerViewModel *model = (PickerViewModel *)viewModel;
+    _viewModel = (PickerViewModel *)viewModel;
     
-    [_shortNameLabel setText:[StringHelper getShortName:model.name]];
+    [_shortNameLabel setText:[StringHelper getShortName:_viewModel.name]];
     
-    switch (model.gradientColorCode) {
+    switch (_viewModel.gradientColorCode) {
         case GRADIENT_COLOR_BLUE:
             [_avatarImageView setImage:[UIImage imageNamed:@"gradientBlue"]];
             break;

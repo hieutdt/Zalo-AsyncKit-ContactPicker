@@ -16,7 +16,7 @@
 #import "IGLKPickerTableView.h"
 #import "IGLKPickerCollectionView.h"
 
-@interface IGLKViewController () <IGLKPickerTableViewDelegate>
+@interface IGLKViewController () <IGLKPickerTableViewDelegate, IGLKPickerCollectionViewDelegate, UISearchBarDelegate>
 
 @property (nonatomic, strong) NSMutableArray<Contact *> *contacts;
 @property (nonatomic, strong) NSMutableArray<NSMutableArray *> *sectionData;
@@ -54,6 +54,11 @@
     
     _tableView.delegate = self;
     [_tableView setViewController:self];
+    
+    _collectionView.delegate = self;
+    
+    _searchBar.placeholder = @"Search for contacts";
+    _searchBar.delegate = self;
     
     [self checkPermissionAndLoadContacts];
 }
@@ -130,8 +135,7 @@
 
 #pragma mark - IGLKPickerTableViewDelegate
 
-- (void)pickerTableView:(IGLKPickerTableView *)tableView
- checkedCellAtIndexPath:(NSIndexPath *)indexPath {
+- (void)pickerTableView:(IGLKPickerTableView *)tableView checkedCellAtIndexPath:(NSIndexPath *)indexPath {
     PickerViewModel *model = [self.pickerModels objectAtIndex:indexPath.row];
     if (!model)
         return;
@@ -139,8 +143,7 @@
     [self.collectionView addElement:model];
 }
 
-- (void)pickerTableView:(IGLKPickerTableView *)tableView
-uncheckedCellAtIndexPath:(NSIndexPath *)indexPath {
+- (void)pickerTableView:(IGLKPickerTableView *)tableView uncheckedCellAtIndexPath:(NSIndexPath *)indexPath {
     PickerViewModel *model = [self.pickerModels objectAtIndex:indexPath.row];
     if (!model)
         return;
@@ -148,5 +151,20 @@ uncheckedCellAtIndexPath:(NSIndexPath *)indexPath {
     [self.collectionView removeElement:model];
 }
 
+#pragma mark - IGLKPickerCollectionViewDelegate
+
+- (void)collectionView:(IGLKPickerCollectionView *)collectionView removeItem:(PickerViewModel *)item {
+    if (!item)
+        return;
+    if (collectionView == self.collectionView) {
+        [self.tableView uncheckModel:item];
+    }
+}
+
+#pragma mark - UISearchBarDelegate
+
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
+    
+}
 
 @end

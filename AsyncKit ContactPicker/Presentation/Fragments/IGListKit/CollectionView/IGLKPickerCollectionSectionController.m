@@ -12,7 +12,7 @@
 #import "IGLKPickerCollectionCell.h"
 #import "AppConsts.h"
 
-@interface IGLKPickerCollectionSectionController ()
+@interface IGLKPickerCollectionSectionController () <IGLKPickerCollectionCellDelegate>
 
 @property (nonatomic, strong) PickerViewModel *currentModel;
 
@@ -49,6 +49,7 @@
     IGLKPickerCollectionCell *cell = [self.collectionContext dequeueReusableCellOfClass:[IGLKPickerCollectionCell class]
                                                                    forSectionController:sectionController
                                                                                 atIndex:index];
+    cell.delegate = self;
     return cell;
 }
 
@@ -56,6 +57,15 @@
            sizeForViewModel:(id)viewModel
                     atIndex:(NSInteger)index {
     return CGSizeMake(AVATAR_COLLECTION_IMAGE_HEIGHT + 5, AVATAR_COLLECTION_IMAGE_HEIGHT + 10);
+}
+
+#pragma mark - IGLKPickerCollectionCellDelegate
+
+- (void)removeButtonTappedAtModel:(PickerViewModel *)model {
+    if (self.delegate && [self.delegate respondsToSelector:@selector(sectionController:removeItem:)]) {
+        [self.delegate sectionController:self
+                              removeItem:model];
+    }
 }
 
 @end
