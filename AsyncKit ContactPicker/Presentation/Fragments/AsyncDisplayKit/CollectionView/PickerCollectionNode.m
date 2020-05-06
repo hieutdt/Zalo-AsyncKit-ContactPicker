@@ -106,7 +106,8 @@ static NSString *kReuseIdentifier = @"PickerCollectionViewCell";
     if (!pickerModel)
         return;
     
-    self.hidden = NO;
+    if (self.hidden)
+        [self show];
     
     [self.collectionNode performBatchUpdates:^{
         [self.models addObject:pickerModel];
@@ -138,14 +139,16 @@ static NSString *kReuseIdentifier = @"PickerCollectionViewCell";
         [self.collectionNode deleteItemsAtIndexPaths:@[indexPath]];
         
     } completion:^(BOOL finished) {
-        self.hidden = (self.models.count == 0);
+        if (self.models.count == 0) {
+            [self hide];
+        }
         [self layoutIfNeeded];
     }];
 }
 
 - (void)removeAllElements {
     [self.models removeAllObjects];
-    self.hidden = YES;
+    [self hide];
     [self reloadData];
 }
 
@@ -234,6 +237,27 @@ constrainedSizeForNodeAtIndexPath:(NSIndexPath *)indexPath {
     [collectionNode scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:self.models.count - 1 inSection:0]
                            atScrollPosition:UICollectionViewScrollPositionNone
                                    animated:true];
+}
+
+- (void)show {
+    self.hidden = NO;
+    self.alpha = 0;
+    self.view.transform = CGAffineTransformTranslate(self.view.transform, 0, self.view.frame.size.height);
+    
+    [UIView animateWithDuration:0.25 animations:^{
+        self.alpha = 1;
+        self.view.transform = CGAffineTransformTranslate(self.view.transform, 0, -self.view.frame.size.height);
+    } completion:^(BOOL finished) {
+        self.view.transform = CGAffineTransformIdentity;
+    }];
+}
+
+- (void)hide {
+    self.alpha = 1;
+    [UIView animateWithDuration:0.25 animations:^{
+        self.alpha = 0;
+        self.hidden = YES;
+    }];
 }
 
 @end

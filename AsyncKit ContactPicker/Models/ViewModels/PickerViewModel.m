@@ -26,7 +26,12 @@
     if (_name.length == 0)
         return -1;
     
-    return [[_name lowercaseString] characterAtIndex:0] - FIRST_ALPHABET_ASCII_CODE;
+    int sectionIndex =  [[_name lowercaseString] characterAtIndex:0] - FIRST_ALPHABET_ASCII_CODE;
+    if (sectionIndex >= ALPHABET_SECTIONS_NUMBER) {
+        sectionIndex = ALPHABET_SECTIONS_NUMBER - 1;
+    }
+    
+    return sectionIndex;
 }
 
 #pragma mark - IGListDiffable
