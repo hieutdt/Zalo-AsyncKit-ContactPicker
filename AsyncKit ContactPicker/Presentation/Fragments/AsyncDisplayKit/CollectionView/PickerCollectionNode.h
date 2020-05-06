@@ -31,10 +31,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)removeAllElements;
 
-- (void)show;
-
-- (void)hide;
-
 @end
 
 NS_ASSUME_NONNULL_END

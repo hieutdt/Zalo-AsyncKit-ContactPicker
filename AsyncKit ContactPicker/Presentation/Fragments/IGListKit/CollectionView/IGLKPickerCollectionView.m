@@ -108,7 +108,10 @@
     if (!element)
         return;
     
-    self.hidden = NO;
+    if (self.hidden) {
+        [self show];
+    }
+    
     [self.viewModels addObject:element];
     [self.adapter performUpdatesAnimated:YES completion:^(BOOL finished) {
         [self scrollToBottom:self.collectionView];
@@ -123,7 +126,7 @@
     [self.adapter performUpdatesAnimated:YES completion:^(BOOL finished) {
         if (finished) {
             if (self.viewModels.count == 0)
-                self.hidden = YES;
+                [self hide];
         }
     }];
 }
@@ -163,7 +166,7 @@
                               completion:^(BOOL finished) {
         if (finished) {
             if (self.viewModels.count == 0)
-                self.hidden = YES;
+                [self hide];
         }
     }];
     
@@ -179,6 +182,27 @@
     [collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:collectionView.numberOfSections - 1]
                            atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally
                                    animated:YES];
+}
+
+- (void)show {
+    self.hidden = NO;
+    self.alpha = 0;
+    self.transform = CGAffineTransformTranslate(self.transform, 0, self.frame.size.height);
+    
+    [UIView animateWithDuration:0.25 animations:^{
+        self.alpha = 1;
+        self.transform = CGAffineTransformTranslate(self.transform, 0, -self.frame.size.height);
+    } completion:^(BOOL finished) {
+        self.transform = CGAffineTransformIdentity;
+    }];
+}
+
+- (void)hide {
+    self.alpha = 1;
+    [UIView animateWithDuration:0.25 animations:^{
+        self.alpha = 0;
+        self.hidden = YES;
+    }];
 }
 
 

@@ -153,7 +153,9 @@ static const int kMaxPick = 5;
     if (!pickerModel)
         return;
     
-    self.hidden = NO;
+    if (self.hidden) {
+        [self show];
+    }
     
     [self.collectionView performBatchUpdates:^{
         [self.viewModels addObject:pickerModel];
@@ -176,7 +178,7 @@ static const int kMaxPick = 5;
         
         [self.viewModels removeObject:pickerModel];
         if (self.viewModels.count == 0)
-            self.hidden = YES;
+            [self hide];
         
         // Delete in datasource
         CKDataSourceChangeset *changeset = [[[CKDataSourceChangesetBuilder dataSourceChangeset]
@@ -224,6 +226,27 @@ static CKComponent *pickerCollectionComponentProvider(PickerViewModel *model, CK
     [collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:self.viewModels.count - 1 inSection:0]
                            atScrollPosition:UICollectionViewScrollPositionNone
                                    animated:true];
+}
+
+- (void)show {
+    self.hidden = NO;
+    self.alpha = 0;
+    self.transform = CGAffineTransformTranslate(self.transform, 0, self.frame.size.height);
+    
+    [UIView animateWithDuration:0.25 animations:^{
+        self.alpha = 1;
+        self.transform = CGAffineTransformTranslate(self.transform, 0, -self.frame.size.height);
+    } completion:^(BOOL finished) {
+        self.transform = CGAffineTransformIdentity;
+    }];
+}
+
+- (void)hide {
+    self.alpha = 1;
+    [UIView animateWithDuration:0.25 animations:^{
+        self.alpha = 0;
+        self.hidden = YES;
+    }];
 }
 
 @end
