@@ -206,6 +206,8 @@ static const int kMaxPick = 5;
     [_dataSource applyChangeset:changeset
                            mode:CKUpdateModeSynchronous
                        userInfo:nil];
+    
+    [self hide];
 }
 
 #pragma mark - CKComponentProvider

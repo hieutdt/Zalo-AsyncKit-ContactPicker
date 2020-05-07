@@ -254,4 +254,21 @@
     view.tintColor = [UIColor whiteColor];
 }
 
+- (void)tableNode:(ASTableNode *)tableNode
+didHighlightRowAtIndexPath:(NSIndexPath *)indexPath {
+    PickerTableCellNode *cell = [tableNode nodeForRowAtIndexPath:indexPath];
+    [UIView animateWithDuration:0.25 animations:^{
+        [cell setBackgroundColor:[UIColor colorWithRed:235/255.f
+                                                 green:245/255.f
+                                                  blue:251/255.f
+                                                 alpha:1]];
+    }];
+}
+
+- (void)tableNode:(ASTableNode *)tableNode
+didUnhighlightRowAtIndexPath:(NSIndexPath *)indexPath {
+    PickerTableCellNode *cell = [tableNode nodeForRowAtIndexPath:indexPath];
+    [cell setBackgroundColor:[UIColor whiteColor]];
+}
+
 @end

@@ -140,6 +140,7 @@
 - (void)removeAllElements {
     [self.viewModels removeAllObjects];
     [self reloadData];
+    [self hide];
 }
 
 #pragma mark - IGListAdapterDataSource
@@ -184,7 +185,8 @@
 #pragma mark - Action
 
 - (void)scrollToBottom:(UICollectionView *)collectionView {
-    [collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:collectionView.numberOfSections - 1]
+    [collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:0
+                                                                inSection:collectionView.numberOfSections - 1]
                            atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally
                                    animated:YES];
 }

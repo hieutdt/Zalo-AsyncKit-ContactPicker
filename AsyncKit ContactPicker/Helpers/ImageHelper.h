@@ -16,6 +16,9 @@ NS_ASSUME_NONNULL_BEGIN
 + (UIImage *)makeRoundedImage:(UIImage *)image
                        radius:(float)radius;
 
++ (UIImage *)imageWithImage:(UIImage *)image
+           scaledToFillSize:(CGSize)size;
+
 @end
 
 NS_ASSUME_NONNULL_END

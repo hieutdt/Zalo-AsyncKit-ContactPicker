@@ -31,14 +31,14 @@
                             <textInputTraits key="textInputTraits"/>
                         </searchBar>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fVc-f1-iA7" customClass="IGLKPickerTableView">
-                            <rect key="frame" x="0.0" y="60" width="414" height="642"/>
+                            <rect key="frame" x="0.0" y="60" width="414" height="662"/>
                             <color key="backgroundColor" systemColor="systemGreenColor" red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wJQ-h2-sx6" customClass="IGLKPickerCollectionView">
-                            <rect key="frame" x="0.0" y="702" width="414" height="150"/>
+                            <rect key="frame" x="0.0" y="722" width="414" height="130"/>
                             <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="150" id="Lq3-ok-gf8"/>
+                                <constraint firstAttribute="height" constant="130" id="Lq3-ok-gf8"/>
                             </constraints>
                         </view>
                     </subviews>

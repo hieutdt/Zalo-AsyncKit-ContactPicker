@@ -18,7 +18,7 @@ static NSString *kReuseIdentifier = @"PickerCollectionViewCell";
 @interface PickerCollectionNode () <ASCollectionDelegate, ASCollectionDataSource, ASCollectionViewLayoutInspecting, PickerCollectionCellNodeDelegate>
 
 @property (nonatomic, strong) ASCollectionNode *collectionNode;
-@property (nonatomic, strong) UICollectionViewFlowLayout *flowLayou t;
+@property (nonatomic, strong) UICollectionViewFlowLayout *flowLayout;
 @property (nonatomic, strong) ASButtonNode *nextButton;
 
 @property (nonatomic, strong) NSMutableArray<PickerViewModel *> *models;
@@ -46,6 +46,7 @@ static NSString *kReuseIdentifier = @"PickerCollectionViewCell";
         _flowLayout = [[UICollectionViewFlowLayout alloc] init];
         _flowLayout.itemSize = CGSizeMake(AVATAR_COLLECTION_IMAGE_HEIGHT, AVATAR_COLLECTION_IMAGE_HEIGHT);
         _flowLayout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
+        _flowLayout.minimumLineSpacing = 10;
         
         _collectionNode = [[ASCollectionNode alloc] initWithCollectionViewLayout:_flowLayout];
         _collectionNode.delegate = self;
@@ -211,7 +212,8 @@ constrainedSizeForNodeAtIndexPath:(NSIndexPath *)indexPath {
 
 #pragma mark - PickerCollectionCellNodeDelegateProtocol
 
-- (void)collectionCellNode:(PickerCollectionCellNode *)node removeButtonTappedAtElement:(PickerViewModel *)element {
+- (void)collectionCellNode:(PickerCollectionCellNode *)node
+removeButtonTappedAtElement:(PickerViewModel *)element {
 #if DEBUG
     assert(element);
 #endif

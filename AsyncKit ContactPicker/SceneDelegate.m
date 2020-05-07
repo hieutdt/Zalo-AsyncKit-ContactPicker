@@ -2,6 +2,7 @@
 #import "ASDKViewController.h"
 #import "CKViewController.h"
 #import "IGLKViewController.h"
+#import "ImageHelper.h"
 
 @interface SceneDelegate ()
 
@@ -19,13 +20,13 @@
     IGLKViewController *IGLK = [[IGLKViewController alloc] init];
     
     UITabBarItem *ASDKTabBarItem = [[UITabBarItem alloc] initWithTitle:@"ASDK"
-                                                                 image:[UIImage imageNamed:@""]
+                                                                 image:nil
                                                                    tag:0];
     UITabBarItem *CKTabBarItem = [[UITabBarItem alloc] initWithTitle:@"CK"
-                                                               image:[UIImage imageNamed:@""]
+                                                               image:nil
                                                                  tag:1];
     UITabBarItem *IGLKTabBarItem = [[UITabBarItem alloc] initWithTitle:@"IGLK"
-                                                                 image:[UIImage imageNamed:@""]
+                                                                 image:nil
                                                                    tag:2];
     
     ASDK.tabBarItem = ASDKTabBarItem;

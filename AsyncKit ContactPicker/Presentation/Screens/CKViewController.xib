@@ -9,33 +9,36 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="CKViewController">
             <connections>
-                <outlet property="collectionView" destination="ARt-OA-mGH" id="zUS-wD-gei"/>
-                <outlet property="searchBar" destination="BcY-VR-U2Y" id="duW-xL-zyz"/>
-                <outlet property="tableView" destination="Tt6-SN-dS5" id="9n8-bq-wQb"/>
-                <outlet property="view" destination="DNS-lc-4Yq" id="kau-iD-XUI"/>
+                <outlet property="collectionView" destination="zXH-yy-BTu" id="6W8-xI-1ke"/>
+                <outlet property="searchBar" destination="7HO-kx-1sx" id="kM5-DE-Xkk"/>
+                <outlet property="tableView" destination="a96-hS-SLw" id="fbS-uV-gJL"/>
+                <outlet property="view" destination="I1p-Dd-vJH" id="9bD-vZ-BrH"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <view contentMode="scaleToFill" id="DNS-lc-4Yq">
+        <view contentMode="scaleToFill" id="I1p-Dd-vJH">
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
-                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="2DC-qE-lo6">
-                    <rect key="frame" x="0.0" y="44" width="414" height="852"/>
+                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="c55-2E-jfJ">
+                    <rect key="frame" x="0.0" y="44" width="414" height="818"/>
                     <subviews>
-                        <searchBar contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="BcY-VR-U2Y">
-                            <rect key="frame" x="0.0" y="0.0" width="414" height="92"/>
+                        <searchBar contentMode="redraw" searchBarStyle="minimal" translatesAutoresizingMaskIntoConstraints="NO" id="7HO-kx-1sx">
+                            <rect key="frame" x="0.0" y="0.0" width="414" height="60"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="60" id="LSL-Nd-gOC"/>
+                            </constraints>
                             <textInputTraits key="textInputTraits"/>
                         </searchBar>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Tt6-SN-dS5" customClass="CKPickerTableView">
-                            <rect key="frame" x="0.0" y="92" width="414" height="610"/>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="a96-hS-SLw" customClass="CKPickerTableView">
+                            <rect key="frame" x="0.0" y="60" width="414" height="658"/>
                             <color key="backgroundColor" systemColor="systemGreenColor" red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         </view>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ARt-OA-mGH" customClass="CKPickerCollectionView">
-                            <rect key="frame" x="0.0" y="702" width="414" height="150"/>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zXH-yy-BTu" customClass="CKPickerCollectionView">
+                            <rect key="frame" x="0.0" y="718" width="414" height="100"/>
                             <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="150" id="IqO-Wa-bg0"/>
+                                <constraint firstAttribute="height" constant="100" id="fch-sB-Es5"/>
                             </constraints>
                         </view>
                     </subviews>
@@ -43,12 +46,12 @@
             </subviews>
             <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
             <constraints>
-                <constraint firstItem="2DC-qE-lo6" firstAttribute="trailing" secondItem="wuL-56-ynQ" secondAttribute="trailing" id="1QW-4Y-wZT"/>
-                <constraint firstItem="wuL-56-ynQ" firstAttribute="bottom" secondItem="2DC-qE-lo6" secondAttribute="bottom" constant="-34" id="G6D-zS-O5w"/>
-                <constraint firstItem="2DC-qE-lo6" firstAttribute="leading" secondItem="wuL-56-ynQ" secondAttribute="leading" id="WvX-Cd-far"/>
-                <constraint firstItem="2DC-qE-lo6" firstAttribute="top" secondItem="wuL-56-ynQ" secondAttribute="top" id="lfF-6Z-oYA"/>
+                <constraint firstItem="c55-2E-jfJ" firstAttribute="bottom" secondItem="c5C-5K-49E" secondAttribute="bottom" id="3yt-cs-Oe5"/>
+                <constraint firstItem="c55-2E-jfJ" firstAttribute="trailing" secondItem="c5C-5K-49E" secondAttribute="trailing" id="SOc-xE-Q2n"/>
+                <constraint firstItem="c55-2E-jfJ" firstAttribute="top" secondItem="c5C-5K-49E" secondAttribute="top" id="Z7b-0V-KZR"/>
+                <constraint firstItem="c55-2E-jfJ" firstAttribute="leading" secondItem="c5C-5K-49E" secondAttribute="leading" id="Zoe-Oe-bkx"/>
             </constraints>
-            <viewLayoutGuide key="safeArea" id="wuL-56-ynQ"/>
+            <viewLayoutGuide key="safeArea" id="c5C-5K-49E"/>
             <point key="canvasLocation" x="87" y="100"/>
         </view>
     </objects>
