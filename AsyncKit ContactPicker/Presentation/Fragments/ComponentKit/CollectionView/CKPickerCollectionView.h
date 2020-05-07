@@ -30,6 +30,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)removeElement:(PickerViewModel *)pickerModel;
 
+- (void)removeAllElements;
+
 @end
 
 NS_ASSUME_NONNULL_END

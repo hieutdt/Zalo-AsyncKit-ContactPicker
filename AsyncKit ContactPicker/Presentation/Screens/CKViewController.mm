@@ -33,6 +33,12 @@ static const int kCollectionViewHeight = 100;
 @property (nonatomic, strong) NSMutableArray<NSMutableArray *> *sectionData;
 @property (nonatomic, strong) NSMutableArray<PickerViewModel *> *viewModels;
 
+@property (nonatomic, strong) UILabel *titleLabel;
+@property (nonatomic, strong) UILabel *subTitleLabel;
+
+@property (nonatomic, strong) UIBarButtonItem *updateButtonItem;
+@property (nonatomic, strong) UIBarButtonItem *cancelButtonItem;
+
 @end
 
 @implementation CKViewController
@@ -57,6 +63,13 @@ static const int kCollectionViewHeight = 100;
     }
     
     [self checkPermissionAndLoadContacts];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    [self customInitNavigationBar];
+    [self updateNavigationBarWithAnimated:NO];
 }
 
 #pragma mark - LoadContacts
@@ -154,6 +167,8 @@ static const int kCollectionViewHeight = 100;
             });
         }];
     }
+    
+    [self updateNavigationBarWithAnimated:YES];
 }
 
 - (void)CKPickerTableView:(CKPickerTableView *)tableView
@@ -164,6 +179,7 @@ didUnSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     PickerViewModel *model = self.viewModels[index];
     [self.collectionView removeElement:model];
+    [self updateNavigationBarWithAnimated:YES];
 }
 
 - (void)loadImageToCellComponent:(CKPickerTableCellComponent *)cellComponent
@@ -184,6 +200,7 @@ didUnSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     if (collectionView == self.collectionView) {
         [self.tableView unselectCellOfElement:element];
+        [self updateNavigationBarWithAnimated:YES];
     }
 }
 
@@ -191,6 +208,87 @@ didUnSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
     [self.tableView searchByString:searchText];
+}
+
+#pragma mark - CustomInitNavigationBar
+
+- (void)customInitNavigationBar {
+    [self.navigationController setNavigationBarHidden:NO
+                                             animated:YES];
+
+    _titleLabel = [[UILabel alloc] init];
+    self.titleLabel.text = @"Chọn bạn";
+    self.titleLabel.font = [UIFont systemFontOfSize:18];
+    self.titleLabel.textColor = [UIColor darkTextColor];
+
+    _subTitleLabel = [[UILabel alloc] init];
+    self.subTitleLabel.text = @"Đã chọn: 0/5";
+    self.subTitleLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleFootnote];
+    self.subTitleLabel.textColor = [UIColor darkGrayColor];
+
+    UIStackView *stackView = [[UIStackView alloc] initWithArrangedSubviews:@[self.titleLabel, self.subTitleLabel]];
+    stackView.distribution = UIStackViewDistributionEqualCentering;
+    stackView.alignment = UIStackViewAlignmentCenter;
+    stackView.axis = UILayoutConstraintAxisVertical;
+
+    self.tabBarController.navigationItem.titleView = stackView;
+
+    self.cancelButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Huỷ"
+                                                             style:UIBarButtonItemStylePlain
+                                                            target:self
+                                                            action:@selector(cancelPickContacts)];
+    self.cancelButtonItem.tintColor = [UIColor blackColor];
+
+    self.updateButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cập nhật"
+                                                             style:UIBarButtonItemStylePlain
+                                                            target:self
+                                                            action:@selector(updateContactsTapped)];
+    self.updateButtonItem.tintColor = [UIColor blackColor];
+}
+
+- (void)showCancelPickNavigationButton {
+    [self.tabBarController.navigationItem setLeftBarButtonItem:self.cancelButtonItem
+                                                      animated:YES];
+}
+
+- (void)hideCancelPickNavigationButton {
+    [self.tabBarController.navigationItem setLeftBarButtonItem:nil animated:YES];
+}
+
+- (void)showUpdateContactNavigationButton {
+    [self.tabBarController.navigationItem setRightBarButtonItem:self.updateButtonItem
+                                                       animated:YES];
+}
+
+- (void)hideUpdateContactNavigationButton {
+    [self.tabBarController.navigationItem setRightBarButtonItem:nil animated:YES];
+}
+
+- (void)updateNavigationBarWithAnimated:(BOOL)animated {
+    if ([self.tableView selectedCount] > 0) {
+        [self showCancelPickNavigationButton];
+    } else {
+        [self hideCancelPickNavigationButton];
+    }
+    
+    self.subTitleLabel.text = [NSString stringWithFormat:@"Đã chọn: %ld/5", [self.tableView selectedCount]];
+    if (animated) {
+        self.subTitleLabel.transform = CGAffineTransformScale(self.subTitleLabel.transform, 1.2, 1.3);
+        [UIView animateWithDuration:0.25 animations:^{
+            self.subTitleLabel.transform = CGAffineTransformIdentity;
+        } completion:nil];
+    }
+}
+
+
+- (void)cancelPickContacts {
+    [self.tableView unselectAllElements];
+    [self.collectionView removeAllElements];
+    [self updateNavigationBarWithAnimated:YES];
+}
+
+- (void)updateContactsTapped {
+    
 }
 
 @end

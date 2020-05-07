@@ -89,6 +89,14 @@
     }];
 }
 
+- (void)unselectAllModels {
+    for (int i = 0; i < self.viewModels.count; i++) {
+        self.viewModels[i].isChosen = NO;
+    }
+    
+    [self reloadData];
+}
+
 - (void)setViewController:(UIViewController *)vc {
     if (vc) {
         [_adapter setViewController:vc];
@@ -107,6 +115,10 @@
     if (model) {
         [_adapter reloadObjects:@[model]];
     }
+}
+
+- (int)selectedCount {
+    return _selectedCount;
 }
 
 #pragma mark - IGListAdapterDataSource

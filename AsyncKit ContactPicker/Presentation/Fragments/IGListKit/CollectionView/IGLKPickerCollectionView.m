@@ -137,6 +137,11 @@
     }
 }
 
+- (void)removeAllElements {
+    [self.viewModels removeAllObjects];
+    [self reloadData];
+}
+
 #pragma mark - IGListAdapterDataSource
 
 - (NSArray<id<IGListDiffable>> *)objectsForListAdapter:(IGListAdapter *)listAdapter {
@@ -199,7 +204,7 @@
 
 - (void)hide {
     self.alpha = 1;
-    [UIView animateWithDuration:0.25 animations:^{
+    [UIView animateWithDuration:0.2 animations:^{
         self.alpha = 0;
         self.hidden = YES;
     }];

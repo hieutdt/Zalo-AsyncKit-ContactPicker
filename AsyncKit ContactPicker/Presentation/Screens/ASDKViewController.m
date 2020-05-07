@@ -146,9 +146,13 @@
     self.collectionNode.hidden = YES;
     self.stateNode.hidden = YES;
     
-    [self customInitNavigationBar];
-    
     [self checkPermissionAndLoadContacts];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self customInitNavigationBar];
+    [self updateNavigationBarWithAnimated:NO];
 }
 
 #pragma mark - SetUpNavigationBar
@@ -156,13 +160,13 @@
 - (void)customInitNavigationBar {
     [self.navigationController setNavigationBarHidden:NO animated:YES];
     
-    self.titleLabel.text = @"Contacts list";
-    self.titleLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleTitle3];
+    self.titleLabel.text = @"Chọn bạn";
+    self.titleLabel.font = [UIFont systemFontOfSize:18];
     self.titleLabel.textColor = [UIColor darkTextColor];
 
-    self.subTitleLabel.text = @"Selected: 0/5";
+    self.subTitleLabel.text = @"Đã chọn: 0/5";
     self.subTitleLabel.font = [UIFont preferredFontForTextStyle:UIFontTextStyleFootnote];
-    self.subTitleLabel.textColor = [UIColor lightGrayColor];
+    self.subTitleLabel.textColor = [UIColor darkGrayColor];
 
     UIStackView *stackView = [[UIStackView alloc] initWithArrangedSubviews:@[self.titleLabel, self.subTitleLabel]];
     stackView.distribution = UIStackViewDistributionEqualCentering;
@@ -171,19 +175,17 @@
     
     self.tabBarController.navigationItem.titleView = stackView;
     
-    self.cancelButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cancel"
+    self.cancelButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Huỷ"
                                                              style:UIBarButtonItemStylePlain
                                                             target:self
                                                             action:@selector(cancelPickContacts)];
     self.cancelButtonItem.tintColor = [UIColor blackColor];
 
-    self.updateButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Update"
+    self.updateButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Cập nhật"
                                                              style:UIBarButtonItemStylePlain
                                                             target:self
                                                             action:@selector(updateContactsTapped)];
     self.updateButtonItem.tintColor = [UIColor blackColor];
-    
-    self.subTitleLabel.hidden = YES;
 }
 
 - (void)showCancelPickNavigationButton {
@@ -202,18 +204,20 @@
     [self.tabBarController.navigationItem setRightBarButtonItem:nil animated:YES];
 }
 
-- (void)updateNavigationBar {
+- (void)updateNavigationBarWithAnimated:(BOOL)animated {
     if ([self.tableNode selectedCount] > 0) {
-        self.subTitleLabel.hidden = NO;
-        self.titleLabel.text = @"Choose Friends";
         [self showCancelPickNavigationButton];
     } else {
-        self.subTitleLabel.hidden = YES;
-        self.titleLabel.text = @"Contacts List";
         [self hideCancelPickNavigationButton];
     }
     
-    self.subTitleLabel.text = [NSString stringWithFormat:@"Selected: %d/5", [self.tableNode selectedCount]];
+    self.subTitleLabel.text = [NSString stringWithFormat:@"Đã chọn: %d/5", [self.tableNode selectedCount]];
+    if (animated) {
+        self.subTitleLabel.transform = CGAffineTransformScale(self.subTitleLabel.transform, 1.2, 1.3);
+        [UIView animateWithDuration:0.25 animations:^{
+            self.subTitleLabel.transform = CGAffineTransformIdentity;
+        } completion:nil];
+    }
 }
 
 #pragma mark - NavigationBarAction
@@ -221,7 +225,7 @@
 - (void)cancelPickContacts {
     [self.tableNode uncheckAllElements];
     [self.collectionNode removeAllElements];
-    [self updateNavigationBar];
+    [self updateNavigationBarWithAnimated:NO];
 }
 
 - (void)updateContactsTapped {
@@ -328,7 +332,7 @@
     if (imageFromCache) {
         [self.collectionNode addElement:element
                               withImage:imageFromCache];
-        [self updateNavigationBar];
+        [self updateNavigationBarWithAnimated:YES];
     } else {
         [self.contactBusiness loadContactImageByID:element.identifier
                                         completion:^(UIImage *image, NSError *error) {
@@ -337,7 +341,7 @@
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self.collectionNode addElement:element
                                       withImage:image];
-                [self updateNavigationBar];
+                [self updateNavigationBarWithAnimated:YES];
             });
         }];
     }
@@ -346,7 +350,7 @@
 - (void)pickerTableNode:(PickerTableNode *)tableNode uncheckedCellOfElement:(PickerViewModel *)element {
     if (tableNode == self.tableNode && element) {
         [self.collectionNode removeElement:element];
-        [self updateNavigationBar];
+        [self updateNavigationBarWithAnimated:YES];
     }
 }
 
@@ -383,7 +387,7 @@
     
     if (collectionNode == self.collectionNode) {
         [self.tableNode uncheckElement:element];
-        [self updateNavigationBar];
+        [self updateNavigationBarWithAnimated:YES];
     }
 }
 

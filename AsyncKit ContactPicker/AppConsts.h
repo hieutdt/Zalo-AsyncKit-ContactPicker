@@ -42,7 +42,7 @@ static const int PICKER_COLLECTION_CELL_HEIGHT = 80;
 
 static const int MAX_PICK = 5;
 
-static const int SECTION_HEADER_HEIGHT = 40;
+static const int SECTION_HEADER_HEIGHT = 35;
 
 static const int MAX_IMAGES_CACHE_SIZE = 20;
 

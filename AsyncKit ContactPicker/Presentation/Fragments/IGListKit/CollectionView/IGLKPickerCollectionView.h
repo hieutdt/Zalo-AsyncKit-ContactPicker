@@ -31,6 +31,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)removeElement:(PickerViewModel *)element;
 
+- (void)removeAllElements;
+
 - (void)setViewController:(UIViewController *)vc;
 
 @end

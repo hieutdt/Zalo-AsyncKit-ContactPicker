@@ -42,6 +42,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)uncheckModel:(PickerViewModel *)model;
 
+- (void)unselectAllModels;
+
+- (int)selectedCount;
+
 @end
 
 NS_ASSUME_NONNULL_END

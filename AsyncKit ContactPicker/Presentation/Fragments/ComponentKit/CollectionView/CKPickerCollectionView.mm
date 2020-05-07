@@ -193,6 +193,21 @@ static const int kMaxPick = 5;
     }];
 }
 
+- (void)removeAllElements {
+    NSMutableSet *set = [[NSMutableSet alloc] init];
+    for (int i = 0; i < self.viewModels.count; i++) {
+        [set addObject:[NSIndexPath indexPathForItem:i
+                                           inSection:0]];
+    }
+    
+    CKDataSourceChangeset *changeset = [[[CKDataSourceChangesetBuilder dataSourceChangeset]
+                                         withRemovedItems:set]
+                                        build];
+    [_dataSource applyChangeset:changeset
+                           mode:CKUpdateModeSynchronous
+                       userInfo:nil];
+}
+
 #pragma mark - CKComponentProvider
 
 static CKComponent *pickerCollectionComponentProvider(PickerViewModel *model, CKPickerCollectionView *context) {
@@ -243,7 +258,7 @@ static CKComponent *pickerCollectionComponentProvider(PickerViewModel *model, CK
 
 - (void)hide {
     self.alpha = 1;
-    [UIView animateWithDuration:0.25 animations:^{
+    [UIView animateWithDuration:0.2 animations:^{
         self.alpha = 0;
         self.hidden = YES;
     }];

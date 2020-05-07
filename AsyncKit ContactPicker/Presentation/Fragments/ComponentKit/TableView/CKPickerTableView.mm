@@ -123,7 +123,8 @@ static NSString * const kReuseIdentifier = @"componentKitPickerTableCell";
 
 - (void)setViewModels:(NSMutableArray<PickerViewModel *> *)viewModels {
     _viewModels = viewModels;
-    [self fitPickerModelsData:_viewModels toSections:_sectionsArray];
+    [self fitPickerModelsData:_viewModels
+                   toSections:_sectionsArray];
     [self enqueue:self.sectionsArray];
 }
 
@@ -202,6 +203,29 @@ static NSString * const kReuseIdentifier = @"componentKitPickerTableCell";
                        userInfo:nil];
 }
 
+- (void)unselectAllElements {
+    self.selectedCount = 0;
+    NSMutableDictionary<NSIndexPath *, PickerViewModel *> *updateDictionary = [NSMutableDictionary new];
+    
+    for (int i = 0; i < self.sectionsArray.count; i++) {
+        for (int j = 0; j < self.sectionsArray[i].count; j++) {
+            PickerViewModel *model = self.sectionsArray[i][j];
+            if (model.isChosen) {
+                NSIndexPath *indexPath = [NSIndexPath indexPathForItem:j
+                                                             inSection:i];
+                [updateDictionary addEntriesFromDictionary:@{ indexPath : model }];
+            }
+        }
+    }
+    
+    CKDataSourceChangeset *changeset = [[[CKDataSourceChangesetBuilder dataSourceChangeset]
+                                         withUpdatedItems:updateDictionary]
+                                        build];
+    [self.dataSource applyChangeset:changeset
+                               mode:CKUpdateModeSynchronous
+                           userInfo:nil];
+}
+
 #pragma mark - CallBackFromCKPickerTableCellComponent
 
 - (void)didSelectCellOfElement:(PickerViewModel *)element {
@@ -210,13 +234,12 @@ static NSString * const kReuseIdentifier = @"componentKitPickerTableCell";
     
     long index = [self.viewModels indexOfObject:element];
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:0];
+    _selectedCount++;
     
     if (self.delegate && [self.delegate respondsToSelector:@selector(CKPickerTableView:didSelectRowAtIndexPath:)]) {
         [self.delegate CKPickerTableView:self
                  didSelectRowAtIndexPath:indexPath];
     }
-    
-    _selectedCount++;
 }
 
 - (void)didUnSelectCellOfElement:(PickerViewModel *)element {
@@ -225,13 +248,12 @@ static NSString * const kReuseIdentifier = @"componentKitPickerTableCell";
     
     long index = [self.viewModels indexOfObject:element];
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:index inSection:0];
+    _selectedCount--;
     
     if (self.delegate && [self.delegate respondsToSelector:@selector(CKPickerTableView:didUnSelectRowAtIndexPath:)]) {
         [self.delegate CKPickerTableView:self
                didUnSelectRowAtIndexPath:indexPath];
     }
-    
-    _selectedCount--;
 }
 
 - (void)unselectCellOfElement:(PickerViewModel *)element {
@@ -247,6 +269,7 @@ static NSString * const kReuseIdentifier = @"componentKitPickerTableCell";
                                                 inSection:section];
     
     element.isChosen = !element.isChosen;
+    _selectedCount--;
     
     [self.collectionView performBatchUpdates:^{
         CKDataSourceChangeset *changeset = [[[CKDataSourceChangesetBuilder dataSourceChangeset]
@@ -256,8 +279,6 @@ static NSString * const kReuseIdentifier = @"componentKitPickerTableCell";
         [_dataSource applyChangeset:changeset
                                mode:CKUpdateModeSynchronous
                            userInfo:nil];
-        
-        _selectedCount--;
         
     } completion:^(BOOL finished) {
         [self layoutIfNeeded];

@@ -18,7 +18,7 @@ static NSString *kReuseIdentifier = @"PickerCollectionViewCell";
 @interface PickerCollectionNode () <ASCollectionDelegate, ASCollectionDataSource, ASCollectionViewLayoutInspecting, PickerCollectionCellNodeDelegate>
 
 @property (nonatomic, strong) ASCollectionNode *collectionNode;
-@property (nonatomic, strong) UICollectionViewFlowLayout *flowLayout;
+@property (nonatomic, strong) UICollectionViewFlowLayout *flowLayou t;
 @property (nonatomic, strong) ASButtonNode *nextButton;
 
 @property (nonatomic, strong) NSMutableArray<PickerViewModel *> *models;
@@ -254,7 +254,7 @@ constrainedSizeForNodeAtIndexPath:(NSIndexPath *)indexPath {
 
 - (void)hide {
     self.alpha = 1;
-    [UIView animateWithDuration:0.25 animations:^{
+    [UIView animateWithDuration:0.2 animations:^{
         self.alpha = 0;
         self.hidden = YES;
     }];
