@@ -20,11 +20,13 @@ static const int kMaxPick = 5;
 
 @property (nonatomic, strong) UICollectionView *collectionView;
 @property (nonatomic, strong) UIButton *nextButton;
+@property (nonatomic, strong) UIView *nextButtonContainer;
 @property (nonatomic, strong) CKCollectionViewDataSource *dataSource;
 @property (nonatomic, strong) CKComponentFlexibleSizeRangeProvider *sizeRangeProvider;
 
 @property (nonatomic, strong) NSMutableArray<PickerViewModel *> *viewModels;
-@property (nonatomic, strong) dispatch_queue_t serialQueue;
+
+@property (nonatomic, assign) float nextButtonHeight;
 
 @end
 
@@ -60,18 +62,19 @@ static const int kMaxPick = 5;
     self.layer.shadowColor = [UIColor blackColor].CGColor;
     self.layer.shadowOpacity = 0.3;
     
-    _viewModels = [[NSMutableArray alloc] init];
+    _nextButtonHeight = [UIScreen mainScreen].bounds.size.width / 7.f;
     
-    _serialQueue = dispatch_queue_create("CKPickerCollectionViewQueue", DISPATCH_QUEUE_SERIAL);
+    _viewModels = [[NSMutableArray alloc] init];
     
     UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
     [flowLayout setScrollDirection:UICollectionViewScrollDirectionHorizontal];
-    flowLayout.minimumLineSpacing = 20;
+    flowLayout.minimumLineSpacing = 10;
     
     _collectionView = [[UICollectionView alloc] initWithFrame:self.bounds
                                          collectionViewLayout:flowLayout];
     _collectionView.backgroundColor = [UIColor whiteColor];
     _collectionView.delegate = self;
+    _collectionView.contentInset = UIEdgeInsetsMake(0, 15, 0, _nextButtonHeight + 20);
     
     [self addSubview:_collectionView];
     _collectionView.translatesAutoresizingMaskIntoConstraints = NO;
@@ -79,6 +82,18 @@ static const int kMaxPick = 5;
     [_collectionView.leadingAnchor constraintEqualToAnchor:self.leadingAnchor
                                                   constant:5].active = YES;
     [_collectionView.heightAnchor constraintEqualToConstant:100].active = YES;
+    [_collectionView.trailingAnchor constraintEqualToAnchor:self.trailingAnchor].active = YES;
+    _collectionView.showsHorizontalScrollIndicator = NO;
+    
+    _nextButtonContainer = [[UIView alloc] init];
+    _nextButtonContainer.backgroundColor = [UIColor whiteColor];
+    _nextButtonContainer.alpha = 0.7;
+    
+    [self addSubview:_nextButtonContainer];
+    _nextButtonContainer.translatesAutoresizingMaskIntoConstraints = NO;
+    [_nextButtonContainer.heightAnchor constraintEqualToConstant:self.bounds.size.height].active = YES;
+    [_nextButtonContainer.widthAnchor constraintEqualToConstant:_nextButtonHeight + 20].active = YES;
+    [_nextButtonContainer.trailingAnchor constraintEqualToAnchor:self.trailingAnchor].active = YES;
     
     _nextButton = [[UIButton alloc] init];
     [_nextButton setTitle:@"→" forState:UIControlStateNormal];
@@ -90,18 +105,15 @@ static const int kMaxPick = 5;
                                                      blue:219/255.f
                                                     alpha:1]];
     [_nextButton.titleLabel setFont:[UIFont boldSystemFontOfSize:30]];
-    _nextButton.layer.cornerRadius = NEXT_BUTTON_HEIGHT / 2;
+    _nextButton.layer.cornerRadius = _nextButtonHeight / 2;
     
     [self addSubview:_nextButton];
-    _nextButton.translatesAutoresizingMaskIntoConstraints = NO;
-    [_nextButton.centerYAnchor constraintEqualToAnchor:self.collectionView.centerYAnchor].active = YES;
-    [_nextButton.widthAnchor constraintEqualToConstant:NEXT_BUTTON_HEIGHT].active = YES;
-    [_nextButton.heightAnchor constraintEqualToConstant:NEXT_BUTTON_HEIGHT].active = YES;
-    [_nextButton.trailingAnchor constraintEqualToAnchor:self.trailingAnchor
-                                               constant:-10].active = YES;
     
-    [_collectionView.trailingAnchor constraintEqualToAnchor:_nextButton.leadingAnchor
-                                                   constant:-10].active = YES;
+    _nextButton.translatesAutoresizingMaskIntoConstraints = NO;
+    [_nextButton.widthAnchor constraintEqualToConstant:_nextButtonHeight].active = YES;
+    [_nextButton.heightAnchor constraintEqualToConstant:_nextButtonHeight].active = YES;
+    [_nextButton.centerYAnchor constraintEqualToAnchor:_nextButtonContainer.centerYAnchor].active = YES;
+    [_nextButton.centerXAnchor constraintEqualToAnchor:_nextButtonContainer.centerXAnchor].active = YES;
     
     _sizeRangeProvider = [CKComponentFlexibleSizeRangeProvider
                           providerWithFlexibility:CKComponentSizeRangeFlexibleWidthAndHeight];
@@ -162,7 +174,6 @@ static const int kMaxPick = 5;
         [self enqueue:@[pickerModel]];
         
     } completion:^(BOOL finished) {
-        [self scrollToBottom:self.collectionView];
         [self layoutIfNeeded];
     }];
 }
@@ -238,12 +249,6 @@ static CKComponent *pickerCollectionComponentProvider(PickerViewModel *model, CK
 }
 
 #pragma mark - Action
-
-- (void)scrollToBottom:(UICollectionView *)collectionView {
-    [collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:self.viewModels.count - 1 inSection:0]
-                           atScrollPosition:UICollectionViewScrollPositionNone
-                                   animated:true];
-}
 
 - (void)show {
     self.hidden = NO;
