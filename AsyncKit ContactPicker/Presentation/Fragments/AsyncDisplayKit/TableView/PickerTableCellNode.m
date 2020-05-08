@@ -10,10 +10,14 @@
 
 #import "ColorHelper.h"
 #import "StringHelper.h"
+#import "UIImage+Addtions.h"
 
 #import "AppConsts.h"
 
 #define FONT_SIZE 18
+
+static float avatarImageHeight;
+static float checkerImageHeight;
 
 @interface PickerTableCellNode ()
 
@@ -31,6 +35,9 @@
 - (instancetype)init {
     self = [super init];
     if (self) {
+        avatarImageHeight = [UIScreen mainScreen].bounds.size.width / 7.f;
+        checkerImageHeight = avatarImageHeight / 2.f;
+        
         self.automaticallyManagesSubnodes = YES;
         
         _nameLabel = [[ASTextNode alloc] init];
@@ -40,15 +47,17 @@
         
         _checkerImageNode = [[ASImageNode alloc] init];
         _checkerImageNode.contentMode = UIViewContentModeScaleToFill;
-        _checkerImageNode.style.height = ASDimensionMake(CHECKER_IMAGE_HEIGHT);
-        _checkerImageNode.style.width = ASDimensionMake(CHECKER_IMAGE_HEIGHT);
+        _checkerImageNode.style.height = ASDimensionMake(checkerImageHeight);
+        _checkerImageNode.style.width = ASDimensionMake(checkerImageHeight);
         
         _avatarImageNode = [[ASImageNode alloc] init];
         _avatarImageNode.contentMode = UIViewContentModeScaleToFill;
-        _avatarImageNode.style.height = ASDimensionMake(AVATAR_IMAGE_HEIHGT);
-        _avatarImageNode.style.width = ASDimensionMake(AVATAR_IMAGE_HEIHGT);
-        _avatarImageNode.cornerRoundingType = ASCornerRoundingTypeDefaultSlowCALayer;
-        _avatarImageNode.cornerRadius = AVATAR_IMAGE_HEIHGT / 2.f;
+        _avatarImageNode.style.height = ASDimensionMake(avatarImageHeight);
+        _avatarImageNode.style.width = ASDimensionMake(avatarImageHeight);
+        _avatarImageNode.imageModificationBlock = ^UIImage *(UIImage * _Nonnull image) {
+            CGSize avatarImageSize = CGSizeMake(avatarImageHeight, avatarImageHeight);
+            return [image makeCircularImageWithSize:avatarImageSize];
+        };
     }
     return self;
 }
@@ -60,21 +69,21 @@
                                           centerLayoutSpecWithCenteringOptions:ASCenterLayoutSpecCenteringY
                                           sizingOptions:ASCenterLayoutSpecSizingOptionDefault
                                           child:_nameLabel];
-    centerNameSpec.style.preferredSize = CGSizeMake(maxConstrainedSize.width, AVATAR_IMAGE_HEIHGT);
+    centerNameSpec.style.preferredSize = CGSizeMake(maxConstrainedSize.width, avatarImageHeight);
     
-    _avatarImageNode.style.preferredSize = CGSizeMake(AVATAR_IMAGE_HEIHGT, AVATAR_IMAGE_HEIHGT);
+    _avatarImageNode.style.preferredSize = CGSizeMake(avatarImageHeight, avatarImageHeight);
     ASCenterLayoutSpec *centerShortNameSpec = [ASCenterLayoutSpec
                                                centerLayoutSpecWithCenteringOptions:ASCenterLayoutSpecCenteringXY
                                                sizingOptions:ASCenterLayoutSpecSizingOptionDefault
                                                child:_shortNameLabel];
-    centerShortNameSpec.style.preferredSize = CGSizeMake(AVATAR_IMAGE_HEIHGT, AVATAR_IMAGE_HEIHGT);
+    centerShortNameSpec.style.preferredSize = CGSizeMake(avatarImageHeight, avatarImageHeight);
     
     ASOverlayLayoutSpec *overlayShortNameSpec = [ASOverlayLayoutSpec overlayLayoutSpecWithChild:_avatarImageNode
                                                                                         overlay:centerShortNameSpec];
 
     
     ASStackLayoutSpec *stackSpec = [ASStackLayoutSpec stackLayoutSpecWithDirection:ASStackLayoutDirectionHorizontal
-                                                                           spacing:10
+                                                                           spacing:15
                                                                     justifyContent:ASStackLayoutJustifyContentStart
                                                                         alignItems:ASStackLayoutAlignItemsCenter
                                                                           children:@[_checkerImageNode, overlayShortNameSpec, centerNameSpec]];
@@ -95,7 +104,8 @@
     paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
     
     NSDictionary *attributedText = @{ NSFontAttributeName: [UIFont fontWithName:@"HelveticaNeue" size:FONT_SIZE],
-                                      NSParagraphStyleAttributeName : paragraphStyle };
+                                      NSParagraphStyleAttributeName : paragraphStyle
+    };
     
     NSAttributedString *string = [[NSAttributedString alloc] initWithString:name
                                                                  attributes:attributedText];

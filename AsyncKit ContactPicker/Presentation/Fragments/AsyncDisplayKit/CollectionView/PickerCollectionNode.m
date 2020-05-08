@@ -10,9 +10,6 @@
 #import "PickerCollectionCellNode.h"
 #import "AppConsts.h"
 
-#define PADDING_LEFT 15
-#define PADDING_RIGHT 15
-
 static NSString *kReuseIdentifier = @"PickerCollectionViewCell";
 
 @interface PickerCollectionNode () <ASCollectionDelegate, ASCollectionDataSource, ASCollectionViewLayoutInspecting, PickerCollectionCellNodeDelegate>
@@ -20,9 +17,12 @@ static NSString *kReuseIdentifier = @"PickerCollectionViewCell";
 @property (nonatomic, strong) ASCollectionNode *collectionNode;
 @property (nonatomic, strong) UICollectionViewFlowLayout *flowLayout;
 @property (nonatomic, strong) ASButtonNode *nextButton;
+@property (nonatomic, strong) ASDisplayNode *nextButtonContainer;
 
 @property (nonatomic, strong) NSMutableArray<PickerViewModel *> *models;
 @property (nonatomic, strong) NSCache<NSString *, UIImage *> *imageCache;
+
+@property (nonatomic, assign) float avatarCollectionImageHeight;
 
 @end
 
@@ -40,11 +40,13 @@ static NSString *kReuseIdentifier = @"PickerCollectionViewCell";
         self.shadowColor = [UIColor blackColor].CGColor;
         self.shadowOpacity = 0.3;
         
+        _avatarCollectionImageHeight = [UIScreen mainScreen].bounds.size.width / 7.f;
+        
         _models = [[NSMutableArray alloc] init];
         _imageCache = [[NSCache alloc] init];
         
         _flowLayout = [[UICollectionViewFlowLayout alloc] init];
-        _flowLayout.itemSize = CGSizeMake(AVATAR_COLLECTION_IMAGE_HEIGHT, AVATAR_COLLECTION_IMAGE_HEIGHT);
+        _flowLayout.itemSize = CGSizeMake(_avatarCollectionImageHeight, _avatarCollectionImageHeight);
         _flowLayout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
         _flowLayout.minimumLineSpacing = 10;
         
@@ -53,6 +55,11 @@ static NSString *kReuseIdentifier = @"PickerCollectionViewCell";
         _collectionNode.dataSource = self;
         _collectionNode.layoutInspector = self;
         _collectionNode.backgroundColor = [UIColor whiteColor];
+        _collectionNode.showsHorizontalScrollIndicator = NO;
+        
+        _nextButtonContainer = [[ASDisplayNode alloc] init];
+        _nextButtonContainer.backgroundColor = [UIColor whiteColor];
+        _nextButtonContainer.alpha = 0.7;
         
         _nextButton = [[ASButtonNode alloc] init];
         [_nextButton setTitle:@"→"
@@ -65,10 +72,14 @@ static NSString *kReuseIdentifier = @"PickerCollectionViewCell";
                                                         green:152/255.f
                                                          blue:219/255.f
                                                         alpha:1]];
-        _nextButton.cornerRadius = NEXT_BUTTON_HEIGHT / 2.f;
+        _nextButton.cornerRadius = _avatarCollectionImageHeight / 2.f;
         [_nextButton addTarget:self
                         action:@selector(nextButtonTapped)
               forControlEvents:ASControlNodeEventTouchUpInside];
+        _nextButton.shadowOffset = CGSizeMake(-1, -1);
+        _nextButton.shadowRadius = 1;
+        _nextButton.shadowColor = [UIColor blackColor].CGColor;
+        _nextButton.shadowOpacity = 0.3;
     }
     return self;
 }
@@ -76,22 +87,32 @@ static NSString *kReuseIdentifier = @"PickerCollectionViewCell";
 - (ASLayoutSpec *)layoutSpecThatFits:(ASSizeRange)constrainedSize {
     CGSize maxConstrainedSize = constrainedSize.max;
     
-    _nextButton.style.preferredSize = CGSizeMake(NEXT_BUTTON_HEIGHT, NEXT_BUTTON_HEIGHT);
-    _collectionNode.style.preferredSize = CGSizeMake(maxConstrainedSize.width - NEXT_BUTTON_HEIGHT - PADDING_LEFT - PADDING_RIGHT - 10,
-                                                     AVATAR_COLLECTION_IMAGE_HEIGHT + 30);
+    _nextButton.style.preferredSize = CGSizeMake(_avatarCollectionImageHeight, _avatarCollectionImageHeight);
+    _nextButtonContainer.style.preferredSize = CGSizeMake(_avatarCollectionImageHeight + 20, self.view.bounds.size.height);
+    _collectionNode.style.preferredSize = CGSizeMake(maxConstrainedSize.width,
+                                                     _avatarCollectionImageHeight + 30);
+    _collectionNode.contentInset = UIEdgeInsetsMake(0, 15, 0, _nextButtonContainer.style.preferredSize.width);
+    
+    ASOverlayLayoutSpec *overlayNextButton = [ASOverlayLayoutSpec
+                                              overlayLayoutSpecWithChild:_nextButtonContainer
+                                              overlay:[ASCenterLayoutSpec
+                                                       centerLayoutSpecWithCenteringOptions:ASCenterLayoutSpecCenteringXY
+                                                       sizingOptions:ASCenterLayoutSpecSizingOptionDefault
+                                                       child:_nextButton]];
     
     ASStackLayoutSpec *mainStack = [ASStackLayoutSpec stackLayoutSpecWithDirection:ASStackLayoutDirectionHorizontal
-                                                                           spacing:10
+                                                                           spacing:-_nextButtonContainer.style.preferredSize.width
                                                                     justifyContent:ASStackLayoutJustifyContentStart
                                                                         alignItems:ASStackLayoutAlignItemsCenter
-                                                                          children:@[_collectionNode, _nextButton]];
+                                                                          children:@[_collectionNode, overlayNextButton]];
     
     ASCenterLayoutSpec *centerSpec = [ASCenterLayoutSpec
                                       centerLayoutSpecWithCenteringOptions:ASCenterLayoutSpecCenteringY
                                       sizingOptions:ASCenterLayoutSpecSizingOptionDefault
                                       child:mainStack];
     
-    return [ASInsetLayoutSpec insetLayoutSpecWithInsets:UIEdgeInsetsMake(0, PADDING_LEFT, 0, PADDING_RIGHT) child:centerSpec];
+    return [ASInsetLayoutSpec insetLayoutSpecWithInsets:UIEdgeInsetsZero
+                                                  child:centerSpec];
 }
 
 - (void)didLoad {
@@ -122,7 +143,6 @@ static NSString *kReuseIdentifier = @"PickerCollectionViewCell";
         [self.collectionNode insertItemsAtIndexPaths:@[indexPath]];
         
     } completion:^(BOOL finished) {
-        [self scrollToBottom:self.collectionNode];
         [self layoutIfNeeded];
     }];
 }
@@ -196,14 +216,14 @@ static NSString *kReuseIdentifier = @"PickerCollectionViewCell";
 
 - (ASSizeRange)collectionNode:(ASCollectionNode *)collectionNode
 constrainedSizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    return ASSizeRangeMake(CGSizeMake(AVATAR_COLLECTION_IMAGE_HEIGHT, AVATAR_COLLECTION_IMAGE_HEIGHT));
+    return ASSizeRangeMake(CGSizeMake(_avatarCollectionImageHeight, _avatarCollectionImageHeight));
 }
 
 #pragma mark - ASCollectionViewLayoutInspecting
 
 - (ASSizeRange)collectionView:(ASCollectionView *)collectionView
 constrainedSizeForNodeAtIndexPath:(NSIndexPath *)indexPath {
-    return ASSizeRangeMake(CGSizeMake(AVATAR_COLLECTION_IMAGE_HEIGHT, AVATAR_COLLECTION_IMAGE_HEIGHT));
+    return ASSizeRangeMake(CGSizeMake(_avatarCollectionImageHeight, _avatarCollectionImageHeight));
 }
 
 - (ASScrollDirection)scrollableDirections {
@@ -233,12 +253,6 @@ removeButtonTappedAtElement:(PickerViewModel *)element {
 
 - (void)nextButtonTapped {
     
-}
-
-- (void)scrollToBottom:(ASCollectionNode *)collectionNode {
-    [collectionNode scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:self.models.count - 1 inSection:0]
-                           atScrollPosition:UICollectionViewScrollPositionNone
-                                   animated:true];
 }
 
 - (void)show {

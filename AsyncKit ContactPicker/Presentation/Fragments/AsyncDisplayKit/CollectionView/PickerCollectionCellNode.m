@@ -11,6 +11,7 @@
 
 #import "StringHelper.h"
 #import "AppConsts.h"
+#import "UIImage+Addtions.h"
 
 @interface PickerCollectionCellNode ()
 
@@ -18,7 +19,8 @@
 @property (nonatomic, strong) ASButtonNode *removeButton;
 @property (nonatomic, strong) ASTextNode *shortNameLabel;
 
-@property (nonatomic, weak) PickerViewModel *model;
+@property (nonatomic, assign) PickerViewModel *model;
+@property (nonatomic, assign) float avatarCollectionImageHeight;
 
 @end
 
@@ -31,17 +33,22 @@
     if (self) {
         self.automaticallyManagesSubnodes = YES;
         
+        _avatarCollectionImageHeight = [UIScreen mainScreen].bounds.size.width / 7.f;
+        
         _imageNode = [[ASImageNode alloc] init];
         _imageNode.contentMode = UIViewContentModeScaleToFill;
-        _imageNode.style.preferredSize = CGSizeMake(AVATAR_COLLECTION_IMAGE_HEIGHT, AVATAR_COLLECTION_IMAGE_HEIGHT);
-        _imageNode.cornerRadius = AVATAR_COLLECTION_IMAGE_HEIGHT / 2.f;
+        _imageNode.style.preferredSize = CGSizeMake(_avatarCollectionImageHeight, _avatarCollectionImageHeight);
+        _imageNode.imageModificationBlock = ^UIImage *(UIImage * _Nonnull image) {
+            CGSize imageSize = CGSizeMake(_avatarCollectionImageHeight, _avatarCollectionImageHeight);
+            return [image makeCircularImageWithSize:imageSize];
+        };
         
         _shortNameLabel = [[ASTextNode alloc] init];
         _shortNameLabel.maximumNumberOfLines = 1;
         
         _removeButton = [[ASButtonNode alloc] init];
         [_removeButton setTitle:@"X"
-                       withFont:[UIFont boldSystemFontOfSize:15]
+                       withFont:[UIFont boldSystemFontOfSize:14]
                       withColor:[UIColor blackColor]
                        forState:UIControlStateNormal];
         [_removeButton setBackgroundColor:[UIColor colorWithRed:240/255.f green:241/255.f blue:242/255.f alpha:1]];
@@ -53,9 +60,9 @@
 }
 
 - (ASLayoutSpec *)layoutSpecThatFits:(ASSizeRange)constrainedSize {
-    _removeButton.style.preferredSize = CGSizeMake(25, 25);
-    _removeButton.cornerRadius = 25/2.f;
-    _removeButton.borderWidth = 2;
+    _removeButton.style.preferredSize = CGSizeMake(20, 20);
+    _removeButton.cornerRadius = 10;
+    _removeButton.borderWidth = 3;
     _removeButton.borderColor = [UIColor whiteColor].CGColor;
     
     ASCenterLayoutSpec *centerNameSpec = [ASCenterLayoutSpec

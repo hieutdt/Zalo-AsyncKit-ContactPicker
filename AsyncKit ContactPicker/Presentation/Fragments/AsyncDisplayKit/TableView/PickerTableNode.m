@@ -82,7 +82,8 @@
         NSIndexPath *indexPath = [NSIndexPath indexPathForRow:row inSection:section];
         
         // Only reload a row of that element
-        [self.tableNode reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+        [self.tableNode reloadRowsAtIndexPaths:@[indexPath]
+                              withRowAnimation:UITableViewRowAnimationNone];
     }
 }
 
@@ -238,7 +239,8 @@
 }
 
 - (ASSizeRange)tableNode:(ASTableNode *)tableNode constrainedSizeForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return ASSizeRangeMake(CGSizeMake(self.tableNode.frame.size.width, AVATAR_IMAGE_HEIHGT + 30));
+    float avatarImageHeight = [UIScreen mainScreen].bounds.size.width / 7.f;
+    return ASSizeRangeMake(CGSizeMake(self.tableNode.frame.size.width, avatarImageHeight + 20));
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {

@@ -49,6 +49,7 @@
 		04A1483A245297D2009EACC7 /* ComponentKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0412D4482452961800DEB7EC /* ComponentKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		04A1484F2452A22F009EACC7 /* CKPickerTableCellComponent.mm in Sources */ = {isa = PBXBuildFile; fileRef = 04A1484E2452A22F009EACC7 /* CKPickerTableCellComponent.mm */; };
 		04A148502452A22F009EACC7 /* CKPickerTableCellComponent.mm in Sources */ = {isa = PBXBuildFile; fileRef = 04A1484E2452A22F009EACC7 /* CKPickerTableCellComponent.mm */; };
+		04BC034D24653C6500A599E2 /* UIImage+Addtions.m in Sources */ = {isa = PBXBuildFile; fileRef = 04BC034C24653C6500A599E2 /* UIImage+Addtions.m */; };
 		04D9E6BB24571A9D00CE3D65 /* CKPickerCollectionCellComponent.mm in Sources */ = {isa = PBXBuildFile; fileRef = 04D9E6BA24571A9D00CE3D65 /* CKPickerCollectionCellComponent.mm */; };
 		04D9E6BC24571A9D00CE3D65 /* CKPickerCollectionCellComponent.mm in Sources */ = {isa = PBXBuildFile; fileRef = 04D9E6BA24571A9D00CE3D65 /* CKPickerCollectionCellComponent.mm */; };
 		04E6C546245DC3B700C79414 /* IGLKPickerTableSectionController.m in Sources */ = {isa = PBXBuildFile; fileRef = 04E6C545245DC3B700C79414 /* IGLKPickerTableSectionController.m */; };
@@ -245,6 +246,8 @@
 		049FCE2424475F7A00F285C4 /* PickerViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PickerViewModel.m; sourceTree = "<group>"; };
 		04A1484D2452A22F009EACC7 /* CKPickerTableCellComponent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CKPickerTableCellComponent.h; sourceTree = "<group>"; };
 		04A1484E2452A22F009EACC7 /* CKPickerTableCellComponent.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = CKPickerTableCellComponent.mm; sourceTree = "<group>"; };
+		04BC034B24653C2900A599E2 /* UIImage+Addtions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIImage+Addtions.h"; sourceTree = "<group>"; };
+		04BC034C24653C6500A599E2 /* UIImage+Addtions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Addtions.m"; sourceTree = "<group>"; };
 		04D9E6B924571A9D00CE3D65 /* CKPickerCollectionCellComponent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CKPickerCollectionCellComponent.h; sourceTree = "<group>"; };
 		04D9E6BA24571A9D00CE3D65 /* CKPickerCollectionCellComponent.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = CKPickerCollectionCellComponent.mm; sourceTree = "<group>"; };
 		04E6C544245DC3B700C79414 /* IGLKPickerTableSectionController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IGLKPickerTableSectionController.h; sourceTree = "<group>"; };
@@ -349,6 +352,7 @@
 		0454CD2B2446F87000D34849 /* Fragments */ = {
 			isa = PBXGroup;
 			children = (
+				04BC033C24653BF300A599E2 /* UIImage */,
 				044BC381245D631C00E41101 /* IGListKit */,
 				04A148482452A1E9009EACC7 /* ComponentKit */,
 				04A148472452A1D7009EACC7 /* AsyncDisplayKit */,
@@ -525,6 +529,15 @@
 				0467E0012457D2A700243323 /* CKPickerCollectionView.mm */,
 			);
 			path = CollectionView;
+			sourceTree = "<group>";
+		};
+		04BC033C24653BF300A599E2 /* UIImage */ = {
+			isa = PBXGroup;
+			children = (
+				04BC034B24653C2900A599E2 /* UIImage+Addtions.h */,
+				04BC034C24653C6500A599E2 /* UIImage+Addtions.m */,
+			);
+			path = UIImage;
 			sourceTree = "<group>";
 		};
 		04E6C55A245DC42B00C79414 /* TableView */ = {
@@ -893,6 +906,7 @@
 				044BC384245D636F00E41101 /* IGLKPickerTableView.m in Sources */,
 				04E716FD2446C255006D54BB /* AppDelegate.m in Sources */,
 				0467E0022457D2A700243323 /* CKPickerCollectionView.mm in Sources */,
+				04BC034D24653C6500A599E2 /* UIImage+Addtions.m in Sources */,
 				0476991624484F1B00CEF11A /* PickerCollectionNode.m in Sources */,
 				048EF99E2452873900986FE3 /* CKPickerTableView.mm in Sources */,
 				046844A02451335200B47DB8 /* StateView.m in Sources */,
@@ -1106,7 +1120,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = VC54UPHUD4;
+				DEVELOPMENT_TEAM = 26UR2VX4CR;
 				INFOPLIST_FILE = "AsyncKit ContactPicker/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

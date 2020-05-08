@@ -101,7 +101,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [_collectionNode.view.heightAnchor constraintEqualToConstant:100].active = YES;
+    [_collectionNode.view.heightAnchor constraintEqualToConstant:80].active = YES;
     [_collectionNode.view.widthAnchor constraintEqualToConstant:self.view.bounds.size.width].active = YES;
     
     [_stackView addArrangedSubview:_tableNode.view];
