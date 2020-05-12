@@ -25,6 +25,7 @@ static float checkerImageHeight;
 @property (nonatomic, strong) ASTextNode *shortNameLabel;
 @property (nonatomic, strong) ASImageNode *avatarImageNode;
 @property (nonatomic, strong) ASImageNode *checkerImageNode;
+@property (nonatomic, strong) ASControlNode *controlNode;
 
 @end
 
@@ -58,12 +59,28 @@ static float checkerImageHeight;
             CGSize avatarImageSize = CGSizeMake(avatarImageHeight, avatarImageHeight);
             return [image makeCircularImageWithSize:avatarImageSize];
         };
+        
+        _controlNode = [[ASControlNode alloc] init];
+        [_controlNode addTarget:self
+                         action:@selector(touchDown)
+               forControlEvents:ASControlNodeEventTouchDown];
+        [_controlNode addTarget:self
+                         action:@selector(touchUpInside)
+               forControlEvents:ASControlNodeEventTouchUpInside];
+        [_controlNode addTarget:self
+                         action:@selector(touchCancel)
+               forControlEvents:ASControlNodeEventTouchUpOutside];
+        [_controlNode addTarget:self
+                         action:@selector(touchCancel)
+               forControlEvents:ASControlNodeEventTouchCancel];
     }
     return self;
 }
 
 - (ASLayoutSpec *)layoutSpecThatFits:(ASSizeRange)constrainedSize {
     CGSize maxConstrainedSize = constrainedSize.max;
+    
+    _controlNode.style.preferredSize = maxConstrainedSize;
     
     ASCenterLayoutSpec *centerNameSpec = [ASCenterLayoutSpec
                                           centerLayoutSpecWithCenteringOptions:ASCenterLayoutSpecCenteringY
@@ -92,7 +109,11 @@ static float checkerImageHeight;
                                                       sizingOptions:ASCenterLayoutSpecSizingOptionDefault
                                                               child:stackSpec];
     
-    return [ASInsetLayoutSpec insetLayoutSpecWithInsets:UIEdgeInsetsMake(0, 15, 0, 0) child:centerSpec];
+    return [ASOverlayLayoutSpec
+            overlayLayoutSpecWithChild:[ASInsetLayoutSpec
+                                        insetLayoutSpecWithInsets:UIEdgeInsetsMake(0, 15, 0, 0)
+                                        child:centerSpec]
+            overlay:_controlNode];
 }
 
 
@@ -155,6 +176,31 @@ static float checkerImageHeight;
         default:
             break;
     }
+}
+
+#pragma mark - TouchEventHandle
+
+- (void)touchDown {
+    [self setBackgroundColor:[UIColor colorWithRed:235/255.f
+                                             green:245/255.f
+                                              blue:251/255.f
+                                             alpha:1]];
+}
+
+- (void)touchUpInside {
+    if (self.delegate && [self.delegate respondsToSelector:@selector(didSelectPickerCellNode:)]) {
+        [self.delegate didSelectPickerCellNode:self];
+    }
+    
+    [UIView animateWithDuration:0.25 animations:^{
+        [self setBackgroundColor:[UIColor whiteColor]];
+    }];
+}
+
+- (void)touchCancel {
+    [UIView animateWithDuration:0.25 animations:^{
+        [self setBackgroundColor:[UIColor whiteColor]];
+    }];
 }
 
 @end

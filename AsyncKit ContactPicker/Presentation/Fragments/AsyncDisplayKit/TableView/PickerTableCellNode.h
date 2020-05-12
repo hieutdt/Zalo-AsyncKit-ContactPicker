@@ -10,7 +10,17 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@class PickerTableCellNode;
+
+@protocol PickerTableCellNodeDelegate <NSObject>
+
+- (void)didSelectPickerCellNode:(PickerTableCellNode *)node;
+
+@end
+
 @interface PickerTableCellNode : ASCellNode
+
+@property (nonatomic, assign) id<PickerTableCellNodeDelegate> delegate;
 
 - (void)setName:(NSString *)name;
 - (void)setAvatar:(UIImage *)avatarImage;

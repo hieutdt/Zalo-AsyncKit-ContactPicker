@@ -119,7 +119,7 @@
 }
 
 - (void)showNotPermissionView {
-    [self.stateNode setImage:[UIImage imageNamed:@"mixi"]];
+    [self.stateNode setImage:[UIImage imageNamed:@"no_permission"]];
     [self.stateNode setTitle:@"KHÔNG CÓ QUYỀN TRUY CẬP"];
     [self.stateNode setDescription:@"Ứng dụng không có quyền truy cập vào danh bạ. Đến Cài đặt để cấp quyền?"];
     [self.stateNode setButtonTitle:@"Đến Cài đặt"];

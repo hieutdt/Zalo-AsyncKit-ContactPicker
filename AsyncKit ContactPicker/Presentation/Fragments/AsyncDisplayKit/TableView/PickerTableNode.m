@@ -12,7 +12,7 @@
 #import "PickerViewModel.h"
 #import "AppConsts.h"
 
-@interface PickerTableNode () <ASTableDelegate, ASTableDataSource>
+@interface PickerTableNode () <ASTableDelegate, ASTableDataSource, PickerTableCellNodeDelegate>
 
 @property (nonatomic, strong) ASTableNode *tableNode;
 
@@ -192,6 +192,7 @@
         [cellNode setChecked:model.isChosen];
         [cellNode setGradientColorBackground:model.gradientColorCode];
         [cellNode setSelectionStyle:UITableViewCellSelectionStyleNone];
+        cellNode.delegate = self;
         
         if (self.delegate && [self.delegate respondsToSelector:@selector(pickerTableNode:loadImageToCellNode:atIndexPath:)]) {
             [self.delegate pickerTableNode:self
@@ -207,36 +208,10 @@
 
 #pragma mark - ASTableDelegate
 
+// We handle this event manualy by PickerTableCellNodeDelegate, this method can't be called
 - (void)tableNode:(ASTableNode *)tableNode
 didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.section >= self.sectionsArray.count) {
-        return;
-    } else if (indexPath.row >= self.sectionsArray[indexPath.section].count) {
-        return;
-    }
     
-    PickerTableCellNode *cell = [tableNode nodeForRowAtIndexPath:indexPath];
-    PickerViewModel *model = self.sectionsArray[indexPath.section][indexPath.row];
-    
-    if (!model)
-        return;
-    
-    if (model.isChosen) {
-        self.selectedCount--;
-        if (self.delegate && [self.delegate respondsToSelector:@selector(pickerTableNode:uncheckedCellOfElement:)]) {
-            [self.delegate pickerTableNode:self uncheckedCellOfElement:model];
-        }
-    } else if (self.selectedCount < MAX_PICK) {
-        self.selectedCount++;
-        if (self.delegate && [self.delegate respondsToSelector:@selector(pickerTableNode:checkedCellOfElement:)]) {
-            [self.delegate pickerTableNode:self checkedCellOfElement:model];
-        }
-    } else {
-        return;
-    }
-    
-    model.isChosen = !model.isChosen;
-    [cell setChecked:model.isChosen];
 }
 
 - (ASSizeRange)tableNode:(ASTableNode *)tableNode constrainedSizeForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -272,6 +247,39 @@ didHighlightRowAtIndexPath:(NSIndexPath *)indexPath {
 didUnhighlightRowAtIndexPath:(NSIndexPath *)indexPath {
     PickerTableCellNode *cell = [tableNode nodeForRowAtIndexPath:indexPath];
     [cell setBackgroundColor:[UIColor whiteColor]];
+}
+
+#pragma mark - PickerTableCellNodeDelegate
+
+- (void)didSelectPickerCellNode:(PickerTableCellNode *)node {
+    NSIndexPath *indexPath = [self.tableNode indexPathForNode:node];
+    if (indexPath.section >= self.sectionsArray.count) {
+        return;
+    } else if (indexPath.row >= self.sectionsArray[indexPath.section].count) {
+        return;
+    }
+    
+    PickerViewModel *model = self.sectionsArray[indexPath.section][indexPath.row];
+    
+    if (!model)
+        return;
+    
+    if (model.isChosen) {
+        self.selectedCount--;
+        if (self.delegate && [self.delegate respondsToSelector:@selector(pickerTableNode:uncheckedCellOfElement:)]) {
+            [self.delegate pickerTableNode:self uncheckedCellOfElement:model];
+        }
+    } else if (self.selectedCount < MAX_PICK) {
+        self.selectedCount++;
+        if (self.delegate && [self.delegate respondsToSelector:@selector(pickerTableNode:checkedCellOfElement:)]) {
+            [self.delegate pickerTableNode:self checkedCellOfElement:model];
+        }
+    } else {
+        return;
+    }
+    
+    model.isChosen = !model.isChosen;
+    [node setChecked:model.isChosen];
 }
 
 @end

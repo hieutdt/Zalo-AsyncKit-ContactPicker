@@ -84,6 +84,13 @@
     [_shortNameLabel.centerYAnchor constraintEqualToAnchor:_avatarImageView.centerYAnchor].active = YES;
     _shortNameLabel.textColor = [UIColor whiteColor];
     _shortNameLabel.font = [UIFont boldSystemFontOfSize:23];
+    
+    UIView *selectedBackground = [[UIView alloc] initWithFrame:self.bounds];
+    [selectedBackground setBackgroundColor:[UIColor colorWithRed:235/255.f
+                                                           green:245/255.f
+                                                            blue:251/255.f
+                                                           alpha:1]];
+    [self setSelectedBackgroundView:selectedBackground];
 }
 
 
