@@ -12,13 +12,15 @@
 #import "IGLKPickerCollectionSectionController.h"
 #import "AppConsts.h"
 
-@interface IGLKPickerCollectionView () <IGListAdapterDataSource, IGLKPickerCollectionSectionControllerDelegate>
+@interface IGLKPickerCollectionView () <IGListAdapterDataSource, IGLKPickerCollectionSectionControllerDelegate, IGListCollectionViewDelegateLayout>
 
 @property (nonatomic, strong) UICollectionView *collectionView;
 @property (nonatomic, strong) UIButton *nextButton;
+@property (nonatomic, strong) UIView *nextButtonContainer;
 
 @property (nonatomic, strong) IGListAdapter *adapter;
 @property (nonatomic, strong) NSMutableArray<PickerViewModel *> *viewModels;
+@property (nonatomic, assign) float avatarImageHeight;
 
 @end
 
@@ -57,24 +59,43 @@
     
     _viewModels = [[NSMutableArray alloc] init];
     
-    UICollectionViewFlowLayout *flowLayout = [[UICollectionViewFlowLayout alloc] init];
-    flowLayout.scrollDirection = UICollectionViewScrollDirectionHorizontal;
+    _avatarImageHeight = [UIScreen mainScreen].bounds.size.width / 7.f;
+    
+    IGListCollectionViewLayout *layout = [[IGListCollectionViewLayout alloc] initWithStickyHeaders:YES
+                                                                                   scrollDirection:UICollectionViewScrollDirectionHorizontal
+                                                                                   topContentInset:0
+                                                                                     stretchToEdge:YES];
+    
     _collectionView = [[UICollectionView alloc] initWithFrame:self.bounds
-                                         collectionViewLayout:flowLayout];
+                                         collectionViewLayout:layout];
     _collectionView.backgroundColor = [UIColor whiteColor];
     
     [self addSubview:_collectionView];
     
     _collectionView.translatesAutoresizingMaskIntoConstraints = NO;
-    [_collectionView.topAnchor constraintEqualToAnchor:self.topAnchor].active = YES;
+    [_collectionView.topAnchor constraintEqualToAnchor:self.topAnchor constant:5].active = YES;
     [_collectionView.leadingAnchor constraintEqualToAnchor:self.leadingAnchor constant:5].active = YES;
-    [_collectionView.heightAnchor constraintEqualToConstant:AVATAR_COLLECTION_IMAGE_HEIGHT + 20].active = YES;
+    [_collectionView.heightAnchor constraintEqualToConstant:_avatarImageHeight + 20].active = YES;
+    [_collectionView.trailingAnchor constraintEqualToAnchor:self.trailingAnchor].active = YES;
+    _collectionView.showsHorizontalScrollIndicator = NO;
+    _collectionView.contentInset = UIEdgeInsetsMake(0, 15, 0, _avatarImageHeight + 20);
     
     IGListAdapterUpdater *updater = [[IGListAdapterUpdater alloc] init];
     _adapter = [[IGListAdapter alloc] initWithUpdater:updater
                                        viewController:nil];
     _adapter.dataSource = self;
     _adapter.collectionView = _collectionView;
+    
+    _nextButtonContainer = [[UIView alloc] init];
+    _nextButtonContainer.backgroundColor = [UIColor whiteColor];
+    _nextButtonContainer.alpha = 0.8;
+    
+    [self addSubview:_nextButtonContainer];
+    _nextButtonContainer.translatesAutoresizingMaskIntoConstraints = NO;
+    [_nextButtonContainer.topAnchor constraintEqualToAnchor:self.topAnchor].active = YES;
+    [_nextButtonContainer.bottomAnchor constraintEqualToAnchor:self.bottomAnchor].active = YES;
+    [_nextButtonContainer.trailingAnchor constraintEqualToAnchor:self.trailingAnchor].active = YES;
+    [_nextButtonContainer.widthAnchor constraintEqualToConstant:_avatarImageHeight + 20].active = YES;
     
     _nextButton = [[UIButton alloc] init];
     [_nextButton setTitle:@"→" forState:UIControlStateNormal];
@@ -86,16 +107,15 @@
                                                      blue:219/255.f
                                                     alpha:1]];
     [_nextButton.titleLabel setFont:[UIFont boldSystemFontOfSize:30]];
-    _nextButton.layer.cornerRadius = NEXT_BUTTON_HEIGHT / 2;
+    _nextButton.layer.cornerRadius = _avatarImageHeight / 2;
 
     [self addSubview:_nextButton];
         
     _nextButton.translatesAutoresizingMaskIntoConstraints = NO;
-    [_nextButton.trailingAnchor constraintEqualToAnchor:self.trailingAnchor constant:-5].active = YES;
     [_nextButton.centerYAnchor constraintEqualToAnchor:_collectionView.centerYAnchor].active = YES;
-    [_nextButton.heightAnchor constraintEqualToConstant:NEXT_BUTTON_HEIGHT].active = YES;
-    [_nextButton.widthAnchor constraintEqualToConstant:NEXT_BUTTON_HEIGHT].active = YES;
-    [_nextButton.leadingAnchor constraintEqualToAnchor:_collectionView.trailingAnchor constant:5].active = YES;
+    [_nextButton.centerXAnchor constraintEqualToAnchor:_nextButtonContainer.centerXAnchor].active = YES;
+    [_nextButton.heightAnchor constraintEqualToConstant:_avatarImageHeight].active = YES;
+    [_nextButton.widthAnchor constraintEqualToConstant:_avatarImageHeight].active = YES;
 }
 
 #pragma mark - PublicMethods
@@ -114,7 +134,6 @@
     
     [self.viewModels addObject:element];
     [self.adapter performUpdatesAnimated:YES completion:^(BOOL finished) {
-        [self scrollToBottom:self.collectionView];
     }];
 }
 
@@ -183,13 +202,6 @@
 }
 
 #pragma mark - Action
-
-- (void)scrollToBottom:(UICollectionView *)collectionView {
-    [collectionView scrollToItemAtIndexPath:[NSIndexPath indexPathForItem:0
-                                                                inSection:collectionView.numberOfSections - 1]
-                           atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally
-                                   animated:YES];
-}
 
 - (void)show {
     self.hidden = NO;

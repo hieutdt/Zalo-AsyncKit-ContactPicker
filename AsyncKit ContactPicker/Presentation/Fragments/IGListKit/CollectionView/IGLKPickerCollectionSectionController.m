@@ -15,6 +15,7 @@
 @interface IGLKPickerCollectionSectionController () <IGLKPickerCollectionCellDelegate>
 
 @property (nonatomic, strong) PickerViewModel *currentModel;
+@property (nonatomic, assign) float avatarImageHeight;
 
 @end
 
@@ -24,6 +25,8 @@
     self = [super init];
     if (self) {
         self.dataSource = self;
+        self.inset = UIEdgeInsetsMake(0, 5, 0, 5);
+        _avatarImageHeight = [UIScreen mainScreen].bounds.size.width / 7.f;
     }
     return self;
 }
@@ -56,7 +59,7 @@
 - (CGSize)sectionController:(IGListBindingSectionController *)sectionController
            sizeForViewModel:(id)viewModel
                     atIndex:(NSInteger)index {
-    return CGSizeMake(AVATAR_COLLECTION_IMAGE_HEIGHT + 5, AVATAR_COLLECTION_IMAGE_HEIGHT + 10);
+    return CGSizeMake(_avatarImageHeight, _avatarImageHeight);
 }
 
 #pragma mark - IGLKPickerCollectionCellDelegate

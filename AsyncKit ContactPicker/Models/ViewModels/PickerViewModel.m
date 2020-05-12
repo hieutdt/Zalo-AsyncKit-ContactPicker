@@ -44,12 +44,9 @@
     if (object == self) {
         return YES;
     } else {
-        @try {
-            PickerViewModel *otherModel = (PickerViewModel *)object;
-            return [self.name isEqual:otherModel.name] && self.isChosen == otherModel.isChosen;
-        } @catch (NSError *error) {
-            return false;
-        }
+        PickerViewModel *otherModel = (PickerViewModel *)object;
+        return [self.name isEqual:otherModel.name]
+        && self.isChosen == otherModel.isChosen;
     }
 }
 

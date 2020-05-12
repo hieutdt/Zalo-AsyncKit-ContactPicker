@@ -46,7 +46,8 @@
 - (CGSize)sectionController:(IGListBindingSectionController *)sectionController
            sizeForViewModel:(id)viewModel
                     atIndex:(NSInteger)index {
-    return CGSizeMake(self.collectionContext.containerSize.width, AVATAR_IMAGE_HEIHGT + 20);
+    CGFloat avatarImageHeight = [UIScreen mainScreen].bounds.size.width / 7.f;
+    return CGSizeMake(self.collectionContext.containerSize.width, avatarImageHeight + 20);
 }
 
 - (UICollectionViewCell<IGListBindable> *)sectionController:(IGListBindingSectionController *)sectionController

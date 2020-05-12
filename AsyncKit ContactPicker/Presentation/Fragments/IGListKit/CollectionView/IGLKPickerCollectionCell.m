@@ -11,6 +11,7 @@
 #import "AppConsts.h"
 #import "StringHelper.h"
 #import "ImageCache.h"
+#import "UIImage+Addtions.h"
 
 @interface IGLKPickerCollectionCell ()
 
@@ -18,6 +19,7 @@
 @property (nonatomic, strong) UILabel *shortNameLabel;
 @property (nonatomic, strong) UIButton *removeButton;
 @property (nonatomic, assign) PickerViewModel *viewModel;
+@property (nonatomic, assign) float avatarImageHeight;
 
 @end
 
@@ -50,6 +52,8 @@
 - (void)customInit {
     self.backgroundColor = [UIColor whiteColor];
     
+    _avatarImageHeight = [UIScreen mainScreen].bounds.size.width / 7.f;
+    
     _avatarImageView = [[UIImageView alloc] init];
     _shortNameLabel = [[UILabel alloc] init];
     _removeButton = [[UIButton alloc] init];
@@ -64,10 +68,8 @@
     
     [_avatarImageView.topAnchor constraintEqualToAnchor:self.topAnchor constant:5].active = YES;
     [_avatarImageView.centerXAnchor constraintEqualToAnchor:self.centerXAnchor].active = YES;
-    [_avatarImageView.heightAnchor constraintEqualToConstant:AVATAR_COLLECTION_IMAGE_HEIGHT].active = YES;
-    [_avatarImageView.widthAnchor constraintEqualToConstant:AVATAR_COLLECTION_IMAGE_HEIGHT].active = YES;
-    _avatarImageView.layer.cornerRadius = AVATAR_COLLECTION_IMAGE_HEIGHT/2.f;
-    _avatarImageView.layer.masksToBounds = YES;
+    [_avatarImageView.heightAnchor constraintEqualToConstant:_avatarImageHeight].active = YES;
+    [_avatarImageView.widthAnchor constraintEqualToConstant:_avatarImageHeight].active = YES;
     
     [_shortNameLabel.centerYAnchor constraintEqualToAnchor:_avatarImageView.centerYAnchor].active = YES;
     [_shortNameLabel.centerXAnchor constraintEqualToAnchor:_avatarImageView.centerXAnchor].active = YES;
@@ -76,14 +78,15 @@
     
     [_removeButton.topAnchor constraintEqualToAnchor:self.topAnchor].active = YES;
     [_removeButton.trailingAnchor constraintEqualToAnchor:self.trailingAnchor].active = YES;
-    [_removeButton.heightAnchor constraintEqualToConstant:25].active = YES;
-    [_removeButton.widthAnchor constraintEqualToConstant:25].active = YES;
+    [_removeButton.heightAnchor constraintEqualToConstant:20].active = YES;
+    [_removeButton.widthAnchor constraintEqualToConstant:20].active = YES;
     [_removeButton setTitle:@"X" forState:UIControlStateNormal];
+    [_removeButton.titleLabel setFont:[UIFont boldSystemFontOfSize:18]];
     _removeButton.backgroundColor = [UIColor lightGrayColor];
-    _removeButton.layer.cornerRadius = 25/2.f;
+    _removeButton.layer.cornerRadius = 20/2.f;
     _removeButton.layer.masksToBounds = YES;
     _removeButton.layer.borderColor = [UIColor whiteColor].CGColor;
-    _removeButton.layer.borderWidth = 2;
+    _removeButton.layer.borderWidth = 3;
     [_removeButton addTarget:self
                       action:@selector(removeButtonTapped)
             forControlEvents:UIControlEventTouchUpInside];
@@ -107,25 +110,27 @@
     
     UIImage *avatar = [[ImageCache instance] imageForKey:_viewModel.identifier];
     if (avatar) {
-        [_avatarImageView setImage:avatar];
         self.shortNameLabel.hidden = YES;
     } else {
         self.shortNameLabel.hidden = NO;
         switch (_viewModel.gradientColorCode) {
             case GRADIENT_COLOR_BLUE:
-                [_avatarImageView setImage:[UIImage imageNamed:@"gradientBlue"]];
+                avatar = [UIImage imageNamed:@"gradientBlue"];
                 break;
             case GRADIENT_COLOR_RED:
-                [_avatarImageView setImage:[UIImage imageNamed:@"gradientRed"]];
+                avatar = [UIImage imageNamed:@"gradientRed"];
                 break;
             case GRADIENT_COLOR_GREEN:
-                [_avatarImageView setImage:[UIImage imageNamed:@"gradientGreen"]];
+                avatar = [UIImage imageNamed:@"gradientGreen"];
                 break;
             case GRADIENT_COLOR_ORANGE:
-                [_avatarImageView setImage:[UIImage imageNamed:@"gradientOrange"]];
+                avatar = [UIImage imageNamed:@"gradientOrange"];
                 break;
         }
     }
+    
+    avatar = [avatar makeCircularImageWithSize:CGSizeMake(_avatarImageHeight, _avatarImageHeight)];
+    [_avatarImageView setImage:avatar];
 }
 
 @end

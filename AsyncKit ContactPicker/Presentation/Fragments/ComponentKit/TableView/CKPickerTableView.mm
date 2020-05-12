@@ -116,9 +116,11 @@ static NSString * const kReuseIdentifier = @"componentKitPickerTableCell";
                                          withInsertedItems:items]
                                         build];
     
-    [_dataSource applyChangeset:changeset
-                           mode:CKUpdateModeSynchronous
-                       userInfo:nil];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [_dataSource applyChangeset:changeset
+                               mode:CKUpdateModeAsynchronous
+                           userInfo:nil];
+    });
 }
 
 - (void)setViewModels:(NSMutableArray<PickerViewModel *> *)viewModels {
@@ -211,6 +213,7 @@ static NSString * const kReuseIdentifier = @"componentKitPickerTableCell";
         for (int j = 0; j < self.sectionsArray[i].count; j++) {
             PickerViewModel *model = self.sectionsArray[i][j];
             if (model.isChosen) {
+                model.isChosen = NO;
                 NSIndexPath *indexPath = [NSIndexPath indexPathForItem:j
                                                              inSection:i];
                 [updateDictionary addEntriesFromDictionary:@{ indexPath : model }];

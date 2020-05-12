@@ -81,7 +81,7 @@ static const int kMaxPick = 5;
     [_collectionView.topAnchor constraintEqualToAnchor:self.topAnchor].active = YES;
     [_collectionView.leadingAnchor constraintEqualToAnchor:self.leadingAnchor
                                                   constant:5].active = YES;
-    [_collectionView.heightAnchor constraintEqualToConstant:100].active = YES;
+    [_collectionView.heightAnchor constraintEqualToConstant:_nextButtonHeight + 20].active = YES;
     [_collectionView.trailingAnchor constraintEqualToAnchor:self.trailingAnchor].active = YES;
     _collectionView.showsHorizontalScrollIndicator = NO;
     

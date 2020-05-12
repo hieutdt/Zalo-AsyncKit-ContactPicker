@@ -19,8 +19,6 @@
 #import "AppConsts.h"
 #import "ImageCache.h"
 
-static const int kCollectionViewHeight = 100;
-
 @interface CKViewController () <CKPickerTableViewDelegate, CKPickerCollectionViewDelegate, UISearchBarDelegate>
 
 @property (weak, nonatomic) IBOutlet CKPickerTableView *tableView;
@@ -105,9 +103,7 @@ static const int kCollectionViewHeight = 100;
                 [self initContactsData:contacts];
                 self.viewModels = [self getPickerModelsArrayFromContacts:self.contacts];
                 
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [self.tableView setViewModels:self.viewModels];
-                });
+                [self.tableView setViewModels:self.viewModels];
             }
         }
     }];

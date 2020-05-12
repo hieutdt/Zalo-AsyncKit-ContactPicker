@@ -32,7 +32,7 @@
                         </searchBar>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="a96-hS-SLw" customClass="CKPickerTableView">
                             <rect key="frame" x="0.0" y="60" width="414" height="658"/>
-                            <color key="backgroundColor" systemColor="systemGreenColor" red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zXH-yy-BTu" customClass="CKPickerCollectionView">
                             <rect key="frame" x="0.0" y="718" width="414" height="100"/>

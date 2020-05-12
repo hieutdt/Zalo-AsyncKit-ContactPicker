@@ -42,6 +42,9 @@
 - (void)customInit {
     self.backgroundColor = [UIColor whiteColor];
     
+    CGFloat avatarImageHeight = [UIScreen mainScreen].bounds.size.width / 7.f;
+    CGFloat checkerImageHeight = avatarImageHeight / 2.f;
+    
     _checkerImageView = [[UIImageView alloc] init];
     _avatarImageView = [[UIImageView alloc] init];
     _nameLabel = [[UILabel alloc] init];
@@ -62,14 +65,14 @@
     [_checkerImageView.trailingAnchor constraintEqualToAnchor:_avatarImageView.leadingAnchor
                                                      constant:-15].active = YES;
     [_checkerImageView.centerYAnchor constraintEqualToAnchor:_avatarImageView.centerYAnchor].active = YES;
-    [_checkerImageView.heightAnchor constraintEqualToConstant:CHECKER_IMAGE_HEIGHT].active = YES;
-    [_checkerImageView.widthAnchor constraintEqualToConstant:CHECKER_IMAGE_HEIGHT].active = YES;
+    [_checkerImageView.heightAnchor constraintEqualToConstant:checkerImageHeight].active = YES;
+    [_checkerImageView.widthAnchor constraintEqualToConstant:checkerImageHeight].active = YES;
     
     [_avatarImageView.topAnchor constraintEqualToAnchor:self.topAnchor constant:10].active = YES;
     [_avatarImageView.bottomAnchor constraintEqualToAnchor:self.bottomAnchor constant:-10].active = YES;
-    [_avatarImageView.heightAnchor constraintEqualToConstant:AVATAR_IMAGE_HEIHGT].active = YES;
-    [_avatarImageView.widthAnchor constraintEqualToConstant:AVATAR_IMAGE_HEIHGT].active = YES;
-    _avatarImageView.layer.cornerRadius = AVATAR_IMAGE_HEIHGT / 2.f;
+    [_avatarImageView.heightAnchor constraintEqualToConstant:avatarImageHeight].active = YES;
+    [_avatarImageView.widthAnchor constraintEqualToConstant:avatarImageHeight].active = YES;
+    _avatarImageView.layer.cornerRadius = avatarImageHeight / 2.f;
     _avatarImageView.layer.masksToBounds = YES;
     
     [_nameLabel.leadingAnchor constraintEqualToAnchor:_avatarImageView.trailingAnchor

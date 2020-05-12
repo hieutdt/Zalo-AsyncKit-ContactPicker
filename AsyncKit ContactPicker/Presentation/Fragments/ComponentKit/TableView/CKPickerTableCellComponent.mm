@@ -8,9 +8,11 @@
 
 #import "CKPickerTableCellComponent.h"
 #import "CKPickerTableView.h"
+
 #import "AppConsts.h"
 #import "StringHelper.h"
 #import "ImageCache.h"
+#import "UIImage+Addtions.h"
 
 #import <ComponentKit/CKComponentSubclass.h>
 
@@ -33,6 +35,9 @@
     } else {
         scope.replaceState(scope, @NO);
     }
+    
+    CGFloat avatarImageHeight = [UIScreen mainScreen].bounds.size.width / 7.f;
+    CGFloat checkImageHeight = avatarImageHeight / 2.f;
     
     UIImage *avatarImage = [[ImageCache instance] imageForKey:viewModel.identifier];
     BOOL hasAvatar = NO;
@@ -68,7 +73,7 @@
        newWithImage:checkImage
        attributes:{}
        size:{
-        .height = 30, .width = 30
+        .height = checkImageHeight, .width = checkImageHeight
     }];
     
     CKLabelComponent *shortNameLabel =
@@ -93,7 +98,7 @@
          sizingOptions:CKCenterLayoutComponentSizingOptionDefault
          child:shortNameLabel
          size:{
-            .width = 60, .height = 60
+            .width = avatarImageHeight, .height = avatarImageHeight
         }];
     }
     
@@ -102,10 +107,10 @@
     newWithImage:avatarImage
     attributes:{
         {@selector(setClipsToBounds:), @YES},
-        {CKComponentViewAttribute::LayerAttribute(@selector(setCornerRadius:)), 30}
+        {CKComponentViewAttribute::LayerAttribute(@selector(setCornerRadius:)), avatarImageHeight / 2.f}
     }
     size:{
-        .height = 60, .width = 60
+        .height = avatarImageHeight, .width = avatarImageHeight
     }];
     
     CKFlexboxComponent *flexBoxComponent =

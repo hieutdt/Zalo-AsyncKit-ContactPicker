@@ -49,7 +49,9 @@
                                                              green:241/255.f
                                                               blue:242/255.f
                                                              alpha:1]},
-            {CKComponentViewAttribute::LayerAttribute(@selector(setCornerRadius:)), 20 / 2.f}
+            {CKComponentViewAttribute::LayerAttribute(@selector(setCornerRadius:)), 20 / 2.f},
+            {CKComponentViewAttribute::LayerAttribute(@selector(setBorderWidth:)), 3},
+            {CKComponentViewAttribute::LayerAttribute(@selector(setBorderColor:)), [UIColor whiteColor]}
         },
         .size = {
             .width = 20, .height = 20
