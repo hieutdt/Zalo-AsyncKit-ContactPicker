@@ -165,8 +165,10 @@ static NSString * const kReuseIdentifier = @"componentKitPickerTableCell";
 - (void)searchByString:(NSString *)searchString {
     if (!searchString) {
         self.searching = NO;
+        _searchModels = [NSMutableArray arrayWithArray:self.viewModels];
     } else if (searchString.length == 0) {
         self.searching = NO;
+        _searchModels = [NSMutableArray arrayWithArray:self.viewModels];
     } else {
         [_searchModels removeAllObjects];
         NSPredicate *predicate = [NSPredicate predicateWithFormat:@"self.name contains[c] %@", searchString];
@@ -174,17 +176,44 @@ static NSString * const kReuseIdentifier = @"componentKitPickerTableCell";
         self.searching = YES;
     }
     
-    [self removeAllCells:self.sectionsArray];
+    NSMutableSet *removeSet = [[NSMutableSet alloc] init];
     
-    if (self.searching) {
-        [self fitPickerModelsData:self.searchModels
-                       toSections:self.sectionsArray];
-    } else {
-        [self fitPickerModelsData:self.viewModels
-                       toSections:self.sectionsArray];
+    for (int i = 0; i < self.sectionsArray.count; i++) {
+        for (int j = 0; j < self.sectionsArray[i].count; j++) {
+            if (![_searchModels containsObject:self.sectionsArray[i][j]]) {
+                [removeSet addObject:[NSIndexPath indexPathForRow:j inSection:i]];
+            }
+        }
     }
     
-    [self enqueue:self.sectionsArray];
+    CKDataSourceChangeset *changeset = [[[CKDataSourceChangesetBuilder dataSourceChangeset]
+                                         withRemovedItems:removeSet]
+                                        build];
+    [_dataSource applyChangeset:changeset mode:CKUpdateModeSynchronous userInfo:nil];
+    
+    NSMutableDictionary *insertDict = [[NSMutableDictionary alloc] init];
+    for (int i = 0; i < _searchModels.count; i++) {
+        int section = [_searchModels[i] getSectionIndex];
+        if (![self.sectionsArray[section] containsObject:_searchModels[i]]) {
+            NSIndexPath *indexPath = [NSIndexPath indexPathForRow:self.sectionsArray[section].count
+                                                        inSection:section];
+            [insertDict addEntriesFromDictionary:@{indexPath : _searchModels[i]}];
+            
+            [self.sectionsArray[section] addObject:_searchModels[i]];
+        }
+    }
+    
+    CKDataSourceChangeset *insertChangeset = [[[CKDataSourceChangesetBuilder dataSourceChangeset]
+                                               withInsertedItems:insertDict]
+                                              build];
+    [_dataSource applyChangeset:insertChangeset mode:CKUpdateModeSynchronous userInfo:nil];
+    
+    if (self.searching)
+        [self fitPickerModelsData:_searchModels
+                       toSections:self.sectionsArray];
+    else
+        [self fitPickerModelsData:self.viewModels
+                       toSections:self.sectionsArray];
 }
 
 - (void)removeAllCells:(NSMutableArray<NSMutableArray *> *)sections {

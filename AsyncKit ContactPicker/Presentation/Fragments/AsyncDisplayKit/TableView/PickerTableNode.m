@@ -82,8 +82,10 @@
         NSIndexPath *indexPath = [NSIndexPath indexPathForRow:row inSection:section];
         
         // Only reload a row of that element
-        [self.tableNode reloadRowsAtIndexPaths:@[indexPath]
-                              withRowAnimation:UITableViewRowAnimationNone];
+        [UIView performWithoutAnimation:^{
+            [self.tableNode reloadRowsAtIndexPaths:@[indexPath]
+                                  withRowAnimation:UITableViewRowAnimationNone];
+        }];
     }
 }
 
