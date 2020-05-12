@@ -7,6 +7,7 @@
 //
 
 #import "IGLKViewController.h"
+#import "StateView.h"
 
 #import "Contact.h"
 #import "ContactBusiness.h"
@@ -29,6 +30,7 @@
 @property (nonatomic, weak) IBOutlet UISearchBar *searchBar;
 @property (nonatomic, weak) IBOutlet IGLKPickerTableView *tableView;
 @property (nonatomic, weak) IBOutlet IGLKPickerCollectionView *collectionView;
+@property (nonatomic, strong) StateView *stateNode;
 
 @property (nonatomic, strong) UILabel *titleLabel;
 @property (nonatomic, strong) UILabel *subTitleLabel;
@@ -51,6 +53,8 @@
         }
         
         _contactBusiness = [[ContactBusiness alloc] init];
+        
+        _stateNode = [[StateView alloc] init];
     }
     return self;
 }
@@ -66,6 +70,20 @@
     
     _searchBar.placeholder = @"Search for contacts";
     _searchBar.delegate = self;
+    
+    [self.view addSubview:_stateNode.view];
+    _stateNode.view.translatesAutoresizingMaskIntoConstraints = NO;
+    [_stateNode.view.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor].active = YES;
+    [_stateNode.view.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor].active = YES;
+    if (@available(iOS 11, *)) {
+        UILayoutGuide *guide = self.view.safeAreaLayoutGuide;
+        [_stateNode.view.topAnchor constraintEqualToAnchor:guide.topAnchor].active = YES;
+        [_stateNode.view.bottomAnchor constraintEqualToAnchor:guide.bottomAnchor].active = YES;
+    } else {
+        [_stateNode.view.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor].active = YES;
+        [_stateNode.view.topAnchor constraintEqualToAnchor:self.view.topAnchor constant:70].active = YES;
+    }
+    _stateNode.hidden = YES;
     
     [self checkPermissionAndLoadContacts];
 }
@@ -101,7 +119,23 @@
 }
 
 - (void)showNotPermissionView {
+    [self.stateNode setImage:[UIImage imageNamed:@"mixi"]];
+    [self.stateNode setTitle:@"KHÔNG CÓ QUYỀN TRUY CẬP"];
+    [self.stateNode setDescription:@"Ứng dụng không có quyền truy cập vào danh bạ. Đến Cài đặt để cấp quyền?"];
+    [self.stateNode setButtonTitle:@"Đến Cài đặt"];
+    [self.stateNode setButtonTappedAction:^{
+        [UIApplication.sharedApplication openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]
+                                         options:@{}
+                               completionHandler:nil];
+    }];
     
+    self.stateNode.hidden = NO;
+    self.stateNode.alpha = 0;
+    [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+        self.stateNode.alpha = 1;
+    } completion:nil];
+    
+    self.stateNode.hidden = NO;
 }
 
 - (void)loadContacts {

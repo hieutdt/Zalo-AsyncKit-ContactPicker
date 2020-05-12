@@ -59,7 +59,7 @@ static NSString *kReuseIdentifier = @"PickerCollectionViewCell";
         
         _nextButtonContainer = [[ASDisplayNode alloc] init];
         _nextButtonContainer.backgroundColor = [UIColor whiteColor];
-        _nextButtonContainer.alpha = 0.7;
+        _nextButtonContainer.alpha = 0.8;
         
         _nextButton = [[ASButtonNode alloc] init];
         [_nextButton setTitle:@"→"

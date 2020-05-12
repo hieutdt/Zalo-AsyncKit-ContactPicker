@@ -118,9 +118,11 @@
         UILayoutGuide *guide = self.view.safeAreaLayoutGuide;
         [_searchBar.topAnchor constraintEqualToAnchor:guide.topAnchor].active = YES;
         [_stateNode.view.topAnchor constraintEqualToAnchor:guide.topAnchor].active = YES;
+        [_stateNode.view.bottomAnchor constraintEqualToAnchor:guide.bottomAnchor].active = YES;
     } else {
         [_searchBar.topAnchor constraintEqualToAnchor:self.view.topAnchor constant:70].active = YES;
         [_stateNode.view.topAnchor constraintEqualToAnchor:self.view.topAnchor constant:70].active = YES;
+        [_stateNode.view.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor].active = YES;
     }
     
     [_searchBar.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor].active = YES;
@@ -141,7 +143,6 @@
     
     [_stateNode.view.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor].active = YES;
     [_stateNode.view.trailingAnchor constraintEqualToAnchor:self.view.trailingAnchor].active = YES;
-    [_stateNode.view.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor].active = YES;
     
     self.collectionNode.hidden = YES;
     self.stateNode.hidden = YES;
@@ -272,7 +273,7 @@
     
     self.stateNode.hidden = NO;
     self.stateNode.alpha = 0;
-    [UIView animateWithDuration:0.7 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+    [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
         self.stateNode.alpha = 1;
     } completion:nil];
     

@@ -18,7 +18,7 @@
 
 static NSString * const kReuseIdentifier = @"componentKitPickerTableCell";
 
-@interface CKPickerTableView () <CKComponentProvider, UICollectionViewDelegateFlowLayout>
+@interface CKPickerTableView () <UICollectionViewDelegateFlowLayout>
 
 @property (nonatomic, strong) UICollectionView *collectionView;
 @property (nonatomic, strong) CKCollectionViewDataSource *dataSource;
@@ -116,8 +116,9 @@ static NSString * const kReuseIdentifier = @"componentKitPickerTableCell";
                                          withInsertedItems:items]
                                         build];
     
+    __weak CKPickerTableView *weakSelf = self;
     dispatch_async(dispatch_get_main_queue(), ^{
-        [_dataSource applyChangeset:changeset
+        [weakSelf.dataSource applyChangeset:changeset
                                mode:CKUpdateModeAsynchronous
                            userInfo:nil];
     });

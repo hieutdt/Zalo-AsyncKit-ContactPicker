@@ -81,8 +81,9 @@
     [_removeButton.heightAnchor constraintEqualToConstant:20].active = YES;
     [_removeButton.widthAnchor constraintEqualToConstant:20].active = YES;
     [_removeButton setTitle:@"X" forState:UIControlStateNormal];
-    [_removeButton.titleLabel setFont:[UIFont boldSystemFontOfSize:18]];
-    _removeButton.backgroundColor = [UIColor lightGrayColor];
+    [_removeButton setTitleColor:[UIColor darkTextColor] forState:UIControlStateNormal];
+    [_removeButton.titleLabel setFont:[UIFont boldSystemFontOfSize:15]];
+    _removeButton.backgroundColor = [UIColor colorWithRed:240/255.f green:241/255.f blue:242/255.f alpha:1];
     _removeButton.layer.cornerRadius = 20/2.f;
     _removeButton.layer.masksToBounds = YES;
     _removeButton.layer.borderColor = [UIColor whiteColor].CGColor;

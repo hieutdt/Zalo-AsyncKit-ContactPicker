@@ -10,6 +10,9 @@
 #import "IGLKPickerTableCell.h"
 #import "AppConsts.h"
 
+static const int kPaddingTop = 5;
+static const int kPaddingBottom = 5;
+
 @interface IGLKPickerTableSectionController () <IGListBindingSectionControllerDataSource>
 
 @property (nonatomic, strong) PickerViewModel *currentModel;
@@ -22,6 +25,7 @@
     self = [super init];
     if (self) {
         self.dataSource = self;
+        self.inset = UIEdgeInsetsMake(kPaddingTop, 0, kPaddingBottom, 0);
     }
     return self;
 }

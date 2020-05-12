@@ -20,7 +20,7 @@
 @property (nonatomic, strong) ASTextNode *shortNameLabel;
 
 @property (nonatomic, assign) PickerViewModel *model;
-@property (nonatomic, assign) float avatarCollectionImageHeight;
+@property (nonatomic, assign) CGFloat avatarCollectionImageHeight;
 
 @end
 
@@ -38,10 +38,7 @@
         _imageNode = [[ASImageNode alloc] init];
         _imageNode.contentMode = UIViewContentModeScaleToFill;
         _imageNode.style.preferredSize = CGSizeMake(_avatarCollectionImageHeight, _avatarCollectionImageHeight);
-        _imageNode.imageModificationBlock = ^UIImage *(UIImage * _Nonnull image) {
-            CGSize imageSize = CGSizeMake(_avatarCollectionImageHeight, _avatarCollectionImageHeight);
-            return [image makeCircularImageWithSize:imageSize];
-        };
+        _imageNode.cornerRadius = _avatarCollectionImageHeight/2.f;
         
         _shortNameLabel = [[ASTextNode alloc] init];
         _shortNameLabel.maximumNumberOfLines = 1;
@@ -88,10 +85,6 @@
                                                               child:removeButtonOverlaySpec];
 }
 
-- (void)didLoad {
-    [super didLoad];
-    
-}
 
 #pragma mark - Setters
 

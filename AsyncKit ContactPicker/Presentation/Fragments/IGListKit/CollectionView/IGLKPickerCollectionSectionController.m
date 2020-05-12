@@ -12,6 +12,9 @@
 #import "IGLKPickerCollectionCell.h"
 #import "AppConsts.h"
 
+static const int kPaddingLeft = 3;
+static const int kPaddingRight = 3;
+
 @interface IGLKPickerCollectionSectionController () <IGLKPickerCollectionCellDelegate>
 
 @property (nonatomic, strong) PickerViewModel *currentModel;
@@ -25,7 +28,7 @@
     self = [super init];
     if (self) {
         self.dataSource = self;
-        self.inset = UIEdgeInsetsMake(0, 5, 0, 5);
+        self.inset = UIEdgeInsetsMake(0, kPaddingLeft, 0, kPaddingRight);
         _avatarImageHeight = [UIScreen mainScreen].bounds.size.width / 7.f;
     }
     return self;

@@ -84,7 +84,7 @@
     paragraphStyle.alignment = NSTextAlignmentCenter;
     paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
     
-    NSDictionary *attributedText = @{ NSFontAttributeName: [UIFont fontWithName:@"HelveticaNeue" size:22],
+    NSDictionary *attributedText = @{ NSFontAttributeName: [UIFont fontWithName:@"HelveticaNeue" size:20],
                                       NSParagraphStyleAttributeName : paragraphStyle,
                                       NSForegroundColorAttributeName : [UIColor darkTextColor]
     };
@@ -99,7 +99,7 @@
     paragraphStyle.alignment = NSTextAlignmentCenter;
     paragraphStyle.lineBreakMode = NSLineBreakByWordWrapping;
     
-    NSDictionary *attributedText = @{ NSFontAttributeName: [UIFont fontWithName:@"HelveticaNeue" size:20],
+    NSDictionary *attributedText = @{ NSFontAttributeName: [UIFont fontWithName:@"HelveticaNeue" size:17],
                                       NSParagraphStyleAttributeName : paragraphStyle,
                                       NSForegroundColorAttributeName : [UIColor darkGrayColor]
     };

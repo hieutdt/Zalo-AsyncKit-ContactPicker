@@ -207,7 +207,8 @@
 
 #pragma mark - ASTableDelegate
 
-- (void)tableNode:(ASTableNode *)tableNode didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+- (void)tableNode:(ASTableNode *)tableNode
+didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (indexPath.section >= self.sectionsArray.count) {
         return;
     } else if (indexPath.row >= self.sectionsArray[indexPath.section].count) {

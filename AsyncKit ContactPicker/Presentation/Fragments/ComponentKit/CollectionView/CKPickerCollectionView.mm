@@ -26,7 +26,7 @@ static const int kMaxPick = 5;
 
 @property (nonatomic, strong) NSMutableArray<PickerViewModel *> *viewModels;
 
-@property (nonatomic, assign) float nextButtonHeight;
+@property (nonatomic, assign) CGFloat nextButtonHeight;
 
 @end
 
@@ -87,7 +87,7 @@ static const int kMaxPick = 5;
     
     _nextButtonContainer = [[UIView alloc] init];
     _nextButtonContainer.backgroundColor = [UIColor whiteColor];
-    _nextButtonContainer.alpha = 0.7;
+    _nextButtonContainer.alpha = 0.8;
     
     [self addSubview:_nextButtonContainer];
     _nextButtonContainer.translatesAutoresizingMaskIntoConstraints = NO;
@@ -112,7 +112,7 @@ static const int kMaxPick = 5;
     _nextButton.translatesAutoresizingMaskIntoConstraints = NO;
     [_nextButton.widthAnchor constraintEqualToConstant:_nextButtonHeight].active = YES;
     [_nextButton.heightAnchor constraintEqualToConstant:_nextButtonHeight].active = YES;
-    [_nextButton.centerYAnchor constraintEqualToAnchor:_nextButtonContainer.centerYAnchor].active = YES;
+    [_nextButton.centerYAnchor constraintEqualToAnchor:_collectionView.centerYAnchor].active = YES;
     [_nextButton.centerXAnchor constraintEqualToAnchor:_nextButtonContainer.centerXAnchor].active = YES;
     
     _sizeRangeProvider = [CKComponentFlexibleSizeRangeProvider
