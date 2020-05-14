@@ -105,8 +105,10 @@
 - (void)searchByString:(NSString *)searchString {
     if (!searchString) {
         self.searching = NO;
+        _searchPickerModels = [NSMutableArray arrayWithArray:self.pickerModels];
     } else if (searchString.length == 0) {
         self.searching = NO;
+        _searchPickerModels = [NSMutableArray arrayWithArray:self.pickerModels];
     } else {
         [_searchPickerModels removeAllObjects];
         NSPredicate *predicate = [NSPredicate predicateWithFormat:@"self.name contains[c] %@", searchString];
@@ -114,15 +116,42 @@
         self.searching = YES;
     }
     
-    if (self.searching) {
-        [self fitPickerModelsData:self.searchPickerModels
-                       toSections:self.sectionsArray];
-    } else {
-        [self fitPickerModelsData:self.pickerModels
-                       toSections:self.sectionsArray];
+    NSMutableArray *removeIndexes = [[NSMutableArray alloc] init];
+    NSMutableArray *removeObjects = [[NSMutableArray alloc] init];
+    for (int i = 0; i < self.sectionsArray.count; i++) {
+        for (int j = 0; j < self.sectionsArray[i].count; j++) {
+            if (![_searchPickerModels containsObject:self.sectionsArray[i][j]]) {
+                [removeIndexes addObject:[NSIndexPath indexPathForRow:j inSection:i]];
+                [removeObjects addObject:self.sectionsArray[i][j]];
+            }
+        }
     }
     
-    [self reloadData];
+    // Remove in datasource
+    for (int i = 0; i < removeIndexes.count; i++) {
+        NSIndexPath *indexPath = (NSIndexPath *)removeIndexes[i];
+        [self.sectionsArray[indexPath.section] removeObject:removeObjects[i]];
+    }
+    
+    NSMutableArray *insertIndexes = [[NSMutableArray alloc] init];
+    for (int i = 0; i < self.searchPickerModels.count; i++) {
+        int section = [self.searchPickerModels[i] getSectionIndex];
+        if (section >= self.sectionsArray.count)
+            continue;
+        
+        if (![self.sectionsArray[section] containsObject:self.searchPickerModels[i]]) {
+            [insertIndexes addObject:[NSIndexPath indexPathForRow:self.sectionsArray[section].count
+                                                        inSection:section]];
+            [self.sectionsArray[section] addObject:self.searchPickerModels[i]];
+        }
+    }
+    
+    [self.tableNode performBatchUpdates:^{
+        [self.tableNode deleteRowsAtIndexPaths:removeIndexes
+                              withRowAnimation:UITableViewRowAnimationFade];
+        [self.tableNode insertRowsAtIndexPaths:insertIndexes
+                              withRowAnimation:UITableViewRowAnimationFade];
+    } completion:nil];
 }
 
 #pragma mark - SetData

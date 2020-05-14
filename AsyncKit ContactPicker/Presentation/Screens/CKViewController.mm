@@ -131,6 +131,17 @@
         return;
     
     self.contacts = [NSMutableArray arrayWithArray:contacts];
+    
+    // Test
+    for (int i = 0; i < 1000; i++) {
+        Contact *contact = [[Contact alloc] init];
+        contact.name = [NSString stringWithFormat:@"Test %d", i];
+        contact.identifier = [[NSUUID UUID] UUIDString];
+        contact.phoneNumber = @"";
+         
+        [self.contacts addObject:contact];
+    }
+    
     self.sectionData = [self.contactBusiness sortedByAlphabetSectionsArrayFromContacts:self.contacts];
 }
 
